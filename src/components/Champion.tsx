@@ -5,15 +5,32 @@ interface IChampionProps {
   pk: number;
   name: string;
   cost: number;
+  orgin: string;
+  job: string;
+  health: number;
   avatar: string | null;
 }
+// pk: number;
+// name: string;
+// cost: number;
+// origin: string;
+// job: string;
+// health: number;
+// ad: number;
+// dps: number;
+// attack_range: number;
+// attack_speed: number;
+// armor: number;
+// magic_resistance: number;
+// skill: string;
+// avatar: string | null;
 
 const Champion = ({ pk, name, cost, avatar }: IChampionProps) => {
   console.log(pk, name, cost, avatar);
   return (
     <Link to={`/champions/${pk}`}>
       <VStack alignItems="center">
-        <Box w="200px" h="200px">
+        <Box w="50px" h="50px">
           {avatar ? (
             <Image
               src={avatar}

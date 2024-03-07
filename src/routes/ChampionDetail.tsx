@@ -1,24 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { getChampion } from "../api";
 import { useParams } from "react-router-dom";
-import { Box, HStack, Text } from "@chakra-ui/react";
-
-interface IChampionDetail {
-  pk: number;
-  name: string;
-  cost: number;
-  origin: string;
-  job: string;
-  health: number;
-  ad: number;
-  dps: number;
-  attack_range: number;
-  attack_speed: number;
-  armor: number;
-  magic_resistance: number;
-  skill: string;
-  avatar: string | null;
-}
+import { Box, Container, HStack, Image, Text, VStack } from "@chakra-ui/react";
+import IChampionDetail from "../components/types";
 
 export default function ChampionDetail() {
   const { championPk } = useParams();
@@ -27,20 +11,95 @@ export default function ChampionDetail() {
     queryFn: getChampion,
   });
   return (
-    <HStack>
-      <Text>{data?.avatar}</Text>
-      <Text>{data?.name}</Text>
-      <Text>{data?.cost}</Text>
-      {/* <Text>{data?.job}</Text> */}
-      {/* <Text>{data?.origin}</Text> */}
-      <Text>{data?.health}</Text>
-      <Text>{data?.armor}</Text>
-      <Text>{data?.magic_resistance}</Text>
-      <Text>{data?.ad}</Text>
-      <Text>{data?.attack_range}</Text>
-      <Text>{data?.attack_speed}</Text>
-      <Text>{data?.dps}</Text>
-      {/* <Text>{data?.skill}</Text> */}
+    <HStack gap={5} justifyContent={"center"}>
+      <Box>
+        <HStack>
+          <Image rounded={"2xl"} src={data?.photos[0].file} />
+          <Text>{data?.name}</Text>
+        </HStack>
+      </Box>
+      <Box>
+        <Text>${data?.cost}</Text>
+      </Box>
+      <Box>
+        <HStack>
+          {data?.job.length === 1 ? (
+            <>
+              <Image
+                rounded={"2xl"}
+                bgColor={"gray"}
+                src={data?.job[0].photos[0].file}
+              />
+              <Text>{data?.job[0].name}</Text>
+            </>
+          ) : (
+            [0, 1].map((index) => (
+              <>
+                <Image
+                  rounded={"2xl"}
+                  bgColor={"gray"}
+                  src={data?.job[index].photos[0].file}
+                />
+                <Text>{data?.job[index].name}</Text>
+              </>
+            ))
+          )}
+        </HStack>
+      </Box>
+      <Box>
+        <HStack>
+          {data?.origin.length === 1 ? (
+            <>
+              <Image
+                rounded={"2xl"}
+                bgColor={"gray"}
+                src={data?.origin[0].photos[0].file}
+              />
+              <Text>{data?.origin[0].name}</Text>
+            </>
+          ) : (
+            [0, 1].map((index) => (
+              <>
+                <Image
+                  rounded={"2xl"}
+                  bgColor={"gray"}
+                  src={data?.origin[index].photos[0].file}
+                />
+                <Text>{data?.origin[index].name}</Text>
+              </>
+            ))
+          )}
+        </HStack>
+      </Box>
+      <Box>
+        <Text>{data?.health}</Text>
+      </Box>
+      <Box>
+        <Text>{data?.armor}</Text>
+      </Box>
+      <Box>
+        <Text>{data?.magic_resistance}</Text>
+      </Box>
+      <Box>
+        <Text>{data?.ad}</Text>
+      </Box>
+      <Box>
+        <Text>{data?.attack_range}</Text>
+      </Box>
+      <Box>
+        <Text>{data?.attack_speed}</Text>
+      </Box>
+      <Box>
+        <Text>{data?.dps}</Text>
+      </Box>
+      <Box>
+        <Image src={data?.skill.photos[0].file} />
+      </Box>
+      <Box>
+        <Text>
+          {data?.skill.start_mana}/{data?.skill.max_mana}
+        </Text>
+      </Box>
     </HStack>
   );
 }

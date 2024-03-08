@@ -40,3 +40,8 @@ export default interface IChampionDetail extends IChampion {
   magic_resistance: number;
   skill: ISkill;
 }
+
+export default interface IComp {
+  pk: number;
+  champions: IChampionDetail[];
+}

@@ -17,3 +17,6 @@ export const getChampion = ({ queryKey }: QueryFunctionContext) => {
     .get(`champions/${championPk}`)
     .then((response) => response.data);
 };
+
+export const getComps = () =>
+  instance.get("comps/").then((response) => response.data);

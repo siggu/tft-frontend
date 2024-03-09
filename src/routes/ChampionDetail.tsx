@@ -11,17 +11,12 @@ export default function ChampionDetail() {
     queryFn: getChampion,
   });
   return (
-    <HStack gap={5} justifyContent={"center"}>
-      <Box>
-        <HStack>
-          <Image rounded={"2xl"} src={data?.photos[0].file} />
-          <Text>{data?.name}</Text>
-        </HStack>
-      </Box>
-      <Box>
+    <VStack gap={5} justifyContent={"center"}>
+      <HStack>
+        {/* 이름, 초상화, 비용, 계열, 직업 */}
+        <Image rounded={"2xl"} src={data?.photos[0].file} />
+        <Text>{data?.name}</Text>
         <Text>${data?.cost}</Text>
-      </Box>
-      <Box>
         <HStack>
           {data?.job.length === 1 ? (
             <>
@@ -45,8 +40,6 @@ export default function ChampionDetail() {
             ))
           )}
         </HStack>
-      </Box>
-      <Box>
         <HStack>
           {data?.origin.length === 1 ? (
             <>
@@ -70,36 +63,40 @@ export default function ChampionDetail() {
             ))
           )}
         </HStack>
-      </Box>
-      <Box>
-        <Text>{data?.health}</Text>
-      </Box>
-      <Box>
-        <Text>{data?.armor}</Text>
-      </Box>
-      <Box>
-        <Text>{data?.magic_resistance}</Text>
-      </Box>
-      <Box>
+      </HStack>
+      <HStack>
+        {/* 체력, 공격력, DPS, 공격사거리, 공격속도, 방어력, 마법저항력 */}
+        <VStack>
+          <Text>체력</Text>
+          <Text>{data?.health}</Text>
+        </VStack>
+        <VStack>
         <Text>{data?.ad}</Text>
-      </Box>
-      <Box>
-        <Text>{data?.attack_range}</Text>
-      </Box>
-      <Box>
-        <Text>{data?.attack_speed}</Text>
-      </Box>
-      <Box>
+        </VStack>
+        <VStack>
         <Text>{data?.dps}</Text>
-      </Box>
-      <Box>
+          </VStack>
+          <VStack>
+          <Text>{data?.attack_range}</Text>
+          </VStack>
+          <VStack>
+          
+        <Text>{data?.attack_speed}</Text>
+          </VStack>
+          <VStack>
+          
+        <Text>{data?.armor}</Text>
+          </VStack>
+          <VStack>
+          <Text>{data?.magic_resistance}</Text>
+          </VStack>
+      </HStack>
+
+      <HStack>
+        {/* 스킬 초상화, 스킬명, 스킬유형, 마나, 스킬 내용, 스킬효과 */}
         <Image src={data?.skill.photos[0].file} />
-      </Box>
-      <Box>
-        <Text>
-          {data?.skill.start_mana}/{data?.skill.max_mana}
-        </Text>
-      </Box>
-    </HStack>
+        <Text>{data?.skill.start_mana}/{data?.skill.max_mana}</Text>
+      </HStack>
+    </VStack>
   );
 }

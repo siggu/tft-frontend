@@ -8,7 +8,6 @@ export default function Home() {
     queryKey: ["comps"],
     queryFn: getComps,
   });
-
   return (
     <VStack gap={20}>
       <Container maxW={"max-content"}>
@@ -24,6 +23,15 @@ export default function Home() {
           data?.map((comp) => (
             <HStack key={comp.pk}>
               <Text>{comp.name}</Text>
+              {comp.champions.map((champion) => (
+                <Image
+                  bgColor={"gray"}
+                  src={champion.origin[0].photos[0].file}
+                />
+              ))}
+              {comp.champions.map((champion) => (
+                <Image bgColor={"gray"} src={champion.job[0].photos[0].file} />
+              ))}
               {comp.champions
                 .slice()
                 .sort((a, b) => a.cost - b.cost)

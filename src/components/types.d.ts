@@ -19,6 +19,7 @@ export default interface ISkill {
   start_mana: number;
   max_mana: number;
   description: string;
+  effect: string;
 }
 
 export default interface IChampion {

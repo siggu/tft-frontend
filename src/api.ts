@@ -20,3 +20,10 @@ export const getChampion = ({ queryKey }: QueryFunctionContext) => {
 
 export const getComps = () =>
   instance.get("comps/").then((response) => response.data);
+
+export const getChampionsByOrigin = ({ queryKey }: QueryFunctionContext) =>{
+  const [_,championName] = queryKey;
+  return instance
+    .get(`synergies/origins/${queryKey}`)
+    .then((response) => response.data);
+}

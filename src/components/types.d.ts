@@ -4,7 +4,7 @@ export default interface IPhoto {
   description: string;
 }
 
-export default interface IJob {
+export default interface ISynergy {
   description: string;
   id: number;
   name: string;
@@ -30,8 +30,8 @@ export default interface IChampion {
 }
 
 export default interface IChampionDetail extends IChampion {
-  origin: IJob[];
-  job: IJob[];
+  origin: ISynergy[];
+  job: ISynergy[];
   health: number;
   ad: number;
   dps: number;

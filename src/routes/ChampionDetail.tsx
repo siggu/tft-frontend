@@ -175,8 +175,8 @@ export default function ChampionDetail() {
       <VStack gap={0} justifyContent={"center"} pl="10%" pr="10%" fontSize={"sm"} minW="100%">
         <HStack as="b" fontSize="lg" h="60px" bgColor="#ca9372" color={"white"} textAlign={"center"} w="100%" pl="16px">
           <Text>시너지</Text>
-          {/* 계열 */}
         </HStack>
+          {/* 계열 1 */}
         <HStack>
         <Image
           w="45px"
@@ -186,27 +186,49 @@ export default function ChampionDetail() {
           src={data?.origin[0].photos[0].file}/>
         <Text>{data?.origin[0].name}</Text>
         <VStack>
-          
           <Text>{data?.origin[0].description}</Text>
-
         </VStack>
         </HStack>
-        if (data?.origin.length === 2) {
-          <>
-            <HStack>
-              <Image
+          {/* 계열 2 */}
+        {data?.origin.length === 2 && (
+          <HStack>
+            <Image
               w="45px"
               h="45px"
               rounded={"2xl"}
               bgColor={"gray"}
               src={data?.origin[1].photos[0].file}/>
-              <Text>{data?.origin[1].name}</Text>
-              <Text>{data?.origin[1].description}</Text>
-            </HStack>
-          </>
-        }
-        <HStack></HStack>
-        <HStack></HStack>
+            <Text>{data?.origin[1].name}</Text>
+            <Text>{data?.origin[1].description}</Text>
+          </HStack>
+        )}
+
+          {/* 직업 1 */}
+          <HStack>
+        <Image
+          w="45px"
+          h="45px"
+          rounded={"2xl"}
+          bgColor={"gray"}
+          src={data?.job[0].photos[0].file}/>
+        <Text>{data?.job[0].name}</Text>
+        <VStack>
+          <Text>{data?.job[0].description}</Text>
+        </VStack>
+        </HStack>
+          {/* 직업 2 */}
+        {data?.job.length === 2 && (
+          <HStack>
+            <Image
+              w="45px"
+              h="45px"
+              rounded={"2xl"}
+              bgColor={"gray"}
+              src={data?.job[1].photos[0].file}/>
+            <Text>{data?.job[1].name}</Text>
+            <Text>{data?.job[1].description}</Text>
+          </HStack>
+        )}
       </VStack>
 
     </VStack>

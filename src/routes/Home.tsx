@@ -12,52 +12,16 @@ import { useQuery } from "@tanstack/react-query";
 import { getComps } from "../api";
 import IComp from "../components/types";
 import { FaCoins } from "react-icons/fa";
+import { useState } from "react";
 
 export default function Home() {
   const { data, isLoading } = useQuery<IComp[]>({
     queryKey: ["comps"],
     queryFn: getComps,
   });
-  // orign 사진
+
   // console.log(data?.[0].champions[0].origin[0].photos[0].file);
-  const originCounts: { [key: string]: number } = {};
-  const jobCounts: { [key: string]: number } = {};
 
-  // origin과 job의 총 개수 저장
-  const originAndJobCounts: { [key: string]: number } = {};
-
-  if (!isLoading && data) {
-    data.forEach((comp) => {
-      comp.champions.forEach((champion) => {
-        // origin 개수 계산
-        champion.origin.forEach((origin: { name: string | number }) => {
-          if (originAndJobCounts[origin.name]) {
-            originAndJobCounts[origin.name]++;
-          } else {
-            originAndJobCounts[origin.name] = 1;
-          }
-        });
-
-        // job 개수 계산
-        champion.job.forEach((job: { name: string | number }) => {
-          if (originAndJobCounts[job.name]) {
-            originAndJobCounts[job.name]++;
-          } else {
-            originAndJobCounts[job.name] = 1;
-          }
-        });
-      });
-    });
-  }
-  const sortedOriginAndJobCounts = Object.entries(originAndJobCounts).sort(
-    (a, b) => b[1] - a[1]
-  );
-
-  // 정렬된 결과 출력
-  // console.log("Origin과 Job 개수 (정렬 후):", sortedOriginAndJobCounts);
-  sortedOriginAndJobCounts.map(([name, count]) => {
-    console.log(`Name: ${name}, Count: ${count}`);
-  });
   return (
     <VStack gap={20}>
       <Container maxW={"max-content"}>
@@ -71,10 +35,23 @@ export default function Home() {
           <Text>Loading...</Text>
         ) : (
           data?.map((comp) => (
-            <HStack key={comp.pk}>
-              <Text>{comp.name}</Text>
-              <VStack>
-                <Box></Box>
+            <HStack key={comp.pk} gap={5}>
+              <Text fontSize={"20px"} as={"b"}>
+                {comp.name}
+              </Text>
+              <VStack gap={3} alignItems={"flex-start"}>
+                <HStack>
+                  {comp.champions.map((champion) => (
+                    <>
+                      <Text></Text>
+                      <Image
+                        rounded={"2xl"}
+                        bg={"gray"}
+                        src={champion.origin[0].photos[0].file}
+                      />
+                    </>
+                  ))}
+                </HStack>
                 <HStack>
                   {/* 챔피언 이미지 표시 */}
                   {comp.champions

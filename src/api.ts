@@ -24,6 +24,6 @@ export const getComps = () =>
 export const getChampionsByOrigin = ({ queryKey }: QueryFunctionContext) =>{
   const [_,championName] = queryKey;
   return instance
-    .get(`synergies/origins/${queryKey}`)
+    .get(`synergies/origin/${championName}`)
     .then((response) => response.data);
-}
+} 

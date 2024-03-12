@@ -10,6 +10,16 @@ export default interface ISynergy {
   name: string;
   photos: IPhoto[];
 }
+export default interface ISynergyDetails{
+  synergy_champions: ISynergy_champions[];
+  id: number;
+  name: string;
+}
+export default interface ISynergy_champions{
+  champion_name: string,
+  champion_pk: number
+}
+
 
 export default interface ISkill {
   id: number;
@@ -46,3 +56,4 @@ export default interface IComp {
   pk: number;
   champions: IChampionDetail[];
 }
+

@@ -22,9 +22,10 @@ export default function Home() {
   let jobStack: string[] = [];
 
   // origin과 job의 총 개수 저장
-  const originAndJobCounts: { [key: string]: number } = {};
+  let originAndJobCounts: { [key: string]: number } = {};
 
   if (!isLoading && data) {
+    originAndJobCounts = {};
     data.forEach((comp) => {
       comp.champions.forEach((champion) => {
         // origin 개수 계산
@@ -275,20 +276,58 @@ export default function Home() {
                               </HStack>
                             </HStack>
                             <VStack alignItems={"flex-start"}>
-                              <HStack>
-                                <Image
-                                  width={"25px"}
-                                  src={champion.origin[0].photos[0].file}
-                                />
-                                <Text>{champion.origin[0].name}</Text>
-                              </HStack>
-                              <HStack>
-                                <Image
-                                  width={"25px"}
-                                  src={champion.job[0].photos[0].file}
-                                />
-                                <Text>{champion.job[0].name}</Text>
-                              </HStack>
+                              {champion.origin.length === 1 ? (
+                                <HStack>
+                                  <Image
+                                    width={"25px"}
+                                    src={champion.origin[0].photos[0].file}
+                                  />
+                                  <Text>{champion.origin[0].name}</Text>
+                                </HStack>
+                              ) : (
+                                <>
+                                  <HStack>
+                                    <Image
+                                      width={"25px"}
+                                      src={champion.origin[0].photos[0].file}
+                                    />
+                                    <Text>{champion.origin[0].name}</Text>
+                                  </HStack>
+                                  <HStack>
+                                    <Image
+                                      width={"25px"}
+                                      src={champion.origin[1].photos[0].file}
+                                    />
+                                    <Text>{champion.origin[1].name}</Text>
+                                  </HStack>
+                                </>
+                              )}
+                              {champion.job.length === 1 ? (
+                                <HStack>
+                                  <Image
+                                    width={"25px"}
+                                    src={champion.job[0].photos[0].file}
+                                  />
+                                  <Text>{champion.job[0].name}</Text>
+                                </HStack>
+                              ) : (
+                                <>
+                                  <HStack>
+                                    <Image
+                                      width={"25px"}
+                                      src={champion.job[0].photos[0].file}
+                                    />
+                                    <Text>{champion.job[0].name}</Text>
+                                  </HStack>
+                                  <HStack>
+                                    <Image
+                                      width={"25px"}
+                                      src={champion.job[1].photos[0].file}
+                                    />
+                                    <Text>{champion.job[1].name}</Text>
+                                  </HStack>
+                                </>
+                              )}
                             </VStack>
                             <HStack alignItems={"flex-start"}>
                               <Text>공격 사거리: {champion.attack_range}</Text>

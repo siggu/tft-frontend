@@ -21,9 +21,10 @@ export default function ChampionDetail() {
     queryFn: getChampions, 
   }) 
   
+  allChampionsData?.sort((a,b) =>a.cost - b.cost)
+
   // test
   allChampionsData?.map((item) => { item.origin.map((origin_obj)=> {if(origin_obj.name === "이야기꾼"){console.log(item.name)}})})
-
 
 
   return (
@@ -289,7 +290,7 @@ export default function ChampionDetail() {
                     pr={1}
                     roundedTopRight={"10px"} // 라운드 처리
                     >
-                    <Text fontSize={"13px"} color={"white"}>${allChampions_item.cost}</Text>
+                    <Text textShadow="1px 0px 2px black" fontSize={"13px"} color={"white"}>${allChampions_item.cost}</Text>
                     </Box>
                     <HStack justifyContent={"center"} >
                     <Text textShadow="1px 0px 2px black" position={"relative"} bottom={"20px"} fontSize={"13px"} color={"white"}>{allChampions_item.name}</Text>
@@ -431,7 +432,7 @@ export default function ChampionDetail() {
                     pr={1}
                     roundedTopRight={"10px"} // 라운드 처리
                     >
-                    <Text fontSize={"13px"} color={"white"}>${allChampions_item.cost}</Text>
+                    <Text textShadow="1px 0px 2px black" fontSize={"13px"} color={"white"}>${allChampions_item.cost}</Text>
                     </Box>
                     <HStack justifyContent={"center"} >
                     <Text textShadow="1px 0px 2px black" position={"relative"} bottom={"20px"} fontSize={"13px"} color={"white"}>{allChampions_item.name}</Text>

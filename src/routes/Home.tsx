@@ -18,10 +18,8 @@ export default function Home() {
     queryKey: ["comps"],
     queryFn: getComps,
   });
-  const originStack: string[] = [];
-  const jobStack: string[] = [];
-  const originCounts: { [key: string]: number } = {};
-  const jobCounts: { [key: string]: number } = {};
+  let originStack: string[] = [];
+  let jobStack: string[] = [];
 
   // origin과 job의 총 개수 저장
   const originAndJobCounts: { [key: string]: number } = {};
@@ -30,7 +28,7 @@ export default function Home() {
     data.forEach((comp) => {
       comp.champions.forEach((champion) => {
         // origin 개수 계산
-        champion.origin.forEach((origin: { name: string | number }) => {
+        champion.origin.forEach((origin: { name: string }) => {
           if (originAndJobCounts[origin.name]) {
             originAndJobCounts[origin.name]++;
           } else {
@@ -39,7 +37,7 @@ export default function Home() {
         });
 
         // job 개수 계산
-        champion.job.forEach((job: { name: string | number }) => {
+        champion.job.forEach((job: { name: string }) => {
           if (originAndJobCounts[job.name]) {
             originAndJobCounts[job.name]++;
           } else {
@@ -49,9 +47,7 @@ export default function Home() {
       });
     });
   }
-  const sortedOriginAndJobCounts = Object.entries(originAndJobCounts).sort(
-    (a, b) => b[1] - a[1]
-  );
+
   // console.log(data?.[0].champions[0].origin[0].photos[0].file);
   // console.log(originAndJobCounts);
   return (
@@ -131,11 +127,11 @@ export default function Home() {
                                   rounded={"10px"}
                                   bg={
                                     originAndJobCounts[origin.name] >= 7
-                                      ? "orange"
+                                      ? "#f8de7b"
                                       : originAndJobCounts[origin.name] >= 5
                                       ? "silver"
                                       : originAndJobCounts[origin.name] > 3
-                                      ? "brown"
+                                      ? "#ea8c52"
                                       : "gray"
                                   }
                                   src={origin.photos[0].file}
@@ -152,11 +148,11 @@ export default function Home() {
                                   color={"white"}
                                   bg={
                                     originAndJobCounts[origin.name] >= 7
-                                      ? "orange"
+                                      ? "#f8de7b"
                                       : originAndJobCounts[origin.name] >= 5
                                       ? "silver"
                                       : originAndJobCounts[origin.name] > 3
-                                      ? "brown"
+                                      ? "#ea8c52"
                                       : "gray"
                                   }
                                 >
@@ -218,7 +214,7 @@ export default function Home() {
                                       : originAndJobCounts[job.name] >= 5
                                       ? "silver"
                                       : originAndJobCounts[job.name] >= 2
-                                      ? "brown"
+                                      ? "#ea8c52"
                                       : "gray"
                                   }
                                   src={job.photos[0].file}
@@ -238,7 +234,7 @@ export default function Home() {
                                       : originAndJobCounts[job.name] >= 5
                                       ? "silver"
                                       : originAndJobCounts[job.name] >= 2
-                                      ? "brown"
+                                      ? "#ea8c52"
                                       : "gray"
                                   }
                                 >

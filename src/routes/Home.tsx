@@ -38,8 +38,9 @@ export default function Home() {
             originAndJobCounts[origin.name] = 1;
           }
         });
-
-
+      });
+    });
+  }
   //
 
   const synergiesArr: { [key: string]: number }[][] = [];
@@ -47,42 +48,38 @@ export default function Home() {
   data?.forEach((comp) => {
     const compArray: { [key: string]: number }[] = [];
     const counts: { [key: string]: number } = {}; // 각 originByChampion.name 별로 count를 저장하는 객체
-  
+
     comp.champions.forEach((championByComp) => {
       championByComp.origin.forEach((originByChampion: { name: string }) => {
         // originByChampion.name이 이미 counts 객체에 존재한다면 count를 증가시키고,
-        if(counts[originByChampion.name]){
-          counts[originByChampion.name]++
-        }else{
+        if (counts[originByChampion.name]) {
+          counts[originByChampion.name]++;
+        } else {
           // 존재하지 않는다면 새로운 키를 생성하고 count를 1로 초기화합니다.
-          counts[originByChampion.name] = 1
+          counts[originByChampion.name] = 1;
         }
       });
       championByComp.job.forEach((jobByChampion: { name: string }) => {
         // jobByChampion.name이 이미 counts 객체에 존재한다면 count를 증가시키고,
-        if(counts[jobByChampion.name]){
-          counts[jobByChampion.name]++
-        }else{
+        if (counts[jobByChampion.name]) {
+          counts[jobByChampion.name]++;
+        } else {
           // 존재하지 않는다면 새로운 키를 생성하고 count를 1로 초기화합니다.
-          counts[jobByChampion.name] = 1
+          counts[jobByChampion.name] = 1;
         }
       });
     });
     // 등장 횟수로 내림차순 정렬
-    const sortedEntries = Object.entries(counts).sort((a, b) => b[1] - a[1]); 
+    const sortedEntries = Object.entries(counts).sort((a, b) => b[1] - a[1]);
     sortedEntries.forEach(([name, count]) => {
-    const entry: { [key: string]: number } = {};
-    entry[name] = count;
-    compArray.push(entry);
-  });
+      const entry: { [key: string]: number } = {};
+      entry[name] = count;
+      compArray.push(entry);
+    });
     synergiesArr.push(compArray);
   });
-  console.log(synergiesArr)
-  
-  
-  
-  
-  
+  console.log(synergiesArr);
+
   return (
     <VStack gap={20}>
       <Container maxW={"max-content"}>
@@ -97,9 +94,7 @@ export default function Home() {
         {isLoading ? (
           <Text>Loading...</Text>
         ) : (
-          
-          data?.map((comp,index) => (
-            
+          data?.map((comp, index) => (
             <HStack
               position={"relative"}
               bg={"gray.700"}
@@ -116,43 +111,31 @@ export default function Home() {
               <VStack gap={3} alignItems={"flex-start"}>
                 {/* 시너지 표시 */}
                 <HStack gap={0}>
-
-                  
-                  {originStack=[]}
-                  {jobStack=[]}
-                  {originAndJobCounts.length = 0}          
-                  {
-                    comp.champions.map((champion) =>
+                  {(originStack = [])}
+                  {(jobStack = [])}
+                  {(originAndJobCounts.length = 0)}
+                  {comp.champions.map((champion) => (
                     <HStack>
-                    {
-                      champion.origin.map((originByChampion:{name:string}) =>
-                      {
-                        if(originAndJobCounts[originByChampion.name]){
-                          return(originAndJobCounts[originByChampion.name]++)
-                        }originAndJobCounts[originByChampion.name]=1
-                      })
-                    }
-                    {
-                      champion.job.map((jobByChampion:{name:string}) =>
-                      {
-                        if(originAndJobCounts[jobByChampion.name]){
-                          return(originAndJobCounts[jobByChampion.name]++)
-                        }originAndJobCounts[jobByChampion.name]=1
-                      })
-                    }
-                    {}
-
-                    
+                      {champion.origin.map(
+                        (originByChampion: { name: string }) => {
+                          if (originAndJobCounts[originByChampion.name]) {
+                            return originAndJobCounts[originByChampion.name]++;
+                          }
+                          originAndJobCounts[originByChampion.name] = 1;
+                        }
+                      )}
+                      {champion.job.map((jobByChampion: { name: string }) => {
+                        if (originAndJobCounts[jobByChampion.name]) {
+                          return originAndJobCounts[jobByChampion.name]++;
+                        }
+                        originAndJobCounts[jobByChampion.name] = 1;
+                      })}
+                      {}
                     </HStack>
-                    
-                    
-                  )}
-                  
-                
-                  {comp.champions.map((champion) => ( 
-                    <>
+                  ))}
 
-                    
+                  {comp.champions.map((champion) => (
+                    <>
                       {/* 계열 표시 */}
                       {champion.origin.map(
                         (
@@ -192,7 +175,7 @@ export default function Home() {
                               p={3}
                             >
                               <HStack>
-                                <Image                                
+                                <Image
                                   key={`${comp.pk}-${champion.pk}-origin-${index}`}
                                   p={1}
                                   w={"30px"}
@@ -482,7 +465,11 @@ export default function Home() {
                             pr={1}
                             roundedTopRight={"10px"} // 라운드 처리
                           >
-                            <Text textShadow="1px 0px 2px black" fontSize={"13px"} color={"white"}>
+                            <Text
+                              textShadow="1px 0px 2px black"
+                              fontSize={"13px"}
+                              color={"white"}
+                            >
                               ${champion.cost}
                             </Text>
                           </Box>
@@ -501,7 +488,6 @@ export default function Home() {
                   공략 더 보기
                 </Text>
               </Box>
-              
             </HStack>
           ))
         )}

@@ -23,6 +23,14 @@ export const getChampion = ({ queryKey }: QueryFunctionContext) => {
 export const getComps = () =>
   instance.get("comps/").then((response) => response.data);
 
-// 아이템
+// 아이템 - 만드는중
 export const getItems = () =>
   instance.get("comps/").then((response) => response.data);
+
+// 시너지-계열
+export const getSynergyOrigins = () => 
+instance.get("synergies/origin").then((response) => response.data);
+
+// 시너지-직업
+export const getSynergyJobs = () => 
+instance.get("synergies/job").then((response) => response.data);

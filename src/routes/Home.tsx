@@ -15,71 +15,97 @@ import { FaCoins } from "react-icons/fa";
 
 export default function Home() {
   // synergy origins api - get
-  const { data:compData, isLoading: compIsLoading } = useQuery<IComp[]>({
+  const { data: compData, isLoading: compIsLoading } = useQuery<IComp[]>({
     queryKey: ["comps"],
     queryFn: getComps,
   });
   // synergy origins api - get
-  const { data:originData,isLoading: originIsLoading} = useQuery<IComp[]>({
+  const { data: originData, isLoading: originIsLoading } = useQuery<IComp[]>({
     queryKey: ["origins"],
     queryFn: getSynergyOrigins,
   });
   // synergy jobs api - get
-  const { data:jobData,isLoading: jobIsLoading } = useQuery<IComp[]>({
+  const { data: jobData, isLoading: jobIsLoading } = useQuery<IComp[]>({
     queryKey: ["jobs"],
     queryFn: getSynergyJobs,
   });
 
+  const synergiesArr: {
+    synergyName: string;
+    frequency: number;
+    description: string;
+    effect: string;
+    photo: string;
+  }[][] = [];
 
-const synergiesArr: { synergyName: string, frequency: number, description: string, effect: string, photo: string }[][] = [];
+  compData?.forEach((comp) => {
+    const compArray: {
+      synergyName: string;
+      frequency: number;
+      description: string;
+      effect: string;
+      photo: string;
+    }[] = [];
+    const counts: { [key: string]: number } = {};
 
-compData?.forEach((comp) => {
-  const compArray: { synergyName: string, frequency: number, description: string, effect: string, photo: string }[] = [];
-  const counts: { [key: string]: number } = {};
-
-  comp.champions.forEach((championByComp) => {
-    championByComp.origin.forEach((originByChampion: { name: string }) => {
-      if (counts[originByChampion.name]) {
-        counts[originByChampion.name]++;
-      } else {
-        counts[originByChampion.name] = 1;
-        
-      }
+    comp.champions.forEach((championByComp) => {
+      championByComp.origin.forEach((originByChampion: { name: string }) => {
+        if (counts[originByChampion.name]) {
+          counts[originByChampion.name]++;
+        } else {
+          counts[originByChampion.name] = 1;
+        }
+      });
+      championByComp.job.forEach((jobByChampion: { name: string }) => {
+        if (counts[jobByChampion.name]) {
+          counts[jobByChampion.name]++;
+        } else {
+          counts[jobByChampion.name] = 1;
+        }
+      });
     });
-    championByComp.job.forEach((jobByChampion: { name: string }) => {
-      if (counts[jobByChampion.name]) {
-        counts[jobByChampion.name]++;
-      } else {
-        counts[jobByChampion.name] = 1;
-      }
+
+    const sortedEntries = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+
+    sortedEntries.forEach(([name, count]) => {
+      let entry = {
+        synergyName: name,
+        frequency: count,
+        description: "",
+        effect: "",
+        photo: "",
+      };
+
+      originData?.forEach((origin_ele) => {
+        if (origin_ele.name === name) {
+          entry = {
+            synergyName: name,
+            frequency: count,
+            description: origin_ele.description,
+            effect: origin_ele.effect,
+            photo: origin_ele.photos[1]?.file,
+          };
+        }
+      });
+      jobData?.forEach((job_ele) => {
+        if (job_ele.name === name) {
+          entry = {
+            synergyName: name,
+            frequency: count,
+            description: job_ele.description,
+            effect: job_ele.effect,
+            photo: job_ele.photos[1]?.file,
+          };
+        }
+      });
+      compArray.push(entry);
     });
+    synergiesArr.push(compArray);
   });
 
-  const sortedEntries = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+  console.log("내가 정리한 시너지", synergiesArr);
 
-  sortedEntries.forEach(([name, count]) => {
-    let entry = { synergyName: name, frequency: count, description: "", effect: "", photo: "" };
-
-    originData?.forEach((origin_ele) => {
-      if (origin_ele.name === name) {
-        entry = { synergyName: name, frequency: count, description: origin_ele.description, effect: origin_ele.effect, photo: origin_ele.photos[1].file };
-      }
-    });
-    jobData?.forEach((job_ele) => {
-      if (job_ele.name === name) {
-        entry = { synergyName: name, frequency: count, description: job_ele.description, effect: job_ele.effect, photo: job_ele.photos[1].file };
-      }
-    });
-    compArray.push(entry);
-  });
-  synergiesArr.push(compArray);
-});
-
-console.log("내가 정리한 시너지", synergiesArr);
-
-
-
-  return ( 
+  return (
     <VStack gap={20}>
       <Container maxW={"max-content"}>
         <Text>검색창</Text>
@@ -112,19 +138,17 @@ console.log("내가 정리한 시너지", synergiesArr);
               <VStack gap={3} alignItems={"flex-start"}>
                 {/* # 2.1 시너지 표시 */}
                 <HStack>
-                {synergiesArr[comp_index].map((compSynergies_ele)=>(
-                  <>
-                    <Tooltip
+                  {synergiesArr[comp_index].map((compSynergies_ele) => (
+                    <>
+                      <Tooltip
                         hasArrow
                         w={"300px"}
                         label={
-                          <VStack
-                            gap={3}
-                            alignItems={"flex-start"}
-                            w={"280px"}
-                          >
+                          <VStack gap={3} alignItems={"flex-start"} w={"280px"}>
                             <HStack>
-                              <Text as={"b"}>{compSynergies_ele.synergyName}</Text>
+                              <Text as={"b"}>
+                                {compSynergies_ele.synergyName}
+                              </Text>
                             </HStack>
                             <VStack>
                               <Text>{compSynergies_ele.description}</Text>
@@ -144,18 +168,16 @@ console.log("내가 정리한 시너지", synergiesArr);
                             w={"30px"}
                             rounded={"10px"}
                             bgGradient={
-                            compSynergies_ele.frequency >= 6
-                              ?  "linear(#d1bc69, #f6da75, #a58735)"
-                              : compSynergies_ele.frequency >= 4
-                              ? "linear(#9ab3b9, #b3ced2, #8aa1a4)"
-                              : compSynergies_ele.frequency >= 2
-                              ? "linear(#c77743, #d97e40, #9b561d)"
-                              : "linear(#646464,#646464)"
+                              compSynergies_ele.frequency >= 6
+                                ? "linear(#d1bc69, #f6da75, #a58735)"
+                                : compSynergies_ele.frequency >= 4
+                                ? "linear(#9ab3b9, #b3ced2, #8aa1a4)"
+                                : compSynergies_ele.frequency >= 2
+                                ? "linear(#c77743, #d97e40, #9b561d)"
+                                : "linear(#646464,#646464)"
                             }
                             position={"relative"}
-
                             src={compSynergies_ele.photo}
-                                                 
                           />
                           <Box
                             left={-3}
@@ -167,29 +189,23 @@ console.log("내가 정리한 시너지", synergiesArr);
                             position={"relative"}
                             bgGradient={
                               compSynergies_ele.frequency >= 6
-                                ?  "linear(#d1bc69, #f6da75, #a58735)"
+                                ? "linear(#d1bc69, #f6da75, #a58735)"
                                 : compSynergies_ele.frequency >= 4
                                 ? "linear(#9ab3b9, #b3ced2, #8aa1a4)"
                                 : compSynergies_ele.frequency >= 2
                                 ? "linear(#c77743, #d97e40, #9b561d)"
                                 : "linear(#646464,#646464)"
-                              }
+                            }
                           >
-                            <Text 
-                            fontSize={"13px"}
-
-                            as={"b"}
-                            >
+                            <Text fontSize={"13px"} as={"b"}>
                               {compSynergies_ele.frequency}
                             </Text>
                           </Box>
                         </HStack>
                       </Tooltip>
-                  </>
-                ))}
+                    </>
+                  ))}
                 </HStack>
-
-
 
                 {/* 챔피언 이미지 표시 */}
                 <HStack>
@@ -323,10 +339,10 @@ console.log("내가 정리한 시너지", synergiesArr);
                           position={"relative"}
                         >
                           <Image
-                          w={"full"}
-                          h={"full"}
-                          src={champion.photos[0].file}
-                          rounded={"12px"}
+                            w={"full"}
+                            h={"full"}
+                            src={champion.photos[0].file}
+                            rounded={"12px"}
                           />
                           <Box
                             position={"absolute"} // 부모 요소를 기준으로 절대적으로 위치

@@ -22,64 +22,108 @@ export default function Encounters() {
       {isLoading ? (
         <Text>Loading...</Text>
       ) : (
-        <Box w={"80%"}>
+        <Box>
           {data &&
             data.map((encounter: IEncounter) => (
-              <HStack gap={5} w={"100%"} m={5} border={"1px solid"} p={5}>
-                <VStack key={encounter.id}>
-                  <Box></Box>
-                </VStack>
-                <Box>
-                  <Box p={5}>
-                    <Image
-                      w={"50px"}
-                      h={"50px"}
-                      rounded={"10px"}
-                      src={encounter.photos[0].file}
-                    />
-                    <Text>{encounter.name}</Text>
-                    {encounter.description_1 && (
-                      <Text>{encounter.description_1}</Text>
-                    )}
+              <VStack
+                alignItems={"flex-start"}
+                key={encounter.id}
+                bg="#27282e"
+                gap={5}
+                w={"100%"}
+                m={5}
+                border={"1px solid"}
+                p={5}
+              >
+                {encounter.description_1 && (
+                  <Box mb={10}>
+                    <Box>
+                      <HStack>
+                        <Image
+                          w={"50px"}
+                          h={"50px"}
+                          rounded={"10px"}
+                          src={encounter.photos[0].file}
+                        />
+                        <Text as={"b"} color={"white"}>
+                          {encounter.name}
+                        </Text>
+                      </HStack>
+                    </Box>
+                    <Box ml={14}>
+                      <Text fontSize={"14px"} color={"gray.500"}>
+                        {encounter.description_1}
+                      </Text>
+                    </Box>
                   </Box>
-                  <Box p={5}>
-                    <Image
-                      w={"50px"}
-                      h={"50px"}
-                      rounded={"10px"}
-                      src={encounter.photos[0].file}
-                    />
-                    <Text>{encounter.name}</Text>
-                    {encounter.description_2 && (
-                      <Text>{encounter.description_2}</Text>
-                    )}
+                )}
+                {encounter.description_2 && (
+                  <Box mb={10}>
+                    <Box>
+                      <HStack>
+                        <Image
+                          w={"50px"}
+                          h={"50px"}
+                          rounded={"10px"}
+                          src={encounter.photos[0].file}
+                        />
+                        <Text as={"b"} color={"white"}>
+                          {encounter.name}
+                        </Text>
+                      </HStack>
+                    </Box>
+                    <Box ml={14}>
+                      <Text fontSize={"14px"} color={"gray.500"}>
+                        {encounter.description_2}
+                      </Text>
+                    </Box>
                   </Box>
-                  <Box p={5}>
-                    <Image
-                      w={"50px"}
-                      h={"50px"}
-                      rounded={"10px"}
-                      src={encounter.photos[0].file}
-                    />
-                    <Text>{encounter.name}</Text>
-                    {encounter.description_3 && (
-                      <Text>{encounter.description_3}</Text>
-                    )}
+                )}
+                {encounter.description_3 && (
+                  <Box mb={10}>
+                    <Box>
+                      <HStack>
+                        <Image
+                          w={"50px"}
+                          h={"50px"}
+                          rounded={"10px"}
+                          src={encounter.photos[0].file}
+                        />
+                        <Text as={"b"} color={"white"}>
+                          {encounter.name}
+                        </Text>
+                      </HStack>
+                    </Box>
+                    <Box ml={14}>
+                      <Text fontSize={"14px"} color={"gray.500"}>
+                        {encounter.description_3}
+                      </Text>
+                    </Box>
                   </Box>
-                  <Box p={5}>
-                    <Image
-                      w={"50px"}
-                      h={"50px"}
-                      rounded={"10px"}
-                      src={encounter.photos[0].file}
-                    />
-                    <Text>{encounter.name}</Text>
-                    {encounter.description_4 && (
-                      <Text>{encounter.description_4}</Text>
-                    )}
+                )}
+                {encounter.description_4 && (
+                  <Box mb={10}>
+                    <Box>
+                      <HStack>
+                        <Image
+                          w={"50px"}
+                          h={"50px"}
+                          rounded={"10px"}
+                          src={encounter.photos[0].file}
+                        />
+                        <Text as={"b"} color={"white"}>
+                          {encounter.name}
+                        </Text>
+                      </HStack>
+                    </Box>
+                    <Box ml={14}>
+                      <Text fontSize={"14px"} color={"gray.500"}>
+                        {encounter.description_4}
+                      </Text>
+                    </Box>
                   </Box>
-                </Box>
-              </HStack>
+                )}
+              </VStack>
             ))}
         </Box>
       )}

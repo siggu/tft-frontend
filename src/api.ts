@@ -28,9 +28,12 @@ export const getItems = () =>
   instance.get("comps/").then((response) => response.data);
 
 // 시너지-계열
-export const getSynergyOrigins = () => 
-instance.get("synergies/origin").then((response) => response.data);
+export const getSynergyOrigins = () =>
+  instance.get("synergies/origin").then((response) => response.data);
 
 // 시너지-직업
-export const getSynergyJobs = () => 
-instance.get("synergies/job").then((response) => response.data);
+export const getSynergyJobs = () =>
+  instance.get("synergies/job").then((response) => response.data);
+
+export const getEncounters = () =>
+  instance.get("encounters/").then((response) => response.data);

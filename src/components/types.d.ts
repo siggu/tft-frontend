@@ -1,4 +1,5 @@
 export default interface IPhoto {
+  map(arg0: (description: any) => any): import("react").ReactNode;
   pk: number;
   file: string;
   description: string;
@@ -10,16 +11,15 @@ export default interface ISynergy {
   name: string;
   photos: IPhoto[];
 }
-export default interface ISynergyDetails{
+export default interface ISynergyDetails {
   synergy_champions: ISynergy_champions[];
   id: number;
   name: string;
 }
-export default interface ISynergy_champions{
-  champion_name: string,
-  champion_pk: number
+export default interface ISynergy_champions {
+  champion_name: string;
+  champion_pk: number;
 }
-
 
 export default interface ISkill {
   id: number;
@@ -57,3 +57,11 @@ export default interface IComp {
   champions: IChampionDetail[];
 }
 
+export default interface IEncounter {
+  name: string;
+  description_1: string;
+  description_2: string;
+  description_3: string;
+  description_4: string;
+  photos: IPhoto[];
+}

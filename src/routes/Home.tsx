@@ -26,18 +26,18 @@ export default function Home() {
   // origin과 job의 총 개수 저장
   let originAndJobCounts: { [key: string]: number } = {};
 
-  if (!isLoading && data) {
-    originAndJobCounts = {};
-    data.forEach((comp) => {
-      comp.champions.forEach((champion) => {
-        // origin 개수 계산
-        champion.origin.forEach((origin: { name: string }) => {
-          if (originAndJobCounts[origin.name]) {
-            originAndJobCounts[origin.name]++;
-          } else {
-            originAndJobCounts[origin.name] = 1;
-          }
-        });
+  // if (!isLoading && data) {
+  //   originAndJobCounts = {};
+  //   data.forEach((comp) => {
+  //     comp.champions.forEach((champion) => {
+  //       // origin 개수 계산
+  //       champion.origin.forEach((origin: { name: string }) => {
+  //         if (originAndJobCounts[origin.name]) {
+  //           originAndJobCounts[origin.name]++;
+  //         } else {
+  //           originAndJobCounts[origin.name] = 1;
+  //         }
+  //       });
 
 
   //

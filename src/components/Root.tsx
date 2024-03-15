@@ -1,13 +1,15 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import Header from "./Header";
+import { Box } from "@chakra-ui/react";
 
 export default function Root() {
   return (
-    <h1>
-      i'm root
+    <Box bg={"#161618"}>
+      <Header />
       <Outlet />
       <ReactQueryDevtools />
-    </h1>
+    </Box>
   );
 }

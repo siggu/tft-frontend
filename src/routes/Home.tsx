@@ -12,6 +12,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getComps, getSynergyJobs, getSynergyOrigins } from "../api";
 import IComp from "../components/types";
 import { FaCoins } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function Home() {
   // synergy origins api - get
@@ -107,12 +108,9 @@ export default function Home() {
 
   return (
     <VStack gap={20}>
-      <Container maxW={"max-content"}>
-        <Text>검색창</Text>
-      </Container>
       <Container maxW={"container.xl"}>
         <Box mb={5}>
-          <Text as={"b"} color={"red"} fontSize={"20px"}>
+          <Text as={"b"} color={"#dca555"} fontSize={"20px"}>
             추천 메타
           </Text>
         </Box>
@@ -122,7 +120,7 @@ export default function Home() {
           compData?.map((comp, comp_index) => (
             <HStack
               position={"relative"}
-              bg={"gray.700"}
+              bg={"#27282e"}
               p={5}
               m={2}
               key={comp.pk}
@@ -384,9 +382,15 @@ export default function Home() {
                 p={3}
                 border={"1px solid white"}
               >
-                <Text color={"white"} fontSize={"13px"}>
-                  공략 더 보기
-                </Text>
+                <Link to={"/comps/1"}>
+                  <Text
+                    _hover={{ textDecoration: "underline" }}
+                    color={"white"}
+                    fontSize={"13px"}
+                  >
+                    공략 더 보기
+                  </Text>
+                </Link>
               </Box>
             </HStack>
           ))

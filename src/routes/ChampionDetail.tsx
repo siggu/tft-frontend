@@ -33,7 +33,7 @@ export default function ChampionDetail() {
         mr={'0px'}
         minW={mediaSize ? '300px' : '700px'}
         position={mediaSize ? 'relative' : 'static'}
-        top={mediaSize ? '-420px' : '0px'}
+        top={mediaSize ? '-320px' : '0px'}
       >
         <HStack gap={'5px'} flexWrap="wrap" p={mediaSize ? '0px' : '20px'}>
           {allChampionsData?.map((allChampionsData_ele) => (

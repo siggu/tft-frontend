@@ -110,13 +110,14 @@ export default function Champion({pk, name, cost, photos, origin, job, attack_ra
               pr={1}
               roundedTopRight={'10px'} // 라운드 처리
             >
-              <Text textShadow="1px 0px 2px black" fontSize={'13px'} color={'white'}>
+              <Text as={'b'} textShadow="1px 0px 2px black" fontSize={'13px'} color={'white'}>
                 ${cost}
               </Text>
             </Box>
             <HStack justifyContent={'center'}>
               <Text
-                textShadow="1px 0px 2px black"
+                as={'b'}
+                textShadow="1px 0px 4px black"
                 position={'relative'}
                 bottom={'20px'}
                 fontSize={'13px'}

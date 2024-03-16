@@ -5,11 +5,29 @@ export default interface IPhoto {
   description: string;
 }
 
+export default interface ISynergyTier {
+  id: number;
+  name: string;
+}
+
+export default interface ISynergyStack {
+  id: number;
+  stack: string;
+}
+
 export default interface ISynergy {
   description: string;
   id: number;
   name: string;
   photos: IPhoto[];
+  effect_1: string | null;
+  effect_2: string | null;
+  effect_3: string | null;
+  effect_4: string | null;
+  effect_5: string | null;
+  effect_6: string | null;
+  tier: ISynergyTier;
+  stack: ISynergyStack;
 }
 export default interface ISynergyDetails {
   synergy_champions: ISynergy_champions[];
@@ -86,7 +104,6 @@ interface IPortalType {
   id: number;
   photos: IPhoto[];
   portal_type: string;
-  // 추가 속성
   pk: number;
   file: string;
 }

@@ -89,3 +89,9 @@ export default interface IPortals {
   name: string;
   description: string;
 }
+export default interface IItemRecipe {
+  id: number;
+  name: string;
+  element_item1: IItems;
+  element_item2: IItems;
+}

@@ -1,6 +1,5 @@
 import {Box, Text, VStack, Image, HStack, Tooltip} from '@chakra-ui/react';
 import {Link} from 'react-router-dom';
-import IChampionDetail from './types.d';
 import ISynergy from './types.d';
 import ISkill from './types.d';
 import {FaCoins} from 'react-icons/fa';

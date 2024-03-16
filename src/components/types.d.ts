@@ -1,5 +1,5 @@
 export default interface IPhoto {
-  map(arg0: (description: any) => any): import("react").ReactNode;
+  map(arg0: (description: any) => any): import('react').ReactNode;
   pk: number;
   file: string;
   description: string;
@@ -82,13 +82,22 @@ export default interface IAugments {
   description: string;
 }
 
-export default interface IPortals {
+interface IPortalType {
   id: number;
   photos: IPhoto[];
   portal_type: string;
+  // 추가 속성
+  pk: number;
+  file: string;
+}
+
+export default interface IPortals {
+  id: number;
+  portal_type: IPortalType;
   name: string;
   description: string;
 }
+
 export default interface IItemRecipe {
   id: number;
   name: string;

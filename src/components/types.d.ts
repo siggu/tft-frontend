@@ -1,4 +1,5 @@
 export default interface IPhoto {
+  slice(): unknown;
   map(arg0: (description: any) => any): import('react').ReactNode;
   pk: number;
   file: string;
@@ -10,7 +11,7 @@ export default interface ISynergyTier {
   name: string;
 }
 
-export default interface ISynergyStack {
+export interface ISynergyStack {
   id: number;
   stack: string;
 }
@@ -100,7 +101,7 @@ export default interface IAugments {
   description: string;
 }
 
-interface IPortalType {
+export interface IPortalType {
   id: number;
   photos: IPhoto[];
   portal_type: string;

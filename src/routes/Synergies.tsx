@@ -24,6 +24,7 @@ export default function Synergies() {
     queryKey: ['champions'],
     queryFn: getChampions,
   });
+  championsData?.sort((a, b) => a.cost - b.cost);
 
   if (isOriginLoading || isJobLoading || isChampionsLoading) return <div>Loading...</div>;
   if (!originData || !jobData || !championsData) return <div>Data not available</div>;
@@ -35,7 +36,7 @@ export default function Synergies() {
         <Text as={'b'} fontSize={'20px'} color={'#dca555'}>
           계열 시너지
         </Text>
-        <Grid gap={5} templateColumns={'1fr 1fr'}>
+        <Grid gap={5} templateColumns={{sm: '1fr', lg: '1fr 1fr'}}>
           {originData.map((origin, index) => (
             <>
               <Box border={'1px solid gray'}>
@@ -79,17 +80,14 @@ export default function Synergies() {
                       {splitedContext}
                     </Text>
                   ))}
-                  {/* <Text>{origin?.description}</Text> */}
-                  {/* {StackText({stackText: origin?.tier.name || ''}).map((stack, index) => (
-                    <Text fontSize={'13px'} key={index} color={'#555864'}>
-                      {stack.trim()}
-                    </Text>
-                  ))} */}
                   {StackText({stackText: origin?.stack.stack || ''}).map((stack, index) => (
                     <Text fontWeight={'500'} fontSize={'13px'} key={index} color={'#555864'}>
-                      <Text fontSize={'13px'} color={'#555864'}>
-                        ({stack.trim()}) {(origin as any)[`effect_${index + 1}`]}
-                      </Text>
+                      <HStack gap={1}>
+                        <Box>({stack.trim()})</Box>
+                        <Text fontSize={'13px'} color={'#555864'}>
+                          {(origin as any)[`effect_${index + 1}`]}
+                        </Text>
+                      </HStack>
                     </Text>
                   ))}
                 </Box>

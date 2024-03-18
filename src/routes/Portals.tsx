@@ -107,6 +107,32 @@ export default function Portals() {
           </Box>
         ))}
       </Box>
+      {/* 코인 차원문 */}
+      <Box mx={20} border={'1px solid gray'} mt={5}>
+        <Box bg={'#27282e'} p={3}>
+          <HStack>
+            <Image src={coinPortals[0].portal_type.photos[0]?.file} />
+            <Text as={'b'} color={'white'}>
+              코인 차원문
+            </Text>
+          </HStack>
+        </Box>
+        {coinPortals.map((portal, index) => (
+          <Box p={3} key={index}>
+            <HStack>
+              <Image w={'40px'} src={portal.portal_type.photos[0]?.file} />
+              <VStack p={3} alignItems={'flex-start'}>
+                <Text fontSize={'14px'} as={'b'} color={'white'}>
+                  {portal.name}
+                </Text>
+                <Text fontSize={'13px'} color={'white'}>
+                  {portal.description}
+                </Text>
+              </VStack>
+            </HStack>
+          </Box>
+        ))}
+      </Box>
       {/* 증강 차원문 */}
       <Box mx={20} border={'1px solid gray'} mt={5}>
         <Box bg={'#27282e'} p={3}>

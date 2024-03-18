@@ -11,60 +11,101 @@ export default function Items() {
     queryKey: ['item'],
     queryFn: getItems,
   });
-  // 아이템 레시피 가져오기
-  const {data: itemRecipiesDate} = useQuery<IItems>({
-    queryKey: ['itemRecipies'],
-    queryFn: getItemRecipies,
+  const basicItemArr: IItems[] = [];
+  const normalItemArr: IItems[] = [];
+  const emblemItemArr: IItems[] = [];
+  const supportItemArr: IItems[] = [];
+  const artifactItemArr: IItems[] = [];
+  const radiantItemArr: IItems[] = [];
+  const etcItemArr: IItems[] = [];
+
+  itemsDate?.map((iele) => {
+    iele.tags === 'basic'
+      ? basicItemArr.push(iele)
+      : iele.tags === 'normal'
+      ? normalItemArr.push(iele)
+      : iele.tags === 'emblem'
+      ? emblemItemArr.push(iele)
+      : iele.tags === 'support'
+      ? supportItemArr.push(iele)
+      : iele.tags === 'artifact'
+      ? artifactItemArr.push(iele)
+      : iele.tags === 'radiant'
+      ? radiantItemArr.push(iele)
+      : etcItemArr.push(iele);
   });
 
+  normalItemArr.forEach((normalItemArrEle) => {
+    basicItemArr.forEach((basicItemArrEle) => {
+      if (basicItemArrEle.key === normalItemArrEle.composition1) {
+        normalItemArrEle.composition1 = basicItemArrEle.imageUrl;
+      }
+      if (basicItemArrEle.key === normalItemArrEle.composition2) {
+        normalItemArrEle.composition2 = basicItemArrEle.imageUrl;
+      }
+    });
+  });
+
+  emblemItemArr.forEach((emblemItemArrEle) => {
+    basicItemArr.forEach((basicItemArrEle) => {
+      if (basicItemArrEle.key === emblemItemArrEle.composition1) {
+        emblemItemArrEle.composition1 = basicItemArrEle.imageUrl;
+      }
+      if (basicItemArrEle.key === emblemItemArrEle.composition2) {
+        emblemItemArrEle.composition2 = basicItemArrEle.imageUrl;
+      }
+    });
+  });
+
+  const itemsArrays: IItems[][] = [
+    basicItemArr,
+    normalItemArr,
+    emblemItemArr,
+    supportItemArr,
+    artifactItemArr,
+    radiantItemArr,
+    etcItemArr,
+  ];
+
   return (
-    <VStack maxW="1120px" mt="20px" p="20px" minW="700px">
-      {itemsDate?.map((itemsDate_ele) => {
-        if (itemsDate_ele.generableItem) {
-          return itemRecipiesDate?.map((itemRecipiesDate_ele) => {
-            if (itemRecipiesDate_ele.result_item.id === itemsDate_ele.id) {
-              let element_item1_photo = '';
-              let element_item2_photo = '';
-              itemsDate?.map((itemsDate_ele_inner) => {
-                if (itemsDate_ele_inner.id === itemRecipiesDate_ele.element_item1.id) {
-                  element_item1_photo = itemsDate_ele_inner.photos[0].file;
-                }
-                if (itemsDate_ele_inner.id === itemRecipiesDate_ele.element_item2.id) {
-                  element_item2_photo = itemsDate_ele_inner.photos[0].file;
-                }
-              });
-              return (
-                <VStack>
-                  <Item
-                    pk={itemsDate_ele.id}
-                    photo={itemsDate_ele.photos[0].file}
-                    name={itemsDate_ele.name}
-                    description={itemsDate_ele.description}
-                    effect={itemsDate_ele.effect}
-                    generableItem={itemsDate_ele.generableItem}
-                    element_item1={element_item1_photo}
-                    element_item2={element_item2_photo}
-                  />
-                </VStack>
-              );
-            }
-          });
-        }
-        return (
-          <VStack>
-            <Item
-              pk={itemsDate_ele.id}
-              photo={itemsDate_ele.photos[0].file}
-              name={itemsDate_ele.name}
-              description={itemsDate_ele.description}
-              effect={itemsDate_ele.effect}
-              generableItem={itemsDate_ele.generableItem}
-              element_item1={itemsDate_ele}
-              element_item2={itemsDate_ele}
-            />
-          </VStack>
-        );
-      })}
+    <VStack maxW="1120px" margin={'auto'} p="20px" minW="700px" color={'white'} alignItems={'flex-start'}>
+      {itemsArrays.map((itemsArraysEle) => (
+        <VStack alignItems={'flex-start'}>
+          <Text as={'b'} fontSize={'xl'}>
+            {itemsArraysEle[0]?.tags === 'basic'
+              ? '기본 '
+              : itemsArraysEle[0]?.tags === 'normal'
+              ? '조합 '
+              : itemsArraysEle[0]?.tags === 'emblem'
+              ? '상징 '
+              : itemsArraysEle[0]?.tags === 'support'
+              ? '지원 '
+              : itemsArraysEle[0]?.tags === 'artifact'
+              ? '오른 '
+              : itemsArraysEle[0]?.tags === 'radiant'
+              ? '찬란한 '
+              : '기타 '}
+            아이템
+          </Text>
+          <HStack wrap={'wrap'} gap={'5'} pb={10}>
+            {itemsArraysEle.map((eachItemsArrays) => (
+              <Item
+                pk={eachItemsArrays.id}
+                name={eachItemsArrays.name}
+                key={eachItemsArrays.key}
+                inGameKey={eachItemsArrays.inGameKey}
+                description={eachItemsArrays.description}
+                effect={eachItemsArrays.effect}
+                generableItem={eachItemsArrays.generableItem}
+                composition1={eachItemsArrays.composition1}
+                composition2={eachItemsArrays.composition2}
+                tags={eachItemsArrays.tags}
+                imageUrl={eachItemsArrays.imageUrl}
+              />
+            ))}
+          </HStack>
+        </VStack>
+      ))}
     </VStack>
   );
 }

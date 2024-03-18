@@ -66,12 +66,17 @@ export default interface IEncounter {
   photos: IPhoto[];
 }
 export default interface IItems {
-  id: number;
-  photos: IPhoto[];
+  pk: number;
+  key: string;
   name: string;
+  inGameKey: string;
   description: string;
   effect: string;
   generableItem: boolean;
+  composition1: string;
+  composition2: string;
+  tags: string;
+  imageUrl: string;
 }
 
 export default interface IAugments {
@@ -96,11 +101,4 @@ export default interface IPortals {
   portal_type: IPortalType;
   name: string;
   description: string;
-}
-
-export default interface IItemRecipe {
-  id: number;
-  name: string;
-  element_item1: IItems;
-  element_item2: IItems;
 }

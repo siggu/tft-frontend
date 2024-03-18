@@ -1,44 +1,60 @@
 import {Box, Text, VStack, Image, HStack, Tooltip} from '@chakra-ui/react';
-
-interface IMinitItemPortrait {
+interface IItems {
   pk: number;
-  photo: string;
+  key: string;
   name: string;
+  inGameKey: string;
   description: string;
   effect: string;
-  generableItem: Boolean;
-  element_item1: string;
-  element_item2: string;
+  generableItem: boolean;
+  composition1: string;
+  composition2: string;
+  tags: string;
+  imageUrl: string;
 }
+
 export default function Item({
   pk,
-  photo,
+  key,
   name,
+  inGameKey,
   description,
   effect,
   generableItem,
-  element_item1,
-  element_item2,
-}: IMinitItemPortrait) {
+  composition1,
+  composition2,
+  tags,
+  imageUrl,
+}: IItems) {
   return (
-    <VStack>
+    <VStack w={'64px'} h={'64px'}>
       <Tooltip
+        bgColor={'black'}
         label={
-          <VStack alignItems={'flex-start'} as={'b'} gap={3}>
-            <Text>{name}</Text>
-            <Text>{description}</Text>
-            <Text color={'gray'}>{effect}</Text>
-            {generableItem ? (
-              <HStack>
-                <Image src={element_item1}></Image>
-                <Image src={element_item2}></Image>
+          <VStack p={1.5} alignItems={'flex-start'} as={'b'} gap={3}>
+            <Text color={'#e09400'} fontSize={'lg'}>
+              {name}
+            </Text>
+            {description.split('<br>').map((splitedContext) => (
+              <Text color={'white'}>{splitedContext}</Text>
+            ))}
+            {effect.split('<br>').map((splitedContext) => (
+              <Text color={'gray'}>{splitedContext}</Text>
+            ))}
+            {generableItem && composition1 && composition2 ? (
+              <HStack gap={'1'}>
+                <Image border={'2px solid gray'} borderRadius={'22'} w="44px" h="44px" src={composition1} />
+                <Text as="b" fontSize={'xl'}>
+                  +
+                </Text>
+                <Image border={'2px solid gray'} borderRadius={'22'} w="44px" h="44px" src={composition2} />
               </HStack>
             ) : null}
           </VStack>
         }
       >
         <Box>
-          <Image src={photo}></Image>
+          <Image src={imageUrl}></Image>
         </Box>
       </Tooltip>
     </VStack>

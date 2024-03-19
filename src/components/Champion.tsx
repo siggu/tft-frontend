@@ -86,7 +86,7 @@ export default function Champion({pk, name, cost, photos, origin, job, attack_ra
             borderRadius={'2xl'}
             position={'relative'}
           >
-            <Image w={'full'} h={'full'} rounded={'12px'} src={photos} />
+            <Image w={'full'} h={'full'} rounded={'13px'} src={photos} />
 
             <Box
               position={'absolute'} // 부모 요소를 기준으로 절대적으로 위치
@@ -109,7 +109,14 @@ export default function Champion({pk, name, cost, photos, origin, job, attack_ra
               pr={1}
               roundedTopRight={'10px'} // 라운드 처리
             >
-              <Text as={'b'} textShadow="1px 0px 2px black" fontSize={'13px'} color={'white'}>
+              <Text
+                display={'flex'}
+                textAlign={'end'}
+                as={'b'}
+                textShadow="1px 0px 2px black"
+                fontSize={'13px'}
+                color={'white'}
+              >
                 ${cost}
               </Text>
             </Box>

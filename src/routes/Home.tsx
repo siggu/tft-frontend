@@ -2,9 +2,22 @@ import {Box, Container, HStack, Text, VStack, Image, Tooltip, Button} from '@cha
 import {useQuery} from '@tanstack/react-query';
 import {getComps, getSynergyJobs, getSynergyOrigins} from '../api';
 import IComp from '../components/types';
+import ISynergy from '../components/types';
 import {FaCoins} from 'react-icons/fa';
 import {Link} from 'react-router-dom';
 import Champion from '../components/Champion';
+
+const b = 'bronze';
+const s = 'silver';
+const g = 'gold';
+const p = 'prism';
+
+const tierColors: Record<string, string> = {
+  [b]: '#dca555', // bronze
+  [s]: 'gray.500', // silver
+  [g]: '#ffd700', // gold
+  [p]: '#9932CC', // prism
+};
 
 export default function Home() {
   // synergy origins api - get
@@ -13,12 +26,12 @@ export default function Home() {
     queryFn: getComps,
   });
   // synergy origins api - get
-  const {data: originData, isLoading: originIsLoading} = useQuery<IComp[]>({
+  const {data: originData, isLoading: originIsLoading} = useQuery<ISynergy[]>({
     queryKey: ['origins'],
     queryFn: getSynergyOrigins,
   });
   // synergy jobs api - get
-  const {data: jobData, isLoading: jobIsLoading} = useQuery<IComp[]>({
+  const {data: jobData, isLoading: jobIsLoading} = useQuery<ISynergy[]>({
     queryKey: ['jobs'],
     queryFn: getSynergyJobs,
   });
@@ -27,8 +40,15 @@ export default function Home() {
     synergyName: string;
     frequency: number;
     description: string;
-    effect: string;
+    effect_1: string;
+    effect_2: string;
+    effect_3: string;
+    effect_4: string;
+    effect_5: string;
+    effect_6: string;
     photo: string;
+    stack: string;
+    tier: string;
   }[][] = [];
 
   compData?.forEach((comp) => {
@@ -36,8 +56,15 @@ export default function Home() {
       synergyName: string;
       frequency: number;
       description: string;
-      effect: string;
+      effect_1: string;
+      effect_2: string;
+      effect_3: string;
+      effect_4: string;
+      effect_5: string;
+      effect_6: string;
       photo: string;
+      stack: string;
+      tier: string;
     }[] = [];
     const counts: {[key: string]: number} = {};
 
@@ -65,8 +92,15 @@ export default function Home() {
         synergyName: name,
         frequency: count,
         description: '',
-        effect: '',
+        effect_1: '',
+        effect_2: '',
+        effect_3: '',
+        effect_4: '',
+        effect_5: '',
+        effect_6: '',
         photo: '',
+        stack: '',
+        tier: '',
       };
 
       originData?.forEach((origin_ele) => {
@@ -75,8 +109,15 @@ export default function Home() {
             synergyName: name,
             frequency: count,
             description: origin_ele.description,
-            effect: origin_ele.effect,
+            effect_1: origin_ele.effect_1,
+            effect_2: origin_ele.effect_2,
+            effect_3: origin_ele.effect_3,
+            effect_4: origin_ele.effect_4,
+            effect_5: origin_ele.effect_5,
+            effect_6: origin_ele.effect_6,
             photo: origin_ele.photos[1]?.file,
+            stack: origin_ele.stack.stack,
+            tier: origin_ele.tier.name,
           };
         }
       });
@@ -86,8 +127,15 @@ export default function Home() {
             synergyName: name,
             frequency: count,
             description: job_ele.description,
-            effect: job_ele.effect,
+            effect_1: job_ele.effect_1,
+            effect_2: job_ele.effect_2,
+            effect_3: job_ele.effect_3,
+            effect_4: job_ele.effect_4,
+            effect_5: job_ele.effect_5,
+            effect_6: job_ele.effect_6,
             photo: job_ele.photos[1]?.file,
+            stack: job_ele.stack.stack,
+            tier: job_ele.tier.name,
           };
         }
       });
@@ -134,8 +182,39 @@ export default function Home() {
                             <VStack>
                               <Text>{compSynergies_ele.description}</Text>
                             </VStack>
-                            <VStack>
-                              <Text>{compSynergies_ele.effect}</Text>
+                            {/* 시너지 effect */}
+                            <VStack alignItems={'flex-start'}>
+                              {compSynergies_ele.effect_1 ? (
+                                <Text color={tierColors[b]}>
+                                  ({compSynergies_ele.stack[0]}) {compSynergies_ele.effect_1}
+                                </Text>
+                              ) : null}
+                              {compSynergies_ele.effect_2 ? (
+                                <Text color={tierColors[s]}>
+                                  ({compSynergies_ele.stack[2]}) {compSynergies_ele.effect_2}
+                                </Text>
+                              ) : null}
+                              {compSynergies_ele.effect_3 ? (
+                                <Text color={tierColors[g]}>
+                                  ({compSynergies_ele.stack[4]}) {compSynergies_ele.effect_3}
+                                </Text>
+                              ) : null}
+                              {compSynergies_ele.effect_4 ? (
+                                <Text color={tierColors[p]}>
+                                  ({compSynergies_ele.stack[6]}
+                                  {compSynergies_ele.stack[7]}) {compSynergies_ele.effect_4}
+                                </Text>
+                              ) : null}
+                              {compSynergies_ele.effect_5 ? (
+                                <Text color={tierColors[compSynergies_ele.tier[8]]}>
+                                  ({compSynergies_ele.stack[8]}) {compSynergies_ele.effect_5}
+                                </Text>
+                              ) : null}
+                              {compSynergies_ele.effect_6 ? (
+                                <Text color={tierColors[compSynergies_ele.tier[10]]}>
+                                  ({compSynergies_ele.stack[10]}) {compSynergies_ele.effect_6}
+                                </Text>
+                              ) : null}
                             </VStack>
                           </VStack>
                         }
@@ -166,6 +245,7 @@ export default function Home() {
                             pr={1}
                             pl={1}
                             pb={6}
+                            mr={-3}
                             roundedRight={'5px'}
                             position={'relative'}
                             bgGradient={
@@ -178,7 +258,7 @@ export default function Home() {
                                 : 'linear(#646464,#646464)'
                             }
                           >
-                            <Text fontSize={'13px'} as={'b'}>
+                            <Text display={'flex'} textAlign={'end'} fontSize={'13px'} as={'b'}>
                               {compSynergies_ele.frequency}
                             </Text>
                           </Box>

@@ -21,12 +21,12 @@ export default interface ISynergy {
   id: number;
   name: string;
   photos: IPhoto[];
-  effect_1: string | null;
-  effect_2: string | null;
-  effect_3: string | null;
-  effect_4: string | null;
-  effect_5: string | null;
-  effect_6: string | null;
+  effect_1: string;
+  effect_2: string;
+  effect_3: string;
+  effect_4: string;
+  effect_5: string;
+  effect_6: string;
   tier: ISynergyTier;
   stack: ISynergyStack;
 }

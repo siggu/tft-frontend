@@ -1,11 +1,13 @@
 import {Box, Container, HStack, Text, VStack, Image, Tooltip, Button} from '@chakra-ui/react';
 import {useQuery} from '@tanstack/react-query';
-import {getComps, getSynergyJobs, getSynergyOrigins} from '../api';
+import {getComps, getSynergyJobs, getSynergyOrigins, getItems} from '../api';
 import IComp from '../components/types';
 import ISynergy from '../components/types';
+import IItems from '../components/types';
 import {FaCoins} from 'react-icons/fa';
 import {Link} from 'react-router-dom';
 import Champion from '../components/Champion';
+import Item from '../components/Item';
 
 const b = 'bronze';
 const s = 'silver';
@@ -35,6 +37,13 @@ export default function Home() {
     queryKey: ['jobs'],
     queryFn: getSynergyJobs,
   });
+
+  const {data: itemData, isLoading: isItemLoading} = useQuery<IItems[]>({
+    queryKey: ['items'],
+    queryFn: getItems,
+  });
+
+  console.log(itemData);
 
   const synergiesArr: {
     synergyName: string;
@@ -158,7 +167,7 @@ export default function Home() {
           <Text>Loading...</Text>
         ) : (
           compData?.map((comp, comp_index) => (
-            <HStack position={'relative'} bg={'#27282e'} p={5} m={2} key={comp.pk} gap={10}>
+            <HStack position={'relative'} bg={'#27282e'} p={5} pb={9} m={2} key={comp.pk} gap={10}>
               {/* # 1. 추천메타 명 */}
               <Box w={'150px'}>
                 <Text color={'white'} fontSize={'15px'}>
@@ -274,16 +283,60 @@ export default function Home() {
                     .slice()
                     .sort((a, b) => a.cost - b.cost)
                     .map((champion) => (
-                      <Champion
-                        pk={champion.id}
-                        name={champion.name}
-                        cost={champion.cost}
-                        photos={champion.photos[0].file}
-                        origin={champion.origin}
-                        job={champion.job}
-                        attack_range={champion.attack_range}
-                        skill={champion.skill}
-                      />
+                      <VStack key={champion.id}>
+                        <Champion
+                          pk={champion.id}
+                          name={champion.name}
+                          cost={champion.cost}
+                          photos={champion.photos[0].file}
+                          origin={champion.origin}
+                          job={champion.job}
+                          attack_range={champion.attack_range}
+                          skill={champion.skill}
+                        />
+                        <Box bottom={5} position={'absolute'}>
+                          <HStack gap={0}>
+                            {!isItemLoading && itemData ? (
+                              <Box>
+                                <Tooltip
+                                  bg={'black'}
+                                  label={
+                                    <Box>
+                                      <Item
+                                        key={itemData[0].key}
+                                        pk={itemData[0].pk}
+                                        name={itemData[0].name}
+                                        inGameKey={itemData[0].inGameKey}
+                                        description={itemData[0].description}
+                                        effect={itemData[0].effect}
+                                        generableItem={itemData[0].generableItem}
+                                        composition1={itemData[0].composition1}
+                                        composition2={itemData[0].composition2}
+                                        tags={itemData[0].tags}
+                                        imageUrl={itemData[0].imageUrl}
+                                      />
+                                    </Box>
+                                  }
+                                >
+                                  <Image w={'20px'} src={itemData[0].imageUrl} />
+                                </Tooltip>
+                              </Box>
+                            ) : (
+                              <Text>Loading items...</Text>
+                            )}
+                            {!isItemLoading && itemData ? (
+                              <Image w={'20px'} src={itemData[1].imageUrl} />
+                            ) : (
+                              <Text>Loading items...</Text>
+                            )}
+                            {!isItemLoading && itemData ? (
+                              <Image w={'20px'} src={itemData[2].imageUrl} />
+                            ) : (
+                              <Text>Loading items...</Text>
+                            )}
+                          </HStack>
+                        </Box>
+                      </VStack>
                     ))}
                 </HStack>
               </VStack>

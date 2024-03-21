@@ -1,6 +1,24 @@
 import {useQuery} from '@tanstack/react-query';
 import {getChampions, getSynergyJobs, getSynergyOrigins} from '../api';
-import {Container, VStack, Text, Grid, Box, Image, HStack, Tooltip} from '@chakra-ui/react';
+import {
+  Container,
+  VStack,
+  Text,
+  Grid,
+  Box,
+  Image,
+  HStack,
+  Tooltip,
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+  TableContainer,
+} from '@chakra-ui/react';
 import ISynergy from '../components/types';
 import IChampionDetail from './../components/types.d';
 import React from 'react';
@@ -31,6 +49,112 @@ export default function Synergies() {
 
   return (
     <Container maxW={'container.xl'}>
+      <VStack>
+        <TableContainer>
+          <Table border={'1px solid'} borderColor={'gray.500'} color={'white'} variant={'unstyled'} size={'lg'}>
+            <Thead borderInline={'1px solid gray'}>
+              <Tr>
+                <Th></Th>
+                <Th>거대괴수</Th>
+                <Th>결투가</Th>
+                <Th>귀인</Th>
+                <Th>기원자</Th>
+                <Th>난동꾼</Th>
+                <Th>비전 마법사</Th>
+                <Th>사신</Th>
+                <Th>연인</Th>
+                <Th>예술가</Th>
+                <Th>이타심</Th>
+                <Th>재주꾼</Th>
+                <Th>저격수</Th>
+                <Th>정령 주술사</Th>
+                <Th>파수꾼</Th>
+                <Th>현자</Th>
+                <Th>호걸</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {/* 도자기 */}
+              <Tr>
+                <Td>도자기</Td>
+                <Td></Td>
+                <Td></Td>
+              </Tr>
+              {/* 먹그림자 */}
+              <Tr>
+                <Td>먹그림자</Td>
+                <Td></Td>
+                <Td></Td>
+              </Tr>
+              {/* 숲지기 */}
+              <Tr>
+                <Td textAlign={'center'}>
+                  <HStack>
+                    <Image width={'20px'} src={originData[0].photos[0].file} />
+                    <Text fontSize={'13px'}>숲지기</Text>
+                  </HStack>
+                  <Text fontSize={'12px'} color={'gray'}>
+                    2/4/6
+                  </Text>
+                </Td>
+                {/* 거대괴수 */}
+                <Td>
+                  {
+                    <Champion
+                      pk={championsData[0].pk}
+                      name={'오른'}
+                      cost={4}
+                      photos={championsData[6].photos[0].file}
+                      origin={championsData[6].origin}
+                      job={championsData[6].job}
+                      attack_range={1}
+                      skill={championsData[6].skill}
+                    />
+                  }
+                </Td>
+                <Td></Td>
+              </Tr>
+              <Tr>
+                <Td textAlign={'center'}>
+                  <HStack>
+                    <Image width={'20px'} src={originData[3].photos[0].file} />
+                    <Text fontSize={'13px'}>신화</Text>
+                  </HStack>
+                  <Text fontSize={'12px'} color={'gray'}>
+                    3/5/7/10
+                  </Text>
+                </Td>
+                <Td></Td>
+                <Td></Td>
+              </Tr>
+              <Tr>
+                <Td textAlign={'center'}>
+                  <HStack>
+                    <Image width={'20px'} src={originData[3].photos[0].file} />
+                    <Text fontSize={'13px'}>암영</Text>
+                  </HStack>
+                  <Text fontSize={'12px'} color={'gray'}>
+                    2/4/6/8
+                  </Text>
+                </Td>
+                <Td></Td>
+                <Td></Td>
+              </Tr>
+              <Tr>
+                <Td textAlign={'center'}>
+                  <HStack>
+                    <Image width={'20px'} src={originData[3].photos[0].file} />
+                    <Text fontSize={'13px'}>신화</Text>
+                  </HStack>
+                  <Text fontSize={'12px'} color={'gray'}>
+                    3/5/7/10
+                  </Text>
+                </Td>
+              </Tr>
+            </Tbody>
+          </Table>
+        </TableContainer>
+      </VStack>
       {/* 계열 시너지 */}
       <VStack mb={20} alignItems={'flex-start'}>
         <Text as={'b'} fontSize={'20px'} color={'#dca555'}>

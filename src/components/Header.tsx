@@ -1,15 +1,38 @@
-import {HStack, Box, Text, Image, Container, VStack} from '@chakra-ui/react';
-import {Link} from 'react-router-dom';
+import {HStack, Box, Text, Image, Container, VStack, Input, FormControl, Button} from '@chakra-ui/react';
+import {useState} from 'react';
+import {FaSearch} from 'react-icons/fa';
+import {Link, useNavigate} from 'react-router-dom';
 
 export default function Header() {
+  const [searchName, setSearchName] = useState('');
+  const navigate = useNavigate();
+
+  const handleSearch = () => {
+    if (searchName.trim() != '') {
+      navigate(`/profile/${searchName}`);
+    }
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchName(event.target.value);
+  };
+
   return (
     <Box p={10} mb={10}>
-      <VStack>
-        <Box mb={10}>
+      <VStack gap={10}>
+        <Box>
           <Link to={'/'}>
             <Image src="https://cdn.dak.gg/tft/images2/sets/set11/logo-title-ko.png" />
           </Link>
         </Box>
+        <HStack>
+          <FormControl>
+            <Input placeholder="플레이어 검색" color={'white'} value={searchName} onChange={handleChange} />
+          </FormControl>
+          <Button type="button" onClick={handleSearch}>
+            <FaSearch />
+          </Button>
+        </HStack>
         <HStack gap={5}>
           {/* 조우자 */}
           <Box

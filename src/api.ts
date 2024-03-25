@@ -33,3 +33,35 @@ export const getSynergyJobs = () => instance.get('synergies/job').then((response
 export const getEncounters = () => instance.get('encounters/').then((response) => response.data);
 
 export const getPortals = () => instance.get('portals/').then((response) => response.data);
+
+// 마스터 유저
+export const getMasterLeague = () => {
+  const apiKey = 'RGAPI-62cc0f1d-3a2e-4bc5-a1d9-7ba80424958a';
+  const url = `https://kr.api.riotgames.com/tft/league/v1/master?queue=RANKED_TFT&api_key=${apiKey}`;
+
+  return axios.get(url).then((response) => response.data);
+};
+
+// 유저 puuid 추출
+export const getSummonerProfile = (profileName: string | undefined) => {
+  const apiKey = 'RGAPI-62cc0f1d-3a2e-4bc5-a1d9-7ba80424958a';
+  const url = `https://kr.api.riotgames.com/tft/summoner/v1/summoners/by-name/${profileName}?api_key=${apiKey}`;
+
+  return axios.get(url).then((response) => response.data);
+};
+
+// 유저 20 게임 정보 추출
+export const getMatchesByPuuid = (puuid: string) => {
+  const apiKey = 'RGAPI-62cc0f1d-3a2e-4bc5-a1d9-7ba80424958a';
+  const url = `https://asia.api.riotgames.com/tft/match/v1/matches/by-puuid/${puuid}/ids?start=0&count=3&api_key=${apiKey}`;
+
+  return axios.get(url).then((response) => response.data);
+};
+
+// 유저 특정 게임 정보 추출
+export const getMatchesByMatchid = (matchid: string) => {
+  const apiKey = 'RGAPI-62cc0f1d-3a2e-4bc5-a1d9-7ba80424958a';
+  const url = `https://asia.api.riotgames.com/tft/match/v1/matches/${matchid}?api_key=${apiKey}`;
+
+  return axios.get(url).then((response) => response.data);
+};

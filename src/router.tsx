@@ -8,6 +8,7 @@ import Items from './routes/Items';
 import Augments from './routes/Augments';
 import Portals from './routes/Portals';
 import Synergies from './routes/Synergies';
+import Profile from './components/Profile';
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
       {
         path: 'synergies',
         element: <Synergies />,
+      },
+      {
+        path: 'profile/:profileName',
+        element: <Profile />,
       },
     ],
   },

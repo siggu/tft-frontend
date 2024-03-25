@@ -2,14 +2,22 @@ import {HStack, Box, Text, Image, Container, VStack, Input, FormControl, Button}
 import {useState} from 'react';
 import {FaSearch} from 'react-icons/fa';
 import {Link, useNavigate} from 'react-router-dom';
+import {getSummonerProfile} from '../api';
 
 export default function Header() {
   const [searchName, setSearchName] = useState('');
   const navigate = useNavigate();
 
-  const handleSearch = () => {
-    if (searchName.trim() != '') {
-      navigate(`/profile/${searchName}`);
+  const handleSearch = async () => {
+    if (searchName.trim() !== '') {
+      try {
+        const profileData = await getSummonerProfile(searchName); // 소환사 닉네임을 API에 전달하여 프로필 데이터 가져오기
+        console.log(profileData);
+        navigate(`/profile/${searchName}`); // 프로필 페이지로 이동
+      } catch (error) {
+        console.error('Error fetching summoner profile:', error);
+        // 오류 처리
+      }
     }
   };
 
@@ -27,7 +35,7 @@ export default function Header() {
         </Box>
         <HStack>
           <FormControl>
-            <Input placeholder="플레이어 검색" color={'white'} value={searchName} onChange={handleChange} />
+            <Input placeholder="플레이어 전적 검색" color={'white'} value={searchName} onChange={handleChange} />
           </FormControl>
           <Button type="button" onClick={handleSearch}>
             <FaSearch />

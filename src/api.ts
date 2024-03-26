@@ -1,5 +1,6 @@
 import {QueryFunctionContext} from '@tanstack/react-query';
 import axios from 'axios';
+import RIOT_API_KEY from './constants';
 
 const instance = axios.create({
   baseURL: 'http://127.0.0.1:8000/api/v1/',
@@ -36,7 +37,7 @@ export const getPortals = () => instance.get('portals/').then((response) => resp
 
 // 마스터 유저
 export const getMasterLeague = () => {
-  const apiKey = '';
+  const apiKey = RIOT_API_KEY;
   const url = `https://kr.api.riotgames.com/tft/league/v1/master?queue=RANKED_TFT&api_key=${apiKey}`;
 
   return axios.get(url).then((response) => response.data);
@@ -44,7 +45,7 @@ export const getMasterLeague = () => {
 
 // 유저 puuid 추출
 export const getSummonerProfile = (profileName: string | undefined) => {
-  const apiKey = '';
+  const apiKey = RIOT_API_KEY;
   const url = `https://kr.api.riotgames.com/tft/summoner/v1/summoners/by-name/${profileName}?api_key=${apiKey}`;
 
   return axios.get(url).then((response) => response.data);
@@ -52,7 +53,7 @@ export const getSummonerProfile = (profileName: string | undefined) => {
 
 // 유저 20 게임 정보 추출
 export const getMatchesByPuuid = (puuid: string) => {
-  const apiKey = '';
+  const apiKey = RIOT_API_KEY;
   const url = `https://asia.api.riotgames.com/tft/match/v1/matches/by-puuid/${puuid}/ids?start=0&count=3&api_key=${apiKey}`;
 
   return axios.get(url).then((response) => response.data);
@@ -60,7 +61,7 @@ export const getMatchesByPuuid = (puuid: string) => {
 
 // 유저 특정 게임 정보 추출
 export const getMatchesByMatchid = (matchid: string) => {
-  const apiKey = '';
+  const apiKey = RIOT_API_KEY;
   const url = `https://asia.api.riotgames.com/tft/match/v1/matches/${matchid}?api_key=${apiKey}`;
 
   return axios.get(url).then((response) => response.data);

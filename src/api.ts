@@ -51,10 +51,18 @@ export const getSummonerProfile = (profileName: string | undefined) => {
   return axios.get(url).then((response) => response.data);
 };
 
+// 유저 정보 추출
+export const getSummonerInfo = (summonerid: string) => {
+  const apiKey = RIOT_API_KEY;
+  const url = `https://kr.api.riotgames.com/tft/league/v1/entries/by-summoner/${summonerid}?api_key=${apiKey}`;
+
+  return axios.get(url).then((response) => response.data);
+};
+
 // 유저 20 게임 정보 추출
 export const getMatchesByPuuid = (puuid: string) => {
   const apiKey = RIOT_API_KEY;
-  const url = `https://asia.api.riotgames.com/tft/match/v1/matches/by-puuid/${puuid}/ids?start=0&count=3&api_key=${apiKey}`;
+  const url = `https://asia.api.riotgames.com/tft/match/v1/matches/by-puuid/${puuid}/ids?start=0&count=1&api_key=${apiKey}`;
 
   return axios.get(url).then((response) => response.data);
 };

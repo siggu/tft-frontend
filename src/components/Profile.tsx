@@ -1,9 +1,8 @@
-import {Box, Container, Heading, Text, VStack} from '@chakra-ui/react';
+import {Box, Button, Container, Heading, Input, Text, VStack} from '@chakra-ui/react';
 import {useEffect, useState} from 'react';
 import {useQuery} from '@tanstack/react-query';
 import {useParams} from 'react-router-dom';
 import {getItems, getMatchesByMatchid, getMatchesByPuuid, getSummonerInfo, getSummonerProfile} from '../api';
-import IItems from '../components/types';
 
 interface IProfile {
   accountId: string;
@@ -180,9 +179,35 @@ export default function Profile() {
     }
   }, [summonerpuuid, profileName]);
 
+  const [summonerName, setSummonerName] = useState<string>('');
+
+  const handleSummonerNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSummonerName(event.target.value);
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/v1/profiles/fetch-puuid/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({summonerName: summonerName}),
+      });
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error('error fetching data', error);
+    }
+  };
+
   return (
     <VStack>
       <Container maxW={'container.xl'}>
+        <Box>
+          <Input color={'white'} type="text" value={summonerName} onChange={handleSummonerNameChange} />
+          <Button onClick={handleSubmit}>Get puuid</Button>
+        </Box>
         <Box>
           <Text fontSize={'20px'} as={'b'} color={'#dca555'}>
             유저 전적

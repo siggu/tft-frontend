@@ -205,10 +205,6 @@ export default function Profile() {
     <VStack>
       <Container maxW={'container.xl'}>
         <Box>
-          <Input color={'white'} type="text" value={summonerName} onChange={handleSummonerNameChange} />
-          <Button onClick={handleSubmit}>Get puuid</Button>
-        </Box>
-        <Box>
           <Text fontSize={'20px'} as={'b'} color={'#dca555'}>
             유저 전적
           </Text>

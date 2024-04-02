@@ -43,13 +43,13 @@ export const getMasterLeague = () => {
   return axios.get(url).then((response) => response.data);
 };
 
-// 유저 puuid 추출
-export const getSummonerProfile = (profileName: string | undefined) => {
-  const apiKey = RIOT_API_KEY;
-  const url = `https://kr.api.riotgames.com/tft/summoner/v1/summoners/by-name/${profileName}?api_key=${apiKey}`;
+// // 유저 puuid 추출
+// export const getSummonerProfile = (profileName: string | undefined) => {
+//   const apiKey = RIOT_API_KEY;
+//   const url = `https://kr.api.riotgames.com/tft/summoner/v1/summoners/by-name/${profileName}?api_key=${apiKey}`;
 
-  return axios.get(url).then((response) => response.data);
-};
+//   return axios.get(url).then((response) => response.data);
+// };
 
 // 유저 정보 추출
 export const getSummonerInfo = (summonerid: string) => {

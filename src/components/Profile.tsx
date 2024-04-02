@@ -1,8 +1,8 @@
 import {Box, Button, Container, Heading, Input, Text, VStack} from '@chakra-ui/react';
 import {useEffect, useState} from 'react';
 import {useQuery} from '@tanstack/react-query';
-import {useParams} from 'react-router-dom';
-import {getItems, getMatchesByMatchid, getMatchesByPuuid, getSummonerInfo, getSummonerProfile} from '../api';
+import {useLocation, useParams} from 'react-router-dom';
+// import {getItems, getMatchesByMatchid, getMatchesByPuuid, getSummonerInfo, getSummonerProfile} from '../api';
 
 interface IProfile {
   accountId: string;
@@ -150,56 +150,9 @@ interface IProfileId {
 
 export default function Profile() {
   const {profileName} = useParams<{profileName: string | undefined}>();
-  const {data: summonerpuuid, isLoading: isSummonerpuuidLoading} = useQuery<IProfile>({
-    queryKey: ['profile', profileName],
-    queryFn: () => getSummonerProfile(profileName || ''),
-  });
-  const {data: summonerid, isLoading: isSummoneridLoading} = useQuery<IProfileId[]>({
-    queryKey: ['summonerid', summonerpuuid?.id],
-    queryFn: () => getSummonerInfo(summonerpuuid?.id || ''),
-  });
+  const location = useLocation();
+  console.log(location);
   const [matchData, setMatchData] = useState<IMatch[]>([]);
-
-  useEffect(() => {
-    if (summonerpuuid && profileName) {
-      const fetchMatchData = async () => {
-        const puuid = summonerpuuid.puuid;
-        try {
-          const matchIds = await getMatchesByPuuid(puuid);
-          const matches = await Promise.all(
-            matchIds.slice(0, 20).map((matchId: string) => getMatchesByMatchid(matchId))
-          );
-          setMatchData(matches);
-        } catch (error) {
-          console.error('Error fetching match data:', error);
-        }
-      };
-
-      fetchMatchData();
-    }
-  }, [summonerpuuid, profileName]);
-
-  const [summonerName, setSummonerName] = useState<string>('');
-
-  const handleSummonerNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSummonerName(event.target.value);
-  };
-
-  const handleSubmit = async () => {
-    try {
-      const response = await fetch('http://127.0.0.1:8000/api/v1/profiles/fetch-puuid/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({summonerName: summonerName}),
-      });
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      console.error('error fetching data', error);
-    }
-  };
 
   return (
     <VStack>
@@ -211,16 +164,6 @@ export default function Profile() {
         </Box>
         <Box>
           <Box>
-            {summonerid?.map((id) => (
-              <>
-                <Text color={'white'}>
-                  티어: {id.tier} {id.rank}
-                </Text>
-                <Text color={'white'}>점수: {id.leaguePoints}</Text>
-                <Text color={'white'}>승리: {id.wins}</Text>
-                <Text color={'white'}>패배: {id.losses}</Text>
-              </>
-            ))}
             <Text color={'white'}>매치 데이터:</Text>
             {matchData.map((match) => (
               <Box>

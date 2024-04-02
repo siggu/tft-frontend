@@ -1,8 +1,7 @@
 import {HStack, Box, Text, Image, Container, VStack, Input, FormControl, Button} from '@chakra-ui/react';
-import {SetStateAction, useState} from 'react';
+import {useState} from 'react';
 import {FaSearch} from 'react-icons/fa';
 import {Link, useNavigate} from 'react-router-dom';
-import {getSummonerProfile} from '../api';
 
 export default function Header() {
   const [searchName, setSearchName] = useState('');
@@ -18,12 +17,20 @@ export default function Header() {
           },
           body: JSON.stringify({summonerName: searchName}),
         });
-        const data = await response.json();
 
-        // 버튼을 눌렀을 때 프로필 페이지로 이동하면서 소환사 닉네임 정보를 전달합니다.
+        const data = await response.json();
         navigate(`/profile/${searchName}`, {state: {puuid: data.puuid}});
-      } catch (error) {
-        console.error('Error fetching summoner puuid:', error);
+      } catch {
+        const response = await fetch('http://127.0.0.1:8000/api/v1/profiles/fetch-puuid/', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          // body: JSON.stringify({summonerName: searchName}),
+        });
+
+        const data = await response.json();
+        navigate(`/profile/${searchName}`, {state: {puuid: data.puuid}});
       }
     }
   };

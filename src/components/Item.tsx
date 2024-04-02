@@ -27,7 +27,7 @@ export default function Item({
   imageUrl,
 }: IItems) {
   return (
-    <VStack w={'64px'} h={'64px'}>
+    <VStack>
       <Tooltip
         bgColor={'black'}
         label={

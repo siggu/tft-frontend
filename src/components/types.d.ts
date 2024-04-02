@@ -73,7 +73,16 @@ export default interface IChampionDetail extends IChampion {
 
 export default interface IComp {
   pk: number;
+  name: string;
   champions: IChampionDetail[];
+  elements: ICompElement[];
+}
+export default interface ICompElement {
+  championLevelChoice: number;
+  champion: IChampionDetail;
+  recommendedItem1: IItems;
+  recommendedItem2: IItems;
+  recommendedItem3: IItems;
 }
 
 export default interface IEncounter {

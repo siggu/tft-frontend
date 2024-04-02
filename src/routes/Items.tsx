@@ -89,19 +89,21 @@ export default function Items() {
           </Text>
           <HStack wrap={'wrap'} gap={'5'} pb={10}>
             {itemsArraysEle.map((eachItemsArrays) => (
-              <Item
-                pk={eachItemsArrays.id}
-                name={eachItemsArrays.name}
-                key={eachItemsArrays.key}
-                inGameKey={eachItemsArrays.inGameKey}
-                description={eachItemsArrays.description}
-                effect={eachItemsArrays.effect}
-                generableItem={eachItemsArrays.generableItem}
-                composition1={eachItemsArrays.composition1}
-                composition2={eachItemsArrays.composition2}
-                tags={eachItemsArrays.tags}
-                imageUrl={eachItemsArrays.imageUrl}
-              />
+              <Box w="64px" h="64px">
+                <Item
+                  pk={eachItemsArrays.id}
+                  name={eachItemsArrays.name}
+                  key={eachItemsArrays.key}
+                  inGameKey={eachItemsArrays.inGameKey}
+                  description={eachItemsArrays.description}
+                  effect={eachItemsArrays.effect}
+                  generableItem={eachItemsArrays.generableItem}
+                  composition1={eachItemsArrays.composition1}
+                  composition2={eachItemsArrays.composition2}
+                  tags={eachItemsArrays.tags}
+                  imageUrl={eachItemsArrays.imageUrl}
+                />
+              </Box>
             ))}
           </HStack>
         </VStack>

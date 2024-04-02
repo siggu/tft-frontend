@@ -38,12 +38,66 @@ export default function Home() {
     queryFn: getSynergyJobs,
   });
 
-  const {data: itemData, isLoading: isItemLoading} = useQuery<IItems[]>({
-    queryKey: ['items'],
+  // 아이템 가져오기
+  const {data: itemsDate} = useQuery<IItems>({
+    queryKey: ['item'],
     queryFn: getItems,
   });
+  const basicItemArr: IItems[] = [];
+  const normalItemArr: IItems[] = [];
+  const emblemItemArr: IItems[] = [];
+  const supportItemArr: IItems[] = [];
+  const artifactItemArr: IItems[] = [];
+  const radiantItemArr: IItems[] = [];
+  const etcItemArr: IItems[] = [];
 
-  console.log(itemData);
+  itemsDate?.map((iele) => {
+    iele.tags === 'basic'
+      ? basicItemArr.push(iele)
+      : iele.tags === 'normal'
+      ? normalItemArr.push(iele)
+      : iele.tags === 'emblem'
+      ? emblemItemArr.push(iele)
+      : iele.tags === 'support'
+      ? supportItemArr.push(iele)
+      : iele.tags === 'artifact'
+      ? artifactItemArr.push(iele)
+      : iele.tags === 'radiant'
+      ? radiantItemArr.push(iele)
+      : etcItemArr.push(iele);
+  });
+
+  normalItemArr.forEach((normalItemArrEle) => {
+    basicItemArr.forEach((basicItemArrEle) => {
+      if (basicItemArrEle.key === normalItemArrEle.composition1) {
+        normalItemArrEle.composition1 = basicItemArrEle.imageUrl;
+      }
+      if (basicItemArrEle.key === normalItemArrEle.composition2) {
+        normalItemArrEle.composition2 = basicItemArrEle.imageUrl;
+      }
+    });
+  });
+
+  emblemItemArr.forEach((emblemItemArrEle) => {
+    basicItemArr.forEach((basicItemArrEle) => {
+      if (basicItemArrEle.key === emblemItemArrEle.composition1) {
+        emblemItemArrEle.composition1 = basicItemArrEle.imageUrl;
+      }
+      if (basicItemArrEle.key === emblemItemArrEle.composition2) {
+        emblemItemArrEle.composition2 = basicItemArrEle.imageUrl;
+      }
+    });
+  });
+
+  const itemsArrays: IItems[][] = [
+    basicItemArr,
+    normalItemArr,
+    emblemItemArr,
+    supportItemArr,
+    artifactItemArr,
+    radiantItemArr,
+    etcItemArr,
+  ];
 
   const synergiesArr: {
     synergyName: string;
@@ -77,15 +131,57 @@ export default function Home() {
     }[] = [];
     const counts: {[key: string]: number} = {};
 
-    comp.champions.forEach((championByComp) => {
-      championByComp.origin.forEach((originByChampion: {name: string}) => {
+    comp.elements.forEach((elementByComp) => {
+      if (elementByComp.recommendedItem1 && elementByComp.recommendedItem1.tags === 'normal') {
+        basicItemArr.forEach((basicItem) => {
+          if (basicItem.key === elementByComp.recommendedItem1.composition1) {
+            elementByComp.recommendedItem1.composition1 = basicItem.imageUrl;
+          }
+        });
+      }
+      if (elementByComp.recommendedItem2 && elementByComp.recommendedItem2.tags === 'normal') {
+        basicItemArr.forEach((basicItem) => {
+          if (basicItem.key === elementByComp.recommendedItem2.composition1) {
+            elementByComp.recommendedItem2.composition1 = basicItem.imageUrl;
+          }
+        });
+      }
+      if (elementByComp.recommendedItem3 && elementByComp.recommendedItem3.tags === 'normal') {
+        basicItemArr.forEach((basicItem) => {
+          if (basicItem.key === elementByComp.recommendedItem3.composition1) {
+            elementByComp.recommendedItem3.composition1 = basicItem.imageUrl;
+          }
+        });
+      }
+      if (elementByComp.recommendedItem1 && elementByComp.recommendedItem1.tags === 'normal') {
+        basicItemArr.forEach((basicItem) => {
+          if (basicItem.key === elementByComp.recommendedItem1.composition2) {
+            elementByComp.recommendedItem1.composition2 = basicItem.imageUrl;
+          }
+        });
+      }
+      if (elementByComp.recommendedItem2 && elementByComp.recommendedItem2.tags === 'normal') {
+        basicItemArr.forEach((basicItem) => {
+          if (basicItem.key === elementByComp.recommendedItem2.composition2) {
+            elementByComp.recommendedItem2.composition2 = basicItem.imageUrl;
+          }
+        });
+      }
+      if (elementByComp.recommendedItem3 && elementByComp.recommendedItem3.tags === 'normal') {
+        basicItemArr.forEach((basicItem) => {
+          if (basicItem.key === elementByComp.recommendedItem3.composition2) {
+            elementByComp.recommendedItem3.composition2 = basicItem.imageUrl;
+          }
+        });
+      }
+      elementByComp.champion.origin.forEach((originByChampion: {name: string}) => {
         if (counts[originByChampion.name]) {
           counts[originByChampion.name]++;
         } else {
           counts[originByChampion.name] = 1;
         }
       });
-      championByComp.job.forEach((jobByChampion: {name: string}) => {
+      elementByComp.champion.job.forEach((jobByChampion: {name: string}) => {
         if (counts[jobByChampion.name]) {
           counts[jobByChampion.name]++;
         } else {
@@ -152,8 +248,6 @@ export default function Home() {
     });
     synergiesArr.push(compArray);
   });
-
-  console.log('내가 정리한 시너지', synergiesArr);
 
   return (
     <VStack gap={20}>
@@ -279,65 +373,69 @@ export default function Home() {
 
                 {/* 챔피언 이미지 표시 */}
                 <HStack>
-                  {comp.champions
-                    .slice()
-                    .sort((a, b) => a.cost - b.cost)
-                    .map((champion) => (
-                      <VStack key={champion.id}>
-                        <Champion
-                          pk={champion.id}
-                          name={champion.name}
-                          cost={champion.cost}
-                          photos={champion.photos[0].file}
-                          origin={champion.origin}
-                          job={champion.job}
-                          attack_range={champion.attack_range}
-                          skill={champion.skill}
-                        />
-                        <Box bottom={5} position={'absolute'}>
-                          <HStack gap={0}>
-                            {!isItemLoading && itemData ? (
-                              <Box>
-                                <Tooltip
-                                  bg={'black'}
-                                  label={
-                                    <Box>
-                                      <Item
-                                        key={itemData[0].key}
-                                        pk={itemData[0].pk}
-                                        name={itemData[0].name}
-                                        inGameKey={itemData[0].inGameKey}
-                                        description={itemData[0].description}
-                                        effect={itemData[0].effect}
-                                        generableItem={itemData[0].generableItem}
-                                        composition1={itemData[0].composition1}
-                                        composition2={itemData[0].composition2}
-                                        tags={itemData[0].tags}
-                                        imageUrl={itemData[0].imageUrl}
-                                      />
-                                    </Box>
-                                  }
-                                >
-                                  <Image w={'20px'} src={itemData[0].imageUrl} />
-                                </Tooltip>
-                              </Box>
-                            ) : (
-                              <Text>Loading items...</Text>
-                            )}
-                            {!isItemLoading && itemData ? (
-                              <Image w={'20px'} src={itemData[1].imageUrl} />
-                            ) : (
-                              <Text>Loading items...</Text>
-                            )}
-                            {!isItemLoading && itemData ? (
-                              <Image w={'20px'} src={itemData[2].imageUrl} />
-                            ) : (
-                              <Text>Loading items...</Text>
-                            )}
-                          </HStack>
-                        </Box>
-                      </VStack>
-                    ))}
+                  {comp.elements?.map((compEle) => (
+                    <Box>
+                      <Champion
+                        pk={compEle.champion.id}
+                        name={compEle.champion.name}
+                        cost={compEle.champion.cost}
+                        photos={compEle.champion.photos[0].file}
+                        origin={compEle.champion.origin}
+                        job={compEle.champion.job}
+                        attack_range={compEle.champion.attack_range}
+                        skill={compEle.champion.skill}
+                      />
+                      {compEle.recommendedItem1 ? (
+                        <HStack gap="3px" justifyContent="center" position="absolute">
+                          <Box w="17px" h="17px">
+                            <Item
+                              pk={compEle.recommendedItem1.id}
+                              name={compEle.recommendedItem1.name}
+                              key={compEle.recommendedItem1.key}
+                              inGameKey={compEle.recommendedItem1.inGameKey}
+                              description={compEle.recommendedItem1.description}
+                              effect={compEle.recommendedItem1.effect}
+                              generableItem={compEle.recommendedItem1.generableItem}
+                              composition1={compEle.recommendedItem1.composition1}
+                              composition2={compEle.recommendedItem1.composition2}
+                              tags={compEle.recommendedItem1.tags}
+                              imageUrl={compEle.recommendedItem1.imageUrl}
+                            />
+                          </Box>
+                          <Box w="17px" h="17px">
+                            <Item
+                              pk={compEle.recommendedItem2.id}
+                              name={compEle.recommendedItem2.name}
+                              key={compEle.recommendedItem2.key}
+                              inGameKey={compEle.recommendedItem2.inGameKey}
+                              description={compEle.recommendedItem2.description}
+                              effect={compEle.recommendedItem2.effect}
+                              generableItem={compEle.recommendedItem2.generableItem}
+                              composition1={compEle.recommendedItem2.composition1}
+                              composition2={compEle.recommendedItem2.composition2}
+                              tags={compEle.recommendedItem2.tags}
+                              imageUrl={compEle.recommendedItem2.imageUrl}
+                            />
+                          </Box>
+                          <Box w="17px" h="17px">
+                            <Item
+                              pk={compEle.recommendedItem3.id}
+                              name={compEle.recommendedItem3.name}
+                              key={compEle.recommendedItem3.key}
+                              inGameKey={compEle.recommendedItem3.inGameKey}
+                              description={compEle.recommendedItem3.description}
+                              effect={compEle.recommendedItem3.effect}
+                              generableItem={compEle.recommendedItem3.generableItem}
+                              composition1={compEle.recommendedItem3.composition1}
+                              composition2={compEle.recommendedItem3.composition2}
+                              tags={compEle.recommendedItem3.tags}
+                              imageUrl={compEle.recommendedItem3.imageUrl}
+                            />
+                          </Box>
+                        </HStack>
+                      ) : null}
+                    </Box>
+                  ))}
                 </HStack>
               </VStack>
               <Box position={'absolute'} right={5} p={3} border={'1px solid white'}>

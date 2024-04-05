@@ -8,30 +8,47 @@ export default function Header() {
   const navigate = useNavigate();
 
   const handleSearch = async () => {
-    if (searchName.trim() !== '') {
-      try {
-        const response = await fetch('http://127.0.0.1:8000/api/v1/profiles/fetch-puuid/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({summonerName: searchName}),
-        });
-
-        const data = await response.json();
-        navigate(`/profile/${searchName}`, {state: {puuid: data.puuid}});
-      } catch {
-        const response = await fetch('http://127.0.0.1:8000/api/v1/profiles/fetch-puuid/', {
+    try {
+      if (searchName.trim() !== '') {
+        const profileResponse = await fetch(`http://127.0.0.1:8000/api/v1/profiles/fetch-puuid/${searchName}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
           },
-          // body: JSON.stringify({summonerName: searchName}),
         });
 
-        const data = await response.json();
-        navigate(`/profile/${searchName}`, {state: {puuid: data.puuid}});
+        if (profileResponse.ok) {
+          const profileData = await profileResponse.json();
+          const summonerPuuid = profileData.puuid;
+
+          const matchesResponse = await fetch(
+            `http://127.0.0.1:8000/api/v1/profiles/matches-by-puuid/${summonerPuuid}`,
+            {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            }
+          );
+
+          if (matchesResponse.ok) {
+            const matchesData = await matchesResponse.json();
+            navigate(`/profile/${searchName}`, {state: {puuid: summonerPuuid, matches: matchesData}});
+          } else {
+            await fetch(`http://127.0.0.1:8000/api/v1/profiles/matches-by-puuid/${summonerPuuid}`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({summonerpuuid: summonerPuuid}),
+            });
+          }
+        } else {
+          console.error('Failed to fetch profile data:', profileResponse.statusText);
+        }
       }
+    } catch (error) {
+      console.error('Error:', error);
     }
   };
 

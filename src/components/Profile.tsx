@@ -149,9 +149,8 @@ interface IProfileId {
 }
 
 export default function Profile() {
-  const {profileName} = useParams<{profileName: string | undefined}>();
   const location = useLocation();
-  console.log(location);
+  console.log(location.state);
   const [matchData, setMatchData] = useState<IMatch[]>([]);
 
   return (

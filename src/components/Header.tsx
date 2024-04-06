@@ -44,7 +44,15 @@ export default function Header() {
             });
           }
         } else {
-          console.error('Failed to fetch profile data:', profileResponse.statusText);
+          await fetch('http://127.0.0.1:8000/api/v1/profiles/fetch-puuid/', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({summonerName: searchName}),
+          });
+
+          navigate(`/profile/${searchName}`);
         }
       }
     } catch (error) {

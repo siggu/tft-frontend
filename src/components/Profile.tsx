@@ -1,7 +1,9 @@
-import {Box, Button, Container, Heading, Input, Text, VStack} from '@chakra-ui/react';
+import {Box, Button, Container, HStack, Heading, Input, Text, VStack} from '@chakra-ui/react';
 import {useEffect, useState} from 'react';
 import {useQuery} from '@tanstack/react-query';
 import {useLocation, useParams} from 'react-router-dom';
+import {FaSearch} from 'react-icons/fa';
+import RIOT_API_KEY from '../constants';
 // import {getItems, getMatchesByMatchid, getMatchesByPuuid, getSummonerInfo, getSummonerProfile} from '../api';
 
 interface IProfile {
@@ -150,8 +152,51 @@ interface IProfileId {
 
 export default function Profile() {
   const location = useLocation();
-  console.log(location.state);
+  const {name, matches} = location.state || {}; // 기본값 설정
+
+  // console.log('Name:', name);
+  // console.log('Matches:', matches);
   const [matchData, setMatchData] = useState<IMatch[]>([]);
+
+  const handleSearch = async () => {
+    try {
+      const responses = await Promise.all(
+        matches.map(async (match: any) => {
+          const response = await fetch(
+            `http://127.0.0.1:8000/api/v1/profiles/matches-by-puuid/${encodeURIComponent(name)}/${match}`,
+            {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            }
+          );
+          return response.json();
+        })
+      );
+      if (responses) {
+        setMatchData(responses);
+      } else {
+        const responses = await Promise.all(
+          matches.map(async (match: any) => {
+            const response = await fetch(
+              `http://127.0.0.1:8000/api/v1/profiles/matches-by-puuid/${encodeURIComponent(name)}/${match.match_id}`,
+              {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({summonerName: name, matchId: match.match_id}),
+              }
+            );
+            return response.json();
+          })
+        );
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <VStack>
@@ -163,7 +208,12 @@ export default function Profile() {
         </Box>
         <Box>
           <Box>
-            <Text color={'white'}>매치 데이터:</Text>
+            <HStack>
+              <Text color={'white'}>매치 데이터:</Text>
+              <Button type="button" onClick={handleSearch}>
+                <FaSearch />
+              </Button>
+            </HStack>
             {matchData.map((match) => (
               <Box>
                 {match.metadata.participants.map((participant, index) => (

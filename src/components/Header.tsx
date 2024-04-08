@@ -18,30 +18,26 @@ export default function Header() {
         });
 
         if (profileResponse.ok) {
-          const profileData = await profileResponse.json();
-          const summonerPuuid = profileData.puuid;
-
-          const matchesResponse = await fetch(
-            `http://127.0.0.1:8000/api/v1/profiles/matches-by-puuid/${summonerPuuid}`,
-            {
-              method: 'GET',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-            }
-          );
+          const matchesResponse = await fetch(`http://127.0.0.1:8000/api/v1/profiles/matches-by-puuid/${searchName}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
 
           if (matchesResponse.ok) {
             const matchesData = await matchesResponse.json();
-            navigate(`/profile/${searchName}`, {state: {puuid: summonerPuuid, matches: matchesData}});
+            navigate(`/profile/${searchName}`, {state: {name: searchName, matches: matchesData}});
           } else {
-            await fetch(`http://127.0.0.1:8000/api/v1/profiles/matches-by-puuid/${summonerPuuid}`, {
+            await fetch(`http://127.0.0.1:8000/api/v1/profiles/matches-by-puuid/${searchName}`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
               },
-              body: JSON.stringify({summonerpuuid: summonerPuuid}),
+              body: JSON.stringify({summonerName: searchName}),
             });
+
+            navigate(`/profile/${searchName}`, {state: {name: searchName}});
           }
         } else {
           await fetch('http://127.0.0.1:8000/api/v1/profiles/fetch-puuid/', {
@@ -52,7 +48,7 @@ export default function Header() {
             body: JSON.stringify({summonerName: searchName}),
           });
 
-          navigate(`/profile/${searchName}`);
+          navigate(`/profile/${searchName}`, {state: {name: searchName}});
         }
       }
     } catch (error) {

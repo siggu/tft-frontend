@@ -8,6 +8,7 @@ import Items from './routes/Items';
 import Augments from './routes/Augments';
 import Portals from './routes/Portals';
 import Synergies from './routes/Synergies';
+import ProfileBackendTest from './routes/ProfileBackendTest';
 import Profile from './components/Profile';
 
 const router = createBrowserRouter([
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
       {
         path: 'profile/:profileName',
         element: <Profile />,
+      },
+      {
+        path: 'profile_backend_test/:summonerName',
+        element: <ProfileBackendTest />,
       },
     ],
   },

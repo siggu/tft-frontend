@@ -27,7 +27,8 @@ export default function Header() {
 
           if (matchesResponse.ok) {
             const matchesData = await matchesResponse.json();
-            navigate(`/profile/${searchName}`, {state: {name: searchName, matches: matchesData}});
+            // navigate(`/profile/${searchName}`, {state: {name: searchName, matches: matchesData}});
+            navigate(`/profile_backend_test/${searchName}`, {state: {name: searchName, matches: matchesData}});
           } else {
             await fetch(`http://127.0.0.1:8000/api/v1/profiles/matches-by-puuid/${searchName}`, {
               method: 'POST',
@@ -37,7 +38,8 @@ export default function Header() {
               body: JSON.stringify({summonerName: searchName}),
             });
 
-            navigate(`/profile/${searchName}`, {state: {name: searchName}});
+            // navigate(`/profile/${searchName}`, {state: {name: searchName}});
+            navigate(`/profile_backend_test/${searchName}`, {state: {name: searchName}});
           }
         } else {
           await fetch('http://127.0.0.1:8000/api/v1/profiles/fetch-puuid/', {
@@ -48,7 +50,8 @@ export default function Header() {
             body: JSON.stringify({summonerName: searchName}),
           });
 
-          navigate(`/profile/${searchName}`, {state: {name: searchName}});
+          // navigate(`/profile/${searchName}`, {state: {name: searchName}});
+          navigate(`/profile_backend_test/${searchName}`, {state: {name: searchName}});
         }
       }
     } catch (error) {

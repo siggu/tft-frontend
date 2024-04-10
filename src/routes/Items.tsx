@@ -1,5 +1,5 @@
 import {useQuery} from '@tanstack/react-query';
-import {getItems, getItemRecipies} from '../api';
+import {getItems} from '../api';
 import {useParams} from 'react-router-dom';
 import {Box, Container, HStack, Image, Text, Tooltip, VStack} from '@chakra-ui/react';
 import IItems from '../components/types';

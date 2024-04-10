@@ -153,6 +153,7 @@ interface IProfileId {
 export default function Profile() {
   const location = useLocation();
   const {name, matches} = location.state || {}; // 기본값 설정
+  // console.log(name, matches);
 
   // console.log('Name:', name);
   // console.log('Matches:', matches);
@@ -163,7 +164,7 @@ export default function Profile() {
       const responses = await Promise.all(
         matches.map(async (match: any) => {
           const response = await fetch(
-            `http://127.0.0.1:8000/api/v1/profiles/matches-by-puuid/${encodeURIComponent(name)}/${match}`,
+            `http://127.0.0.1:8000/api/v1/profiles/matches-by-puuid/${name}/${match.match_id}`,
             {
               method: 'GET',
               headers: {
@@ -176,11 +177,12 @@ export default function Profile() {
       );
       if (responses) {
         setMatchData(responses);
+        console.log(matchData);
       } else {
         const responses = await Promise.all(
           matches.map(async (match: any) => {
             const response = await fetch(
-              `http://127.0.0.1:8000/api/v1/profiles/matches-by-puuid/${encodeURIComponent(name)}/${match.match_id}`,
+              `http://127.0.0.1:8000/api/v1/profiles/matches-by-puuid/${name}/${match.match_id}`,
               {
                 method: 'POST',
                 headers: {

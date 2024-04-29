@@ -3,7 +3,10 @@ import {useQuery} from '@tanstack/react-query';
 import {useParams} from 'react-router-dom';
 import {useEffect, useState} from 'react';
 import {FaSearch} from 'react-icons/fa';
-import {getSummonerData, fetchMatchData} from '../api';
+import IChampionDetail from '../components/types';
+import IItems from '../components/types';
+import {getSummonerData, fetchMatchData, getChampions, getItems} from '../api';
+import Item from '../components/Item';
 interface IMatchDataByPuuid {
   id: number;
   match_id: string;
@@ -157,6 +160,69 @@ interface IProfileId {
   hotStreak: boolean;
 }
 export default function ProfileBackendTest() {
+  const {data: allChampionsData} = useQuery<IChampionDetail[]>({
+    queryKey: ['champions'],
+    queryFn: getChampions,
+  });
+  const {data: itemsData, isLoading: isItemsLoading} = useQuery<IItems>({
+    queryKey: ['item'],
+    queryFn: getItems,
+  });
+  const basicItemArr: IItems[] = [];
+  const normalItemArr: IItems[] = [];
+  const emblemItemArr: IItems[] = [];
+  const supportItemArr: IItems[] = [];
+  const artifactItemArr: IItems[] = [];
+  const radiantItemArr: IItems[] = [];
+  const etcItemArr: IItems[] = [];
+
+  itemsData?.map((iele) => {
+    iele.tags === 'basic'
+      ? basicItemArr.push(iele)
+      : iele.tags === 'normal'
+      ? normalItemArr.push(iele)
+      : iele.tags === 'emblem'
+      ? emblemItemArr.push(iele)
+      : iele.tags === 'support'
+      ? supportItemArr.push(iele)
+      : iele.tags === 'artifact'
+      ? artifactItemArr.push(iele)
+      : iele.tags === 'radiant'
+      ? radiantItemArr.push(iele)
+      : etcItemArr.push(iele);
+  });
+
+  normalItemArr.forEach((normalItemArrEle) => {
+    basicItemArr.forEach((basicItemArrEle) => {
+      if (basicItemArrEle.key === normalItemArrEle.composition1) {
+        normalItemArrEle.composition1 = basicItemArrEle.imageUrl;
+      }
+      if (basicItemArrEle.key === normalItemArrEle.composition2) {
+        normalItemArrEle.composition2 = basicItemArrEle.imageUrl;
+      }
+    });
+  });
+
+  emblemItemArr.forEach((emblemItemArrEle) => {
+    basicItemArr.forEach((basicItemArrEle) => {
+      if (basicItemArrEle.key === emblemItemArrEle.composition1) {
+        emblemItemArrEle.composition1 = basicItemArrEle.imageUrl;
+      }
+      if (basicItemArrEle.key === emblemItemArrEle.composition2) {
+        emblemItemArrEle.composition2 = basicItemArrEle.imageUrl;
+      }
+    });
+  });
+
+  const itemsArrays: IItems[][] = [
+    basicItemArr,
+    normalItemArr,
+    emblemItemArr,
+    supportItemArr,
+    artifactItemArr,
+    radiantItemArr,
+    etcItemArr,
+  ];
   const {summonerName} = useParams();
   const {data: summonerMatchData} = useQuery<IMatchDataByPuuid[]>({
     queryKey: ['summoner', summonerName],
@@ -212,15 +278,47 @@ export default function ProfileBackendTest() {
       {/* matchData를 사용하여 UI에 매치 데이터 표시 */}
       {matchData.map((data, index) => (
         <Box key={index} border={'white solid 1px'} color={'white'}>
-          <Text>{data.match_detail.info.participants[0].augments[0]}</Text>
-          <Text>{data.match_detail.info.participants[0].augments[1]}</Text>
-          <Text>{data.match_detail.info.participants[0].augments[2]}</Text>
-          <Text>{data.match_detail.info.participants[1].augments[0]}</Text>
-          <Text>{data.match_detail.info.participants[1].augments[1]}</Text>
-          <Text>{data.match_detail.info.participants[1].augments[2]}</Text>
-          <Text>{data.match_detail.info.participants[2].augments[0]}</Text>
-          <Text>{data.match_detail.info.participants[2].augments[1]}</Text>
-          <Text>{data.match_detail.info.participants[2].augments[2]}</Text>
+          {data.match_detail.info.participants.map((participantData) => (
+            <HStack fontSize={'15px'} border={'white solid 1px'}>
+              {participantData.units.map((unitData) => (
+                <VStack>
+                  <Text>{`${'★'.repeat(unitData.tier)}`}</Text>
+                  <Text>{unitData.character_id}</Text>
+                  {unitData.itemNames ? (
+                    <>
+                      <HStack>
+                        {unitData.itemNames.map((itemData) => (
+                          <>
+                            {itemsData?.map((itemEle) => (
+                              <>
+                                {itemEle.inGameKey === itemData ? (
+                                  <Box w="18px" h="18px">
+                                    <Item
+                                      pk={itemEle.id}
+                                      name={itemEle.name}
+                                      key={itemEle.key}
+                                      inGameKey={itemEle.inGameKey}
+                                      description={itemEle.description}
+                                      effect={itemEle.effect}
+                                      generableItem={itemEle.generableItem}
+                                      composition1={itemEle.composition1}
+                                      composition2={itemEle.composition2}
+                                      tags={itemEle.tags}
+                                      imageUrl={itemEle.imageUrl}
+                                    />
+                                  </Box>
+                                ) : null}
+                              </>
+                            ))}
+                          </>
+                        ))}
+                      </HStack>
+                    </>
+                  ) : null}
+                </VStack>
+              ))}
+            </HStack>
+          ))}
         </Box>
       ))}
     </VStack>

@@ -7,7 +7,7 @@ import Item from '../components/Item';
 
 export default function Items() {
   // 아이템 가져오기
-  const {data: itemsDate} = useQuery<IItems>({
+  const {data: itemsData} = useQuery<IItems>({
     queryKey: ['item'],
     queryFn: getItems,
   });
@@ -19,7 +19,7 @@ export default function Items() {
   const radiantItemArr: IItems[] = [];
   const etcItemArr: IItems[] = [];
 
-  itemsDate?.map((iele) => {
+  itemsData?.map((iele) => {
     iele.tags === 'basic'
       ? basicItemArr.push(iele)
       : iele.tags === 'normal'

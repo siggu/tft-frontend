@@ -10,7 +10,6 @@ import Portals from './routes/Portals';
 import Synergies from './routes/Synergies';
 import ProfileBackendTest from './routes/ProfileBackendTest';
 import Profile from './components/Profile';
-import ChampionDetailCopy from './routes/ChampionDetailCopy';
 
 const router = createBrowserRouter([
   {
@@ -28,10 +27,6 @@ const router = createBrowserRouter([
       {
         path: 'champions/:championPk',
         element: <ChampionDetail />,
-      },
-      {
-        path: 'championsCopy/:championPk',
-        element: <ChampionDetailCopy />,
       },
       {
         path: 'encounters',

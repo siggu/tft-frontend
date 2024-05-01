@@ -25,9 +25,9 @@ export default interface ISynergy {
   stats_5: string;
   stats_6: string;
 }
-
 export default interface IChampion {
-  pk: number;
+  key: string;
+  ingameKey: string | null;
   name: string;
   cost: number;
   photos: IPhoto[];

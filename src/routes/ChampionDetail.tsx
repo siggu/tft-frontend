@@ -3,20 +3,20 @@ import {getChampion, getChampions} from '../api';
 import {useParams} from 'react-router-dom';
 import {FaFlask, FaCoins} from 'react-icons/fa';
 import {Box, Container, HStack, Image, Text, VStack, Grid, useMediaQuery} from '@chakra-ui/react';
-import IChampionDetail from '../components/types';
+import IChampion from '../components/types';
 import Champion from '../components/Champion';
 
 export default function ChampionDetail() {
   // 특정 챔피언 1개만 가져오기 (url)
   const {championPk} = useParams();
-  const {data: championData} = useQuery<IChampionDetail>({
+  const {data: championData, isLoading: isChampionDataLoading} = useQuery<IChampion>({
     queryKey: ['champion', championPk],
     queryFn: getChampion,
   });
 
   // 모든 챔피언 가져오기
 
-  const {data: allChampionsData} = useQuery<IChampionDetail[]>({
+  const {data: allChampionsData, isLoading: isAllChampionDataLoading} = useQuery<IChampion[]>({
     queryKey: ['champions'],
     queryFn: getChampions,
   });
@@ -234,6 +234,7 @@ export default function ChampionDetail() {
             {/* 직업 */}
           </VStack>
         </VStack>
+        ) : (<Text>Loading...</Text>)
       </Container>
     </VStack>
   );

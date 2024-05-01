@@ -225,24 +225,24 @@ export default function Home() {
           entry = {
             synergyName: name,
             frequency: count,
-            description: origin_ele.description,
-            effect_1: origin_ele.stats_1,
-            effect_2: origin_ele.stats_2,
-            effect_3: origin_ele.stats_3,
-            effect_4: origin_ele.stats_4,
-            effect_5: origin_ele.stats_5,
-            effect_6: origin_ele.stats_6,
+            description: job_ele.description,
+            effect_1: job_ele.stats_1,
+            effect_2: job_ele.stats_2,
+            effect_3: job_ele.stats_3,
+            effect_4: job_ele.stats_4,
+            effect_5: job_ele.stats_5,
+            effect_6: job_ele.stats_6,
           };
         }
       });
-      compArray.push(entry);
+      // compArray.push(entry);
     });
     synergiesArr.push(compArray);
   });
 
   return (
     <VStack gap={20}>
-      <Container maxW={'container.xl'}>
+      <Container maxW={'container.xl'} minH={'500px'}>
         <Box mb={5}>
           <Text as={'b'} color={'#dca555'} fontSize={'20px'}>
             추천 메타

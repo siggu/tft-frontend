@@ -50,25 +50,50 @@ export default interface ISkill {
   description: string;
   effect: string;
 }
-
 export default interface IChampion {
-  pk: number;
+  key: string;
+  ingameKey: string | null;
   name: string;
-  cost: number;
-  photos: IPhoto[];
-}
-
-export default interface IChampionDetail extends IChampion {
-  origin: ISynergy[];
-  job: ISynergy[];
-  health: number;
-  ad: number;
-  dps: number;
-  attack_range: number;
-  attack_speed: number;
+  imageUrl: string;
+  splashUrl: string;
+  traits1: string | null;
+  traits2: string | null;
+  traits3: string | null;
+  traits4: string | null;
+  isHiddenGuide: boolean | null;
+  isHiddenLanding: boolean | null;
+  isHiddenTeamBuiler: boolean | null;
+  cost1: number;
+  cost2: number;
+  cost3: number;
+  health1: number;
+  health2: number;
+  health3: number;
+  attackDamage1: number;
+  attackDamage2: number;
+  attackDamage3: number;
+  damagePerSecond1: number;
+  damagePerSecond2: number;
+  damagePerSecond3: number;
+  attackRange: number;
+  attackSpeed: number;
   armor: number;
-  magic_resistance: number;
-  skill: ISkill;
+  magicalResistance: number;
+  recommendItems1: string | null;
+  recommendItems2: string | null;
+  recommendItems3: string | null;
+  recommendItems4: string | null;
+  recommendItems5: string | null;
+  skill_name: string;
+  skill_imageUrl: string;
+  skill_desc: string;
+  skill_startingMana: number;
+  skill_skillMana: number;
+  skill_stats1: string | null;
+  skill_stats2: string | null;
+  skill_stats3: string | null;
+  skill_stats4: string | null;
+  skill_stats5: string | null;
 }
 
 export default interface IComp {

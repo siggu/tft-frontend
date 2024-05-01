@@ -10,7 +10,7 @@ export default function Encounters() {
   });
 
   return (
-    <Container maxW={'container.xl'}>
+    <Container maxW={'container.xl'} minH={'500px'}>
       <Box mb={5}>
         <Text as={'b'} color={'#dca555'} fontSize={'20px'}>
           조우자

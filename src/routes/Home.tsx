@@ -251,7 +251,7 @@ export default function Home() {
 
   return (
     <VStack gap={20}>
-      <Container maxW={'container.xl'}>
+      <Container maxW={'container.xl'} minH={'500px'}>
         <Box mb={5}>
           <Text as={'b'} color={'#dca555'} fontSize={'20px'}>
             추천 메타
@@ -376,12 +376,12 @@ export default function Home() {
                   {comp.elements?.map((compEle) => (
                     <Box>
                       <Champion
-                        pk={compEle.champion.id}
+                        key={compEle.champion.id}
                         name={compEle.champion.name}
                         cost={compEle.champion.cost}
                         photos={compEle.champion.photos[0].file}
-                        origin={compEle.champion.origin}
-                        job={compEle.champion.job}
+                        traits1={compEle.champion.origin}
+                        traits2={compEle.champion.job}
                         attack_range={compEle.champion.attack_range}
                         skill={compEle.champion.skill}
                       />

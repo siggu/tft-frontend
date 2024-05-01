@@ -42,7 +42,7 @@ export default function Synergies() {
     queryKey: ['champions'],
     queryFn: getChampions,
   });
-  championsData?.sort((a, b) => a.cost - b.cost);
+  championsData?.sort((a, b) => a.cost1 - b.cost1);
 
   if (isOriginLoading || isJobLoading || isChampionsLoading) return <div>Loading...</div>;
   if (!originData || !jobData || !championsData) return <div>Data not available</div>;
@@ -100,16 +100,16 @@ export default function Synergies() {
                 {/* 거대괴수 */}
                 <Td>
                   {
-                    <Champion
-                      pk={championsData[0].pk}
-                      name={'오른'}
-                      cost={4}
-                      photos={championsData[6].photos[0].file}
-                      origin={championsData[6].origin}
-                      job={championsData[6].job}
-                      attack_range={1}
-                      skill={championsData[6].skill}
-                    />
+                    // <Champion
+                    //   pk={championsData[0].pk}
+                    //   name={'오른'}
+                    //   cost={4}
+                    //   photos={championsData[6].photos[0].file}
+                    //   origin={championsData[6].origin}
+                    //   job={championsData[6].job}
+                    //   attack_range={1}
+                    //   skill={championsData[6].skill}
+                    // />
                   }
                 </Td>
                 <Td></Td>
@@ -177,21 +177,21 @@ export default function Synergies() {
                 <Box pt={5}>
                   <HStack justifyContent={'center'}>
                     {championsData
-                      .filter((champion) =>
-                        champion.origin.some((championOrigin) => championOrigin.name === origin.name)
-                      )
+                      // .filter((champion) =>
+                      //   champion.origin.some((championOrigin) => championOrigin.name === origin.name)
+                      // )
                       .map((champion, index) => (
                         <>
                           <HStack>
                             <Champion
-                              pk={champion.id}
+                              key={champion.key}
                               name={champion.name}
-                              cost={champion.cost}
+                              cost={champion.cost1}
                               photos={champion.photos[0].file}
-                              origin={champion.origin}
-                              job={champion.job}
-                              attack_range={champion.attack_range}
-                              skill={champion.skill}
+                              traits1={champion.traits1}
+                              traits2={champion.traits2}
+                              attack_range={champion.attackRange}
+                              skill={champion.skill_name}
                             />
                           </HStack>
                         </>
@@ -240,19 +240,19 @@ export default function Synergies() {
                 <Box pt={5}>
                   <HStack justifyContent={'center'}>
                     {championsData
-                      .filter((champion) => champion.job.some((championJob) => championJob.name === job.name))
+                      // .filter((champion) => champion.job.some((championJob) => championJob.name === job.name))
                       .map((champion, index) => (
                         <>
                           <HStack>
                             <Champion
-                              pk={champion.id}
+                              key={champion.key}
                               name={champion.name}
-                              cost={champion.cost}
+                              cost={champion.cost1}
                               photos={champion.photos[0].file}
-                              origin={champion.origin}
-                              job={champion.job}
-                              attack_range={champion.attack_range}
-                              skill={champion.skill}
+                              traits1={champion.traits1}
+                              traits2={champion.traits2}
+                              attack_range={champion.attackRange}
+                              skill={champion.skill_name}
                             />
                           </HStack>
                         </>

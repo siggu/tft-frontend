@@ -110,7 +110,7 @@ export default function Header() {
             fontSize={'14px'}
             border={'1px solid black'}
           >
-            <Link to={'/champions/1'}>
+            <Link to={'/champions/Xayah'}>
               <Text fontWeight={'600'} color={'white'}>
                 챔피언
               </Text>

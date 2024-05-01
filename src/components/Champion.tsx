@@ -5,17 +5,26 @@ import ISkill from './types.d';
 import {FaCoins} from 'react-icons/fa';
 
 interface IMiniChampionPortrait {
-  pk: number;
+  key: string;
   name: string;
   cost: number;
   photos: string;
-  origin: ISynergy[];
-  job: ISynergy[];
+  traits1: string | null;
+  traits2: string | null;
   attack_range: number;
-  skill: ISkill;
+  skill: string;
 }
 
-export default function Champion({pk, name, cost, photos, origin, job, attack_range, skill}: IMiniChampionPortrait) {
+export default function Champion({
+  key,
+  name,
+  cost,
+  photos,
+  traits1,
+  traits2,
+  attack_range,
+  skill,
+}: IMiniChampionPortrait) {
   const championRootLink = 'http://localhost:3000/champions/';
   return (
     <VStack>
@@ -34,39 +43,33 @@ export default function Champion({pk, name, cost, photos, origin, job, attack_ra
             </HStack>
             <VStack alignItems={'flex-start'}>
               <HStack>
-                <Image width={'25px'} src={origin[0].photos[0].file} />
-                <Text>{origin[0].name}</Text>
+                {/* <Image width={'25px'} src={origin[0].photos[0].file} /> */}
+                <Text>{origin}</Text>
               </HStack>
               <HStack>
-                <Image width={'25px'} src={job[0].photos[0].file} />
-                <Text>{job[0].name}</Text>
+                {/* <Image width={'25px'} src={job[0].photos[0].file} /> */}
+                <Text>{traits1}</Text>
               </HStack>
             </VStack>
             <HStack alignItems={'flex-start'}>
               <Text>공격 사거리: {attack_range}</Text>
             </HStack>
             <HStack>
-              <Image w={'40px'} src={skill.photos[0].file} />
+              {/* <Image w={'40px'} src={skill.photos[0].file} /> */}
               <VStack gap={0} alignItems={'flex-start'}>
-                <Text color={'orange'}>{skill.name}</Text>
-                <Text>
-                  마나: {skill.start_mana}/{skill.max_mana}
-                </Text>
+                <Text color={'orange'}>{skill}</Text>
+                <Text>{/* 마나: {skill.start_mana}/{skill.max_mana} */}</Text>
               </VStack>
             </HStack>
-            <VStack>
-              <Text color={'gray'}>{skill.description}</Text>
-            </VStack>
-            <VStack>
-              <Text>{skill.effect}</Text>
-            </VStack>
+            <VStack>{/* <Text color={'gray'}>{skill.description}</Text> */}</VStack>
+            <VStack>{/* <Text>{skill.effect}</Text> */}</VStack>
           </VStack>
         }
         bg={'black'}
         rounded={'md'}
         p={3}
       >
-        <Link to={`${championRootLink}${pk}`}>
+        <Link to={`${championRootLink}${key}`}>
           <Box
             w={'60px'}
             h={'60px'}

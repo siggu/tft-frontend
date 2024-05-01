@@ -176,21 +176,21 @@ export default function ProfileBackendTest() {
   const radiantItemArr: IItems[] = [];
   const etcItemArr: IItems[] = [];
 
-  itemsData?.map((iele) => {
-    iele.tags === 'basic'
-      ? basicItemArr.push(iele)
-      : iele.tags === 'normal'
-      ? normalItemArr.push(iele)
-      : iele.tags === 'emblem'
-      ? emblemItemArr.push(iele)
-      : iele.tags === 'support'
-      ? supportItemArr.push(iele)
-      : iele.tags === 'artifact'
-      ? artifactItemArr.push(iele)
-      : iele.tags === 'radiant'
-      ? radiantItemArr.push(iele)
-      : etcItemArr.push(iele);
-  });
+  // itemsData?.map((iele) => {
+  //   iele.tags === 'basic'
+  //     ? basicItemArr.push(iele)
+  //     : iele.tags === 'normal'
+  //     ? normalItemArr.push(iele)
+  //     : iele.tags === 'emblem'
+  //     ? emblemItemArr.push(iele)
+  //     : iele.tags === 'support'
+  //     ? supportItemArr.push(iele)
+  //     : iele.tags === 'artifact'
+  //     ? artifactItemArr.push(iele)
+  //     : iele.tags === 'radiant'
+  //     ? radiantItemArr.push(iele)
+  //     : etcItemArr.push(iele);
+  // });
 
   normalItemArr.forEach((normalItemArrEle) => {
     basicItemArr.forEach((basicItemArrEle) => {
@@ -289,7 +289,7 @@ export default function ProfileBackendTest() {
                       <HStack>
                         {unitData.itemNames.map((itemData) => (
                           <>
-                            {itemsData?.map((itemEle) => (
+                            {/* {itemsData?.map((itemEle) => (
                               <>
                                 {itemEle.inGameKey === itemData ? (
                                   <Box w="18px" h="18px">
@@ -309,7 +309,7 @@ export default function ProfileBackendTest() {
                                   </Box>
                                 ) : null}
                               </>
-                            ))}
+                            ))} */}
                           </>
                         ))}
                       </HStack>

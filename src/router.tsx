@@ -44,10 +44,10 @@ const router = createBrowserRouter([
         path: 'portals',
         element: <Portals />,
       },
-      {
-        path: 'synergies',
-        element: <Synergies />,
-      },
+      // {
+      //   path: 'synergies',
+      //   element: <Synergies />,
+      // },
       {
         path: 'profile/:profileName',
         element: <Profile />,

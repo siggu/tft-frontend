@@ -5,17 +5,96 @@ import ISkill from './types.d';
 import {FaCoins} from 'react-icons/fa';
 
 interface IMiniChampionPortrait {
-  pk: number;
+  key: string;
+  ingameKey: string;
   name: string;
-  cost: number;
-  photos: string;
-  origin: ISynergy[];
-  job: ISynergy[];
-  attack_range: number;
-  skill: ISkill;
+  imageUrl: string;
+  splashUrl: string;
+  traits1: string;
+  traits2: string;
+  traits3: string;
+  traits4: string;
+  isHiddenGuide: boolean;
+  isHiddenLanding: boolean;
+  isHiddenTeamBuiler: boolean;
+  cost1: number;
+  cost2: number;
+  cost3: number;
+  health1: number;
+  health2: number;
+  health3: number;
+  attackDamage1: number;
+  attackDamage2: number;
+  attackDamage3: number;
+  damagePerSecond1: number;
+  damagePerSecond2: number;
+  damagePerSecond3: number;
+  attackRange: number;
+  attackSpeed: number;
+  armor: number;
+  magicalResistance: number;
+  recommendItems1: string;
+  recommendItems2: string;
+  recommendItems3: string;
+  recommendItems4: string;
+  recommendItems5: string;
+  skill_name: string;
+  skill_imageUrl: string;
+  skill_desc: string;
+  skill_startingMana: number;
+  skill_skillMana: number;
+  skill_stats1: string;
+  skill_stats2: string;
+  skill_stats3: string;
+  skill_stats4: string;
+  skill_stats5: string;
 }
 
-export default function Champion({pk, name, cost, photos, origin, job, attack_range, skill}: IMiniChampionPortrait) {
+export default function Champion({
+  key,
+  ingameKey,
+  name,
+  imageUrl,
+  splashUrl,
+  traits1,
+  traits2,
+  traits3,
+  traits4,
+  isHiddenGuide,
+  isHiddenLanding,
+  isHiddenTeamBuiler,
+  cost1,
+  cost2,
+  cost3,
+  health1,
+  health2,
+  health3,
+  attackDamage1,
+  attackDamage2,
+  attackDamage3,
+  damagePerSecond1,
+  damagePerSecond2,
+  damagePerSecond3,
+  attackRange,
+  attackSpeed,
+  armor,
+  magicalResistance,
+  recommendItems1,
+  recommendItems2,
+  recommendItems3,
+  recommendItems4,
+  recommendItems5,
+  skill_name,
+  skill_imageUrl,
+  skill_desc,
+  skill_startingMana,
+  skill_skillMana,
+  skill_stats1,
+  skill_stats2,
+  skill_stats3,
+  skill_stats4,
+  skill_stats5,
+}: IMiniChampionPortrait) {
   const championRootLink = 'http://localhost:3000/champions/';
   return (
     <VStack>
@@ -29,36 +108,26 @@ export default function Champion({pk, name, cost, photos, origin, job, attack_ra
                 <Box color={'yellow.400'}>
                   <FaCoins />
                 </Box>
-                <Text>{cost}</Text>
+                <Text>{cost1}</Text>
               </HStack>
             </HStack>
-            <VStack alignItems={'flex-start'}>
-              <HStack>
-                <Image width={'25px'} src={origin[0].photos[0].file} />
-                <Text>{origin[0].name}</Text>
-              </HStack>
-              <HStack>
-                <Image width={'25px'} src={job[0].photos[0].file} />
-                <Text>{job[0].name}</Text>
-              </HStack>
-            </VStack>
             <HStack alignItems={'flex-start'}>
-              <Text>공격 사거리: {attack_range}</Text>
+              <Text>공격 사거리: {attackRange}</Text>
             </HStack>
             <HStack>
-              <Image w={'40px'} src={skill.photos[0].file} />
+              <Image w={'40px'} src={skill_imageUrl} />
               <VStack gap={0} alignItems={'flex-start'}>
-                <Text color={'orange'}>{skill.name}</Text>
+                <Text color={'orange'}>{skill_name}</Text>
                 <Text>
-                  마나: {skill.start_mana}/{skill.max_mana}
+                  마나: {skill_startingMana}/{skill_skillMana}
                 </Text>
               </VStack>
             </HStack>
             <VStack>
-              <Text color={'gray'}>{skill.description}</Text>
+              <Text color={'gray'}>{skill_desc}</Text>
             </VStack>
             <VStack>
-              <Text>{skill.effect}</Text>
+              <Text>{skill_stats1}</Text>
             </VStack>
           </VStack>
         }
@@ -66,42 +135,42 @@ export default function Champion({pk, name, cost, photos, origin, job, attack_ra
         rounded={'md'}
         p={3}
       >
-        <Link to={`${championRootLink}${pk}`}>
+        <Link to={`${championRootLink}${key}`}>
           <Box
             w={'60px'}
             h={'60px'}
             border={
-              cost === 1
+              cost1 === 1
                 ? '3px solid gray'
-                : cost === 2
+                : cost1 === 2
                 ? '3px solid green'
-                : cost === 3
+                : cost1 === 3
                 ? '3px solid blue'
-                : cost === 4
+                : cost1 === 4
                 ? '3px solid purple'
-                : cost === 5
+                : cost1 === 5
                 ? '3px solid gold'
                 : '3px solid black'
             }
             borderRadius={'2xl'}
             position={'relative'}
           >
-            <Image w={'full'} h={'full'} rounded={'13px'} src={photos} />
+            <Image w={'full'} h={'full'} rounded={'13px'} src={imageUrl} />
 
             <Box
               position={'absolute'} // 부모 요소를 기준으로 절대적으로 위치
               top={0} // 부모 요소의 위쪽에 배치
               right={0} // 부모 요소의 오른쪽에 배치
               bg={
-                cost === 1
+                cost1 === 1
                   ? 'gray'
-                  : cost === 2
+                  : cost1 === 2
                   ? 'green'
-                  : cost === 3
+                  : cost1 === 3
                   ? 'blue'
-                  : cost === 4
+                  : cost1 === 4
                   ? 'purple'
-                  : cost === 5
+                  : cost1 === 5
                   ? 'gold'
                   : undefined
               } // 배경색 지정
@@ -117,7 +186,7 @@ export default function Champion({pk, name, cost, photos, origin, job, attack_ra
                 fontSize={'13px'}
                 color={'white'}
               >
-                ${cost}
+                ${cost1}
               </Text>
             </Box>
             <HStack justifyContent={'center'}>

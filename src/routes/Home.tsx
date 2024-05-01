@@ -51,21 +51,21 @@ export default function Home() {
   const radiantItemArr: IItems[] = [];
   const etcItemArr: IItems[] = [];
 
-  itemsDate?.map((iele) => {
-    iele.tags === 'basic'
-      ? basicItemArr.push(iele)
-      : iele.tags === 'normal'
-      ? normalItemArr.push(iele)
-      : iele.tags === 'emblem'
-      ? emblemItemArr.push(iele)
-      : iele.tags === 'support'
-      ? supportItemArr.push(iele)
-      : iele.tags === 'artifact'
-      ? artifactItemArr.push(iele)
-      : iele.tags === 'radiant'
-      ? radiantItemArr.push(iele)
-      : etcItemArr.push(iele);
-  });
+  // itemsDate?.map((iele: IComp) => {
+  //   iele.tags === 'basic'
+  //     ? basicItemArr.push(iele)
+  //     : iele.tags === 'normal'
+  //     ? normalItemArr.push(iele)
+  //     : iele.tags === 'emblem'
+  //     ? emblemItemArr.push(iele)
+  //     : iele.tags === 'support'
+  //     ? supportItemArr.push(iele)
+  //     : iele.tags === 'artifact'
+  //     ? artifactItemArr.push(iele)
+  //     : iele.tags === 'radiant'
+  //     ? radiantItemArr.push(iele)
+  //     : etcItemArr.push(iele);
+  // });
 
   normalItemArr.forEach((normalItemArrEle) => {
     basicItemArr.forEach((basicItemArrEle) => {
@@ -203,9 +203,6 @@ export default function Home() {
         effect_4: '',
         effect_5: '',
         effect_6: '',
-        photo: '',
-        stack: '',
-        tier: '',
       };
 
       originData?.forEach((origin_ele) => {
@@ -214,15 +211,12 @@ export default function Home() {
             synergyName: name,
             frequency: count,
             description: origin_ele.description,
-            effect_1: origin_ele.effect_1,
-            effect_2: origin_ele.effect_2,
-            effect_3: origin_ele.effect_3,
-            effect_4: origin_ele.effect_4,
-            effect_5: origin_ele.effect_5,
-            effect_6: origin_ele.effect_6,
-            photo: origin_ele.photos[1]?.file,
-            stack: origin_ele.stack.stack,
-            tier: origin_ele.tier.name,
+            effect_1: origin_ele.stats_1,
+            effect_2: origin_ele.stats_2,
+            effect_3: origin_ele.stats_3,
+            effect_4: origin_ele.stats_4,
+            effect_5: origin_ele.stats_5,
+            effect_6: origin_ele.stats_6,
           };
         }
       });
@@ -231,16 +225,13 @@ export default function Home() {
           entry = {
             synergyName: name,
             frequency: count,
-            description: job_ele.description,
-            effect_1: job_ele.effect_1,
-            effect_2: job_ele.effect_2,
-            effect_3: job_ele.effect_3,
-            effect_4: job_ele.effect_4,
-            effect_5: job_ele.effect_5,
-            effect_6: job_ele.effect_6,
-            photo: job_ele.photos[1]?.file,
-            stack: job_ele.stack.stack,
-            tier: job_ele.tier.name,
+            description: origin_ele.description,
+            effect_1: origin_ele.stats_1,
+            effect_2: origin_ele.stats_2,
+            effect_3: origin_ele.stats_3,
+            effect_4: origin_ele.stats_4,
+            effect_5: origin_ele.stats_5,
+            effect_6: origin_ele.stats_6,
           };
         }
       });
@@ -376,14 +367,55 @@ export default function Home() {
                   {comp.elements?.map((compEle) => (
                     <Box>
                       <Champion
-                        pk={compEle.champion.id}
-                        name={compEle.champion.name}
-                        cost={compEle.champion.cost}
-                        photos={compEle.champion.photos[0].file}
-                        origin={compEle.champion.origin}
-                        job={compEle.champion.job}
-                        attack_range={compEle.champion.attack_range}
-                        skill={compEle.champion.skill}
+                        key={compEle.key}
+                        name={compEle.name}
+                        cost1={compEle.cost}
+                        imageUrl={compEle.imageUrl}
+                        attackRange={compEle.attack_range}
+                        // skill_name={allChampionsData_ele.skill_name}
+                        // skill_imageUrl={allChampionsData_ele.skill_imageUrl}
+                        // skill_desc={allChampionsData_ele.skill_desc}
+                        // skill_startingMana={allChampionsData_ele.skill_startingMana}
+                        // skill_skillMana={allChampionsData_ele.skill_skillMana}
+                        // skill_stats1={allChampionsData_ele.skill_stats1}
+                        ingameKey={''}
+                        splashUrl={''}
+                        traits1={''}
+                        traits2={''}
+                        traits3={''}
+                        traits4={''}
+                        isHiddenGuide={false}
+                        isHiddenLanding={false}
+                        isHiddenTeamBuiler={false}
+                        cost2={0}
+                        cost3={0}
+                        health1={0}
+                        health2={0}
+                        health3={0}
+                        attackDamage1={0}
+                        attackDamage2={0}
+                        attackDamage3={0}
+                        damagePerSecond1={0}
+                        damagePerSecond2={0}
+                        damagePerSecond3={0}
+                        attackSpeed={0}
+                        armor={0}
+                        magicalResistance={0}
+                        recommendItems1={''}
+                        recommendItems2={''}
+                        recommendItems3={''}
+                        recommendItems4={''}
+                        recommendItems5={''}
+                        skill_stats2={''}
+                        skill_stats3={''}
+                        skill_stats4={''}
+                        skill_stats5={''}
+                        skill_name={''}
+                        skill_imageUrl={''}
+                        skill_desc={''}
+                        skill_startingMana={0}
+                        skill_skillMana={0}
+                        skill_stats1={''}
                       />
                       {compEle.recommendedItem1 ? (
                         <HStack gap="3px" justifyContent="center" position="absolute">

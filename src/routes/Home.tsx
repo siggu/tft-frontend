@@ -1,6 +1,6 @@
 import {Box, Container, HStack, Text, VStack, Image, Tooltip, Button} from '@chakra-ui/react';
 import {useQuery} from '@tanstack/react-query';
-import {getComps, getSynergyJobs, getSynergyOrigins, getItems} from '../api';
+import {getComps, getSynergies, getItems} from '../api';
 import IComp from '../components/types';
 import ISynergy from '../components/types';
 import IItems from '../components/types';
@@ -27,15 +27,11 @@ export default function Home() {
     queryKey: ['comps'],
     queryFn: getComps,
   });
-  // synergy origins api - get
-  const {data: originData, isLoading: originIsLoading} = useQuery<ISynergy[]>({
+
+  // 시너지 get
+  const {data: synergiesData, isLoading: isSynergiesLoading} = useQuery<ISynergy[]>({
     queryKey: ['origins'],
-    queryFn: getSynergyOrigins,
-  });
-  // synergy jobs api - get
-  const {data: jobData, isLoading: jobIsLoading} = useQuery<ISynergy[]>({
-    queryKey: ['jobs'],
-    queryFn: getSynergyJobs,
+    queryFn: getSynergies,
   });
 
   // 아이템 가져오기
@@ -205,36 +201,36 @@ export default function Home() {
         effect_6: '',
       };
 
-      originData?.forEach((origin_ele) => {
-        if (origin_ele.name === name) {
-          entry = {
-            synergyName: name,
-            frequency: count,
-            description: origin_ele.description,
-            effect_1: origin_ele.stats_1,
-            effect_2: origin_ele.stats_2,
-            effect_3: origin_ele.stats_3,
-            effect_4: origin_ele.stats_4,
-            effect_5: origin_ele.stats_5,
-            effect_6: origin_ele.stats_6,
-          };
-        }
-      });
-      jobData?.forEach((job_ele) => {
-        if (job_ele.name === name) {
-          entry = {
-            synergyName: name,
-            frequency: count,
-            description: job_ele.description,
-            effect_1: job_ele.stats_1,
-            effect_2: job_ele.stats_2,
-            effect_3: job_ele.stats_3,
-            effect_4: job_ele.stats_4,
-            effect_5: job_ele.stats_5,
-            effect_6: job_ele.stats_6,
-          };
-        }
-      });
+      // originData?.forEach((origin_ele) => {
+      //   if (origin_ele.name === name) {
+      //     entry = {
+      //       synergyName: name,
+      //       frequency: count,
+      //       description: origin_ele.description,
+      //       effect_1: origin_ele.stats_1,
+      //       effect_2: origin_ele.stats_2,
+      //       effect_3: origin_ele.stats_3,
+      //       effect_4: origin_ele.stats_4,
+      //       effect_5: origin_ele.stats_5,
+      //       effect_6: origin_ele.stats_6,
+      //     };
+      //   }
+      // });
+      // jobData?.forEach((job_ele) => {
+      //   if (job_ele.name === name) {
+      //     entry = {
+      //       synergyName: name,
+      //       frequency: count,
+      //       description: job_ele.description,
+      //       effect_1: job_ele.stats_1,
+      //       effect_2: job_ele.stats_2,
+      //       effect_3: job_ele.stats_3,
+      //       effect_4: job_ele.stats_4,
+      //       effect_5: job_ele.stats_5,
+      //       effect_6: job_ele.stats_6,
+      //     };
+      //   }
+      // });
       // compArray.push(entry);
     });
     synergiesArr.push(compArray);
@@ -367,7 +363,7 @@ export default function Home() {
                   {comp.elements?.map((compEle) => (
                     <Box>
                       <Champion
-                        key={compEle.key}
+                        championKey={compEle.key}
                         name={compEle.name}
                         cost1={compEle.cost}
                         imageUrl={compEle.imageUrl}
@@ -398,7 +394,7 @@ export default function Home() {
                         damagePerSecond1={0}
                         damagePerSecond2={0}
                         damagePerSecond3={0}
-                        attackSpeed={0}
+                        attackSpeed={''}
                         armor={0}
                         magicalResistance={0}
                         recommendItems1={''}

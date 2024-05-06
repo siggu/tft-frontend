@@ -1,19 +1,21 @@
 import {Box, Text, VStack, Image, HStack, Tooltip} from '@chakra-ui/react';
-import {Link} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import ISynergy from './types.d';
 import ISkill from './types.d';
 import {FaCoins} from 'react-icons/fa';
+import {useQuery} from '@tanstack/react-query';
+import {getSynergies} from '../api';
 
-interface IMiniChampionPortrait {
-  key: string;
-  ingameKey: string;
+interface IChampionData {
+  championKey: string;
+  ingameKey: string | null;
   name: string;
   imageUrl: string;
   splashUrl: string;
-  traits1: string;
-  traits2: string;
-  traits3: string;
-  traits4: string;
+  traits1: string | null;
+  traits2: string | null;
+  traits3: string | null;
+  traits4: string | null;
   isHiddenGuide: boolean;
   isHiddenLanding: boolean;
   isHiddenTeamBuiler: boolean;
@@ -30,28 +32,28 @@ interface IMiniChampionPortrait {
   damagePerSecond2: number;
   damagePerSecond3: number;
   attackRange: number;
-  attackSpeed: number;
+  attackSpeed: string | number;
   armor: number;
   magicalResistance: number;
-  recommendItems1: string;
-  recommendItems2: string;
-  recommendItems3: string;
-  recommendItems4: string;
-  recommendItems5: string;
+  recommendItems1: string | null;
+  recommendItems2: string | null;
+  recommendItems3: string | null;
+  recommendItems4: string | null;
+  recommendItems5: string | null;
   skill_name: string;
   skill_imageUrl: string;
   skill_desc: string;
   skill_startingMana: number;
   skill_skillMana: number;
-  skill_stats1: string;
-  skill_stats2: string;
-  skill_stats3: string;
-  skill_stats4: string;
-  skill_stats5: string;
+  skill_stats1: string | null;
+  skill_stats2: string | null;
+  skill_stats3: string | null;
+  skill_stats4: string | null;
+  skill_stats5: string | null;
 }
 
 export default function Champion({
-  key,
+  championKey,
   ingameKey,
   name,
   imageUrl,
@@ -94,14 +96,35 @@ export default function Champion({
   skill_stats3,
   skill_stats4,
   skill_stats5,
-}: IMiniChampionPortrait) {
-  const championRootLink = 'http://localhost:3000/champions/';
+}: IChampionData) {
+  // 시너지 가져오기
+  const {data: synergiesData, isLoading: isSynergiesLoading} = useQuery({
+    queryKey: ['synergy'],
+    queryFn: getSynergies,
+  });
+
+  // 시너지 데이터로부터 이름 가져오는 함수
+  const getTraitName = (key: string): string => {
+    const synergy = synergiesData.find((syn: {key: string}) => syn.key === key);
+    return synergy ? synergy.name : '';
+  };
+
+  // 계열과 직업 리스트 초기화
+  const traitsList: string[] = [];
+  const jobsList: string[] = [];
+
+  // if (synergiesData) {
+  //   for (let i = 1; i <= 4; i++) {
+  //     const traitKey =
+  //   }
+  // }
+
   return (
     <VStack>
       <Tooltip
         hasArrow
         label={
-          <VStack as={'b'} gap={3} alignItems={'flex-start'} w={'300px'}>
+          <VStack key={championKey} as={'b'} gap={3} alignItems={'flex-start'} w={'300px'}>
             <HStack>
               <Text>{name}</Text>
               <HStack>
@@ -111,6 +134,28 @@ export default function Champion({
                 <Text>{cost1}</Text>
               </HStack>
             </HStack>
+            <VStack alignItems={'left'}>
+              {/* 계열 출력 */}
+              {traits1 && (
+                <HStack>
+                  <Text mr={5}>계열</Text>
+                  <HStack>
+                    {/* 계열 이미지와 이름 */}
+                    <Text>{getTraitName(traits1)}</Text>
+                  </HStack>
+                </HStack>
+              )}
+              {/* 직업 출력 */}
+              {traits2 && (
+                <HStack>
+                  <Text mr={5}>직업</Text>
+                  <HStack>
+                    {/* 직업 이미지와 이름 */}
+                    <Text>{getTraitName(traits2)}</Text>
+                  </HStack>
+                </HStack>
+              )}
+            </VStack>
             <HStack alignItems={'flex-start'}>
               <Text>공격 사거리: {attackRange}</Text>
             </HStack>
@@ -123,11 +168,19 @@ export default function Champion({
                 </Text>
               </VStack>
             </HStack>
-            <VStack>
-              <Text color={'gray'}>{skill_desc}</Text>
+            <VStack spacing={0}>
+              <Text color={'gray'} dangerouslySetInnerHTML={{__html: skill_desc.replace(/<br>/g, '<br />')}} />
+            </VStack>
+            <VStack alignItems={'left'} spacing={0}>
+              <>
+                {skill_stats1 ? <Text>{skill_stats1}</Text> : null}
+                {skill_stats2 ? <Text>{skill_stats2}</Text> : null}
+                {skill_stats3 ? <Text>{skill_stats3}</Text> : null}
+                {skill_stats4 ? <Text>{skill_stats4}</Text> : null}
+              </>
             </VStack>
             <VStack>
-              <Text>{skill_stats1}</Text>
+              <Text>추천 아이템</Text>
             </VStack>
           </VStack>
         }
@@ -135,7 +188,7 @@ export default function Champion({
         rounded={'md'}
         p={3}
       >
-        <Link to={`${championRootLink}${key}`}>
+        <Link to={`/champions/${championKey}`}>
           <Box
             w={'60px'}
             h={'60px'}

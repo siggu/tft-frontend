@@ -1,5 +1,5 @@
 import {useQuery} from '@tanstack/react-query';
-import {getChampion, getChampions} from '../api';
+import {getChampion, getChampions, getSynergies} from '../api';
 import {useParams} from 'react-router-dom';
 import {FaFlask, FaCoins} from 'react-icons/fa';
 import {Box, Container, HStack, Image, Text, VStack, Grid, useMediaQuery} from '@chakra-ui/react';
@@ -15,15 +15,50 @@ export default function ChampionDetail() {
   });
 
   // 모든 챔피언 가져오기
-
   const {data: allChampionsData, isLoading: isAllChampionDataLoading} = useQuery<IChampion[]>({
     queryKey: ['champions'],
     queryFn: getChampions,
   });
 
+  // 시너지 가져오기
+  const {data: synergiesData, isLoading: isSynergiesLoading} = useQuery({
+    queryKey: ['synergy'],
+    queryFn: getSynergies,
+  });
+
   const [mediaSize] = useMediaQuery('(min-width: 1200px)');
   allChampionsData?.sort((a, b) => a.cost - b.cost);
-  console.log(allChampionsData);
+
+  // 시너지 데이터로부터 이름 가져오는 함수
+  const getTraitName = (key: string): string => {
+    const synergy = synergiesData.find((syn: {key: string}) => syn.key === key);
+    return synergy ? synergy.name : '';
+  };
+
+  // 계열과 직업 리스트 초기화
+  const traitsList: string[] = [];
+  const jobsList: string[] = [];
+
+  // 챔피언 데이터가 있고, 시너지 데이터가 있는 경우에만 처리
+  if (championData && synergiesData) {
+    for (let i = 1; i <= 4; i++) {
+      const traitKey = `traits${i}` as keyof IChampion;
+      if (championData[traitKey]) {
+        const traitKeys = championData[traitKey]?.split(',');
+        // 각 계열 또는 직업을 적절한 리스트에 추가
+        traitKeys?.forEach((trait: string) => {
+          const synergy = synergiesData.find((syn: {key: any}) => syn.key === trait);
+          if (synergy) {
+            if (synergy._type === 'CLASS') {
+              jobsList.push(getTraitName(trait));
+            } else {
+              traitsList.push(getTraitName(trait));
+            }
+          }
+        });
+      }
+    }
+  }
 
   return (
     <VStack flexDir={mediaSize ? 'row' : 'column'} gap={'0px'}>
@@ -37,61 +72,60 @@ export default function ChampionDetail() {
         top={mediaSize ? '-320px' : '0px'}
       >
         <HStack gap={'5px'} flexWrap="wrap" p={mediaSize ? '0px' : '20px'}>
-          {allChampionsData?.map((allChampionsData_ele) => (
-            <Champion
-              key={allChampionsData_ele.key}
-              name={allChampionsData_ele.name}
-              cost1={allChampionsData_ele.cost1}
-              imageUrl={allChampionsData_ele.imageUrl}
-              attackRange={allChampionsData_ele.attackRange}
-              // skill_name={allChampionsData_ele.skill_name}
-              // skill_imageUrl={allChampionsData_ele.skill_imageUrl}
-              // skill_desc={allChampionsData_ele.skill_desc}
-              // skill_startingMana={allChampionsData_ele.skill_startingMana}
-              // skill_skillMana={allChampionsData_ele.skill_skillMana}
-              // skill_stats1={allChampionsData_ele.skill_stats1}
-              ingameKey={''}
-              splashUrl={''}
-              traits1={''}
-              traits2={''}
-              traits3={''}
-              traits4={''}
-              isHiddenGuide={false}
-              isHiddenLanding={false}
-              isHiddenTeamBuiler={false}
-              cost2={0}
-              cost3={0}
-              health1={0}
-              health2={0}
-              health3={0}
-              attackDamage1={0}
-              attackDamage2={0}
-              attackDamage3={0}
-              damagePerSecond1={0}
-              damagePerSecond2={0}
-              damagePerSecond3={0}
-              attackSpeed={0}
-              armor={0}
-              magicalResistance={0}
-              recommendItems1={''}
-              recommendItems2={''}
-              recommendItems3={''}
-              recommendItems4={''}
-              recommendItems5={''}
-              skill_stats2={''}
-              skill_stats3={''}
-              skill_stats4={''}
-              skill_stats5={''}
-              skill_name={''}
-              skill_imageUrl={''}
-              skill_desc={''}
-              skill_startingMana={0}
-              skill_skillMana={0}
-              skill_stats1={''}
-            />
-          ))}
+          {allChampionsData?.map(
+            (allChampionsData_ele, index) =>
+              index > 1 && (
+                <Champion
+                  key={allChampionsData_ele.key}
+                  championKey={allChampionsData_ele.key}
+                  name={allChampionsData_ele.name}
+                  cost1={allChampionsData_ele.cost1}
+                  imageUrl={allChampionsData_ele.imageUrl}
+                  attackRange={allChampionsData_ele.attackRange}
+                  ingameKey={allChampionsData_ele.ingameKey}
+                  splashUrl={allChampionsData_ele.splashUrl}
+                  traits1={allChampionsData_ele.traits1}
+                  traits2={allChampionsData_ele.traits2}
+                  traits3={allChampionsData_ele.traits3}
+                  traits4={allChampionsData_ele.traits4}
+                  isHiddenGuide={allChampionsData_ele.isHiddenGuide}
+                  isHiddenLanding={allChampionsData_ele.isHiddenLanding}
+                  isHiddenTeamBuiler={allChampionsData_ele.isHiddenTeamBuiler}
+                  cost2={allChampionsData_ele.cost2}
+                  cost3={allChampionsData_ele.cost3}
+                  health1={allChampionsData_ele.health1}
+                  health2={allChampionsData_ele.health2}
+                  health3={allChampionsData_ele.health3}
+                  attackDamage1={allChampionsData_ele.attackDamage1}
+                  attackDamage2={allChampionsData_ele.attackDamage2}
+                  attackDamage3={allChampionsData_ele.attackDamage3}
+                  damagePerSecond1={allChampionsData_ele.damagePerSecond1}
+                  damagePerSecond2={allChampionsData_ele.damagePerSecond2}
+                  damagePerSecond3={allChampionsData_ele.damagePerSecond3}
+                  attackSpeed={allChampionsData_ele.attackSpeed}
+                  armor={allChampionsData_ele.armor}
+                  magicalResistance={0}
+                  recommendItems1={allChampionsData_ele.recommendItems1}
+                  recommendItems2={allChampionsData_ele.recommendItems2}
+                  recommendItems3={allChampionsData_ele.recommendItems3}
+                  recommendItems4={allChampionsData_ele.recommendItems4}
+                  recommendItems5={allChampionsData_ele.recommendItems5}
+                  skill_stats1={allChampionsData_ele.skill_stats1}
+                  skill_stats2={allChampionsData_ele.skill_stats2}
+                  skill_stats3={allChampionsData_ele.skill_stats3}
+                  skill_stats4={allChampionsData_ele.skill_stats4}
+                  skill_stats5={allChampionsData_ele.skill_stats5}
+                  skill_name={allChampionsData_ele.skill_name}
+                  skill_imageUrl={allChampionsData_ele.skill_imageUrl}
+                  skill_desc={allChampionsData_ele.skill_desc}
+                  skill_startingMana={allChampionsData_ele.skill_startingMana}
+                  skill_skillMana={allChampionsData_ele.skill_skillMana}
+                />
+              )
+          )}
         </HStack>
       </Container>
+
       {/* # 2-1. 챔피언 세부정보 박스 */}
       <Container maxW="1120px" minW="700px" ml={'0px'}>
         <VStack maxW="1120px" p="20px" minW="700px">
@@ -105,11 +139,11 @@ export default function ChampionDetail() {
               borderWidth={1}
               gap={5}
               borderBottom={0}
-              backgroundColor="black"
+              bgImage={championData?.splashUrl}
+              bgPos={mediaSize ? 'left' : 'center'}
               color="white"
             >
               <HStack p={5}>
-                {/* <Image src={championData?.photos[0].file} borderRadius={'20'} /> */}
                 <Text p={5} fontSize={'2xl'} as={'b'}>
                   {championData?.name}
                 </Text>
@@ -118,26 +152,32 @@ export default function ChampionDetail() {
                 <HStack>
                   <Text mr={5}>비용</Text>
                   <FaCoins color="#ffb42c" />
-                  <Text>{championData?.cost}</Text>
+                  <Text>{championData?.cost1}</Text>
                 </HStack>
-                <HStack>
-                  <Text mr={5}>계열</Text>
-                  {/* {championData?.origin.map((value) => (
-                    <>
-                      <Image p={1} w="35px" h="35px" rounded={'2xl'} bgColor={'gray'} src={value.photos[0].file} />
-                      <Text>{value.name}</Text>
-                    </>
-                  ))} */}
-                </HStack>
-                <HStack>
-                  <Text mr={5}>직업</Text>
-                  {/* {championData?.job.map((value) => (
-                    <>
-                      <Image p={1} w="35px" h="35px" rounded={'2xl'} bgColor={'gray'} src={value.photos[0].file} />
-                      <Text>{value.name}</Text>
-                    </>
-                  ))} */}
-                </HStack>
+                {/* 계열 출력 */}
+                {traitsList.length > 0 && (
+                  <HStack>
+                    <Text mr={5}>계열</Text>
+                    {traitsList.map((trait, index) => (
+                      <Text key={index}>
+                        {trait}
+                        {index !== traitsList.length - 1 ? ',' : ''}
+                      </Text>
+                    ))}
+                  </HStack>
+                )}
+                {/* 직업 출력 */}
+                {jobsList.length > 0 && (
+                  <HStack>
+                    <Text mr={5}>직업</Text>
+                    {jobsList.map((job, index) => (
+                      <Text key={index}>
+                        {job}
+                        {index !== jobsList.length - 1 ? ',' : ''}
+                      </Text>
+                    ))}
+                  </HStack>
+                )}
               </VStack>
             </HStack>
 

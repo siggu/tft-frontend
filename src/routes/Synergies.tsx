@@ -1,5 +1,5 @@
 import {useQuery} from '@tanstack/react-query';
-import {getChampions, getSynergyJobs, getSynergyOrigins} from '../api';
+import {getChampions, getSynergies} from '../api';
 import {
   Container,
   VStack,
@@ -25,13 +25,9 @@ import React from 'react';
 import Champion from '../components/Champion';
 
 export default function Synergies() {
-  const {data: originData, isLoading: isOriginLoading} = useQuery<ISynergy[]>({
+  const {data: synergiesData, isLoading: isSynergiesLoading} = useQuery<ISynergy[]>({
     queryKey: ['origins'],
-    queryFn: getSynergyOrigins,
-  });
-  const {data: jobData, isLoading: isJobLoading} = useQuery<ISynergy[]>({
-    queryKey: ['jobs'],
-    queryFn: getSynergyJobs,
+    queryFn: getSynergies,
   });
   const {data: championsData, isLoading: isChampionsLoading} = useQuery<IChampionDetail[]>({
     queryKey: ['champions'],
@@ -39,9 +35,10 @@ export default function Synergies() {
   });
   championsData?.sort((a, b) => a.cost - b.cost);
   console.log(championsData);
+  console.log(synergiesData);
 
-  if (isOriginLoading || isJobLoading || isChampionsLoading) return <div>Loading...</div>;
-  if (!originData || !jobData || !championsData) return <div>Data not available</div>;
+  if (isSynergiesLoading || isChampionsLoading) return <div>Loading...</div>;
+  if (!isSynergiesLoading || !!championsData) return <div>Data not available</div>;
 
   return <div></div>;
 }

@@ -1,10 +1,9 @@
 import {Box, Text, VStack, Image, HStack, Tooltip} from '@chakra-ui/react';
 import {Link, useParams} from 'react-router-dom';
-import ISynergy from './types.d';
-import ISkill from './types.d';
 import {FaCoins} from 'react-icons/fa';
 import {useQuery} from '@tanstack/react-query';
-import {getSynergies} from '../api';
+import {getChampion, getChampions, getSynergies} from '../api';
+import IChampion from '../components/types';
 
 interface IChampionData {
   championKey: string;
@@ -98,33 +97,47 @@ export default function Champion({
   skill_stats5,
 }: IChampionData) {
   // 시너지 가져오기
-  const {data: synergiesData, isLoading: isSynergiesLoading} = useQuery({
+  const {data: synergiesData} = useQuery({
     queryKey: ['synergy'],
     queryFn: getSynergies,
   });
 
-  // 시너지 데이터로부터 이름 가져오는 함수
-  const getTraitName = (key: string): string => {
-    const synergy = synergiesData.find((syn: {key: string}) => syn.key === key);
-    return synergy ? synergy.name : '';
+  // 시너지 데이터로부터 계열 또는 직업의 이름과 이미지 URL을 가져오는 함수
+  const getTraitNamesAndImages = (
+    traits: (string | null)[]
+  ): {classList: {name: string; whiteImageUrl: string}[]; jobsList: {name: string; whiteImageUrl: string}[]} => {
+    const classList: {name: string; whiteImageUrl: string}[] = [];
+    const jobsList: {name: string; whiteImageUrl: string}[] = [];
+
+    if (!synergiesData || synergiesData.length === 0) {
+      return {classList, jobsList};
+    }
+
+    traits.forEach((trait) => {
+      if (trait) {
+        const synergy = synergiesData.find((syn: {key: any}) => syn.key === trait);
+        if (synergy) {
+          if (synergy._type === 'CLASS') {
+            classList.push({name: synergy.name, whiteImageUrl: synergy.whiteImageUrl || ''});
+          } else {
+            jobsList.push({name: synergy.name, whiteImageUrl: synergy.whiteImageUrl || ''});
+          }
+        }
+      }
+    });
+
+    return {classList, jobsList};
   };
 
-  // 계열과 직업 리스트 초기화
-  const traitsList: string[] = [];
-  const jobsList: string[] = [];
-
-  // if (synergiesData) {
-  //   for (let i = 1; i <= 4; i++) {
-  //     const traitKey =
-  //   }
-  // }
+  // 시너지 데이터로부터 계열 또는 직업의 이름과 이미지 URL을 가져옴
+  const {classList, jobsList} = getTraitNamesAndImages([traits1, traits2, traits3, traits4]);
 
   return (
     <VStack>
       <Tooltip
         hasArrow
         label={
-          <VStack key={championKey} as={'b'} gap={3} alignItems={'flex-start'} w={'300px'}>
+          <VStack key={championKey} as={'b'} gap={5} alignItems={'flex-start'} w={'300px'}>
             <HStack>
               <Text>{name}</Text>
               <HStack>
@@ -135,24 +148,30 @@ export default function Champion({
               </HStack>
             </HStack>
             <VStack alignItems={'left'}>
-              {/* 계열 출력 */}
-              {traits1 && (
+              {/* 계열 */}
+              {classList.length > 0 && (
                 <HStack>
-                  <Text mr={5}>계열</Text>
-                  <HStack>
-                    {/* 계열 이미지와 이름 */}
-                    <Text>{getTraitName(traits1)}</Text>
-                  </HStack>
+                  <Text mr={1}>계열</Text>
+                  {classList.map((trait, index) => (
+                    <HStack key={index}>
+                      <Image src={trait.whiteImageUrl} alt={trait.name} boxSize="20px" />
+                      <Text ml={1}>{trait.name}</Text>
+                      {index !== classList.length - 1 ? ',' : ''}
+                    </HStack>
+                  ))}
                 </HStack>
               )}
-              {/* 직업 출력 */}
-              {traits2 && (
+              {/* 직업 */}
+              {jobsList.length > 0 && (
                 <HStack>
-                  <Text mr={5}>직업</Text>
-                  <HStack>
-                    {/* 직업 이미지와 이름 */}
-                    <Text>{getTraitName(traits2)}</Text>
-                  </HStack>
+                  <Text mr={1}>직업</Text>
+                  {jobsList.map((trait, index) => (
+                    <HStack key={index}>
+                      <Image src={trait.whiteImageUrl} alt={trait.name} boxSize="20px" />
+                      <Text ml={1}>{trait.name}</Text>
+                      {index !== jobsList.length - 1 ? ',' : ''}
+                    </HStack>
+                  ))}
                 </HStack>
               )}
             </VStack>

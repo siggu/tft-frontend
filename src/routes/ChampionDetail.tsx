@@ -35,9 +35,19 @@ export default function ChampionDetail() {
     return synergy ? synergy.name : '';
   };
 
+  // 시너지 데이터로부터 이미지 가져오기
+  const getTraitImage = (key: string): string | undefined => {
+    if (!synergiesData || synergiesData.length === 0) {
+      return undefined;
+    }
+
+    const synergy = synergiesData.find((syn: {key: any}) => syn.key === key);
+    return synergy ? synergy.whiteImageUrl : undefined;
+  };
+
   // 계열과 직업 리스트 초기화
-  const traitsList: string[] = [];
-  const jobsList: string[] = [];
+  const classListWithImages: {name: string; whiteImageUrl: string}[] = [];
+  const jobsListWithImages: {name: string; whiteImageUrl: string}[] = [];
 
   // 챔피언 데이터가 있고, 시너지 데이터가 있는 경우에만 처리
   if (championData && synergiesData) {
@@ -50,9 +60,9 @@ export default function ChampionDetail() {
           const synergy = synergiesData.find((syn: {key: any}) => syn.key === trait);
           if (synergy) {
             if (synergy._type === 'CLASS') {
-              jobsList.push(getTraitName(trait));
+              classListWithImages.push({name: getTraitName(trait), whiteImageUrl: getTraitImage(trait) || ''});
             } else {
-              traitsList.push(getTraitName(trait));
+              jobsListWithImages.push({name: getTraitName(trait), whiteImageUrl: getTraitImage(trait) || ''});
             }
           }
         });
@@ -150,31 +160,32 @@ export default function ChampionDetail() {
               </HStack>
               <VStack p={5} alignItems={'flex-start'} bgColor={'#2b2e37'}>
                 <HStack>
-                  <Text mr={5}>비용</Text>
+                  <Text pr={1}>비용</Text>
                   <FaCoins color="#ffb42c" />
-                  <Text>{championData?.cost1}</Text>
+                  <Text pl={1}>{championData?.cost1}</Text>
                 </HStack>
-                {/* 계열 출력 */}
-                {traitsList.length > 0 && (
-                  <HStack>
-                    <Text mr={5}>계열</Text>
-                    {traitsList.map((trait, index) => (
-                      <Text key={index}>
-                        {trait}
-                        {index !== traitsList.length - 1 ? ',' : ''}
-                      </Text>
+                {/* 이미지와 함께 계열 및 직업 이름 출력 */}
+                {classListWithImages.length > 0 && (
+                  <HStack gap={2}>
+                    <Text>계열</Text>
+                    {classListWithImages.map((trait, index) => (
+                      <HStack key={index}>
+                        <Image src={trait.whiteImageUrl} alt={trait.name} boxSize="20px" />
+                        <Text>{trait.name}</Text>
+                        {index !== classListWithImages.length - 1 ? ',' : ''}
+                      </HStack>
                     ))}
                   </HStack>
                 )}
-                {/* 직업 출력 */}
-                {jobsList.length > 0 && (
-                  <HStack>
-                    <Text mr={5}>직업</Text>
-                    {jobsList.map((job, index) => (
-                      <Text key={index}>
-                        {job}
-                        {index !== jobsList.length - 1 ? ',' : ''}
-                      </Text>
+                {jobsListWithImages.length > 0 && (
+                  <HStack gap={2}>
+                    <Text>직업</Text>
+                    {jobsListWithImages.map((trait, index) => (
+                      <HStack key={index}>
+                        <Image src={trait.whiteImageUrl} alt={trait.name} boxSize="20px" />
+                        <Text>{trait.name}</Text>
+                        {index !== jobsListWithImages.length - 1 ? ',' : ''}
+                      </HStack>
                     ))}
                   </HStack>
                 )}

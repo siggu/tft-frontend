@@ -2,7 +2,7 @@ import {Box, Text, VStack, Image, HStack, Tooltip} from '@chakra-ui/react';
 import {Link, useParams} from 'react-router-dom';
 import {FaCoins} from 'react-icons/fa';
 import {useQuery} from '@tanstack/react-query';
-import {getChampion, getChampions, getSynergies} from '../api';
+import {getChampion, getChampions, getItems, getSynergies} from '../api';
 import IChampion from '../components/types';
 
 interface IChampionData {
@@ -132,10 +132,33 @@ export default function Champion({
   // 시너지 데이터로부터 계열 또는 직업의 이름과 이미지 URL을 가져옴
   const {classList, jobsList} = getTraitNamesAndImages([traits1, traits2, traits3, traits4]);
 
+  // 아이템 가져오기
+  const {data: itemData} = useQuery({
+    queryKey: ['item'],
+    queryFn: getItems,
+  });
+
+  // 아이템 데이터로부터 아이템의 이미지 URL을 가져오는 함수
+  const getItemImageUrl = (itemName: string): string | undefined => {
+    if (!itemData || !itemName) return undefined; // 아이템 데이터가 없거나 itemName이 없는 경우 undefined 반환
+
+    // itemData에서 itemName과 일치하는 아이템 찾기
+    const item = itemData.find((item: {ingameKey: string; name: string}) => item.ingameKey === itemName);
+
+    // 일치하는 아이템이 없을 경우 undefined 반환
+    if (!item) return undefined;
+
+    return item.imageUrl; // 아이템의 이미지 URL 반환
+  };
+
+  // 아이템 추천을 위한 이미지 URL 가져오기
+  const recommendedItems = [recommendItems1, recommendItems2, recommendItems3, recommendItems4, recommendItems5];
+
   return (
     <VStack>
       <Tooltip
         hasArrow
+        placement="right"
         label={
           <VStack key={championKey} as={'b'} gap={5} alignItems={'flex-start'} w={'300px'}>
             <HStack>
@@ -182,9 +205,13 @@ export default function Champion({
               <Image w={'40px'} src={skill_imageUrl} />
               <VStack gap={0} alignItems={'flex-start'}>
                 <Text color={'orange'}>{skill_name}</Text>
-                <Text>
-                  마나: {skill_startingMana}/{skill_skillMana}
-                </Text>
+                {skill_startingMana === 0 && skill_skillMana === 0 ? (
+                  <Text>마나 없음</Text>
+                ) : (
+                  <Text>
+                    마나: {skill_startingMana}/{skill_skillMana}
+                  </Text>
+                )}
               </VStack>
             </HStack>
             <VStack spacing={0}>
@@ -198,8 +225,14 @@ export default function Champion({
                 {skill_stats4 ? <Text>{skill_stats4}</Text> : null}
               </>
             </VStack>
-            <VStack>
+            <VStack alignItems={'flex-start'}>
               <Text>추천 아이템</Text>
+              <HStack>
+                {recommendedItems.map((itemName, index) => {
+                  const imageUrl = getItemImageUrl(itemName || ''); // itemName이 null일 경우 빈 문자열로 처리
+                  return imageUrl ? <Image key={index} src={imageUrl} alt={itemName || ''} boxSize="40px" /> : <></>;
+                })}
+              </HStack>
             </VStack>
           </VStack>
         }

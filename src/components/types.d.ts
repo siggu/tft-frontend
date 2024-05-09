@@ -1,4 +1,5 @@
 export default interface ISynergy {
+  tags: string;
   key: string;
   ingameKey: string;
   name: string;
@@ -102,17 +103,25 @@ export default interface IEncounter {
   photos: IPhoto[];
 }
 export default interface IItems {
-  pk: number;
   key: string;
+  ingameKey: string;
   name: string;
-  inGameKey: string;
   description: string;
-  effect: string;
-  generableItem: boolean;
+  shortDesc: string;
+  imageUrl: string;
   composition1: string;
   composition2: string;
-  tags: string;
-  imageUrl: string;
+  isFromItem: boolean;
+  isNormal: boolean;
+  isEmblem: boolean;
+  isSupport: boolean;
+  isArtifact: boolean;
+  isRadiant: boolean;
+  isUnique: boolean;
+  isNew: boolean;
+  tag1: string;
+  tag2: string;
+  tag3: string;
 }
 
 export default interface IAugments {

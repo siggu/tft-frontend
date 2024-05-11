@@ -416,7 +416,7 @@ export default function Home() {
                       {compEle.recommendedItem1 ? (
                         <HStack gap="3px" justifyContent="center" position="absolute">
                           <Box w="17px" h="17px">
-                            <Item
+                            {/* <Item
                               pk={compEle.recommendedItem1.id}
                               name={compEle.recommendedItem1.name}
                               key={compEle.recommendedItem1.key}
@@ -428,10 +428,10 @@ export default function Home() {
                               composition2={compEle.recommendedItem1.composition2}
                               tags={compEle.recommendedItem1.tags}
                               imageUrl={compEle.recommendedItem1.imageUrl}
-                            />
+                            /> */}
                           </Box>
                           <Box w="17px" h="17px">
-                            <Item
+                            {/* <Item
                               pk={compEle.recommendedItem2.id}
                               name={compEle.recommendedItem2.name}
                               key={compEle.recommendedItem2.key}
@@ -443,10 +443,10 @@ export default function Home() {
                               composition2={compEle.recommendedItem2.composition2}
                               tags={compEle.recommendedItem2.tags}
                               imageUrl={compEle.recommendedItem2.imageUrl}
-                            />
+                            /> */}
                           </Box>
                           <Box w="17px" h="17px">
-                            <Item
+                            {/* <Item
                               pk={compEle.recommendedItem3.id}
                               name={compEle.recommendedItem3.name}
                               key={compEle.recommendedItem3.key}
@@ -458,7 +458,7 @@ export default function Home() {
                               composition2={compEle.recommendedItem3.composition2}
                               tags={compEle.recommendedItem3.tags}
                               imageUrl={compEle.recommendedItem3.imageUrl}
-                            />
+                            /> */}
                           </Box>
                         </HStack>
                       ) : null}

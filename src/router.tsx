@@ -37,7 +37,7 @@ const router = createBrowserRouter([
         element: <Items />,
       },
       {
-        path: 'augments',
+        path: 'augments/:tier',
         element: <Augments />,
       },
       {

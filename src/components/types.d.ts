@@ -1,4 +1,5 @@
 export default interface ISynergy {
+  filter(arg0: (augment: {tier: string}) => boolean): unknown;
   tags: string;
   key: string;
   ingameKey: string;
@@ -125,11 +126,18 @@ export default interface IItems {
 }
 
 export default interface IAugments {
-  id: number;
-  photos: IPhoto[];
-  tier: string;
+  key: string;
+  ingameKey: string;
   name: string;
-  description: string;
+  desc: string;
+  imageUrl: string;
+  isHidden: boolean | null;
+  tier: number;
+  championIngameKey: null;
+  legendCode1: string | null;
+  legendCode2: string | null;
+  tag1: string | null;
+  tag2: string | null;
 }
 
 export interface IPortalType {

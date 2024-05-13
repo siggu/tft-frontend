@@ -1,8 +1,9 @@
+import React from 'react';
+import {useNavigate, useParams, Link} from 'react-router-dom';
 import {useQuery} from '@tanstack/react-query';
 import {getAugments} from '../api';
-import {Box, Container, Divider, Grid, HStack, Image, Text, VStack} from '@chakra-ui/react';
+import {Box, Container, HStack, Image, Text, VStack} from '@chakra-ui/react';
 import IAugments from './../components/types.d';
-import {useRef} from 'react';
 
 export default function Augments() {
   const {data, isLoading} = useQuery<IAugments[]>({
@@ -10,23 +11,19 @@ export default function Augments() {
     queryFn: getAugments,
   });
 
-  const silverRef = useRef<HTMLDivElement>(null);
-  const goldRef = useRef<HTMLDivElement>(null);
-  const prismaticRef = useRef<HTMLDivElement>(null);
-
-  const scrollToRef = (ref: React.MutableRefObject<HTMLDivElement | null>) => {
-    if (ref.current) {
-      ref.current.scrollIntoView({behavior: 'smooth'});
-    }
-  };
+  const {tier} = useParams();
+  const navigate = useNavigate();
 
   if (isLoading) return <div>Loading...</div>;
   if (!data) return <div>Data not available</div>;
 
-  // tier 별로 데이터를 분류
-  const silverAugments = data.filter((augment) => augment.tier === 'silver');
-  const goldAugments = data.filter((augment) => augment.tier === 'gold');
-  const prismaticAugments = data.filter((augment) => augment.tier === 'prismatic');
+  // 현재 선택된 탭에 따라 데이터 필터링
+  const filteredAugments = data.filter(
+    (augment) =>
+      (tier === 'silver' && augment.tier === 1) ||
+      (tier === 'gold' && augment.tier === 2) ||
+      (tier === 'prismatic' && augment.tier === 3)
+  );
 
   return (
     <Container p={5} maxW={'container.xl'}>
@@ -35,121 +32,48 @@ export default function Augments() {
           증강
         </Text>
       </Box>
-      {/* 스크롤 이동 */}
-      <Box bg={'#27282e'} mx={20} mb={5}>
-        <HStack justifyContent={'space-between'}>
-          {/* 3등분 레이아웃 및 스크롤 기능 적용 */}
-          <Box
-            p={5}
-            _hover={{bg: '#d0a28a'}}
-            h={'100%'}
-            w="33.33%"
-            ref={silverRef}
-            onClick={() => scrollToRef(silverRef)}
-            cursor={'pointer'}
-          >
-            <Text fontWeight={'700'} fontSize={'13px'} color={'white'} textAlign="center">
+      <Box bg={'#27282e'} mx={20} mb={5} display="flex" justifyContent="space-between">
+        {/* 3등분 레이아웃 및 스크롤 기능 적용 */}
+        <Box p={5} _hover={{bg: '#d0a28a'}} width="33.33%" cursor={'pointer'} textAlign="center">
+          <Link to={'/augments/silver'}>
+            <Text fontWeight={'700'} fontSize={'13px'} color={'white'}>
               실버
             </Text>
-          </Box>
-          <Box
-            p={5}
-            _hover={{bg: '#d0a28a'}}
-            w="33.33%"
-            ref={goldRef}
-            onClick={() => scrollToRef(goldRef)}
-            cursor={'pointer'}
-          >
-            <Text fontWeight={'700'} fontSize={'13px'} color={'white'} textAlign="center">
+          </Link>
+        </Box>
+        <Box p={5} _hover={{bg: '#d0a28a'}} width="33.33%" cursor={'pointer'} textAlign="center">
+          <Link to={'/augments/gold'}>
+            <Text fontWeight={'700'} fontSize={'13px'} color={'white'}>
               골드
             </Text>
-          </Box>
-          <Box
-            p={5}
-            _hover={{bg: '#d0a28a'}}
-            w="33.33%"
-            ref={prismaticRef}
-            onClick={() => scrollToRef(prismaticRef)}
-            cursor={'pointer'}
-          >
-            <Text fontWeight={'700'} fontSize={'13px'} color={'white'} textAlign="center">
+          </Link>
+        </Box>
+        <Box p={5} _hover={{bg: '#d0a28a'}} width="33.33%" cursor={'pointer'} textAlign="center">
+          <Link to={'/augments/prismatic'}>
+            <Text fontWeight={'700'} fontSize={'13px'} color={'white'}>
               프리즘
             </Text>
-          </Box>
-        </HStack>
-      </Box>
-
-      {/* 실버 티어 */}
-      <Box ref={silverRef} mx={20} border={'1px solid gray'}>
-        <Box bg={'#27282e'} p={3} borderBottom={0}>
-          <Text as={'b'} color={'white'}>
-            실버
-          </Text>
+          </Link>
         </Box>
-        {silverAugments.map((augment, index) => (
-          <Box p={3} key={index}>
+      </Box>
+      <VStack mx={20} mb={5} alignItems={'flex-start'}>
+        {filteredAugments.map((augment) => (
+          <Box key={augment.key} mb={5}>
             <HStack>
-              <Image w={'45px'} src={augment.photos[0]?.file} />
-              <VStack p={3} alignItems={'flex-start'}>
-                <Text fontSize={'14px'} as={'b'} color={'white'}>
-                  {augment.name}
-                </Text>
-                <Text fontSize={'13px'} color={'white'}>
-                  {augment.description}
-                </Text>
+              <Image w={'50px'} src={augment.imageUrl} />
+              <VStack gap={0} alignItems={'flex-start'}>
+                <Text color={'white'}>{augment.name}</Text>
+                <Text
+                  color={'gray.500'}
+                  dangerouslySetInnerHTML={{
+                    __html: augment.desc.replace(/<br>/g, '<br />'),
+                  }}
+                />
               </VStack>
             </HStack>
           </Box>
         ))}
-      </Box>
-
-      {/* 골드 티어 */}
-      <Box ref={goldRef} mx={20} border={'1px solid gray'} mt={5}>
-        <Box bg={'#27282e'} p={3}>
-          <Text as={'b'} color={'white'}>
-            골드
-          </Text>
-        </Box>
-        {goldAugments.map((augment, index) => (
-          <Box p={3} key={index}>
-            <HStack>
-              <Image w={'45px'} src={augment.photos[0]?.file} />
-              <VStack p={3} alignItems={'flex-start'}>
-                <Text fontSize={'14px'} as={'b'} color={'white'}>
-                  {augment.name}
-                </Text>
-                <Text fontSize={'13px'} color={'white'}>
-                  {augment.description}
-                </Text>
-              </VStack>
-            </HStack>
-          </Box>
-        ))}
-      </Box>
-
-      {/* 프리즘 티어 */}
-      <Box ref={prismaticRef} mx={20} border={'1px solid gray'} mt={5}>
-        <Box bg={'#27282e'} p={3}>
-          <Text as={'b'} color={'white'}>
-            프리즘
-          </Text>
-        </Box>
-        {prismaticAugments.map((augment, index) => (
-          <Box p={3} key={index}>
-            <HStack>
-              <Image w={'45px'} src={augment.photos[0]?.file} />
-              <VStack p={3} alignItems={'flex-start'}>
-                <Text fontSize={'14px'} as={'b'} color={'white'}>
-                  {augment.name}
-                </Text>
-                <Text fontSize={'13px'} color={'white'}>
-                  {augment.description}
-                </Text>
-              </VStack>
-            </HStack>
-          </Box>
-        ))}
-      </Box>
+      </VStack>
     </Container>
   );
 }

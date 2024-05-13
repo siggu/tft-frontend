@@ -164,7 +164,7 @@ export default function Header() {
             fontSize={'14px'}
             border={'1px solid black'}
           >
-            <Link to={'/augments'}>
+            <Link to={'/augments/silver'}>
               <Text fontWeight={'600'} color={'white'}>
                 증강체
               </Text>

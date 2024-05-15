@@ -96,12 +96,10 @@ export default interface ICompElement {
 }
 
 export default interface IEncounter {
+  ingameKey: string;
+  encounterDesc: string;
   name: string;
-  description_1: string;
-  description_2: string;
-  description_3: string;
-  description_4: string;
-  photos: IPhoto[];
+  tileImageUrl: string;
 }
 export default interface IItems {
   key: string;

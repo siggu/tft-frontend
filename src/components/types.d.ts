@@ -1,5 +1,4 @@
 export default interface ISynergy {
-  filter(arg0: (augment: {tier: string}) => boolean): unknown;
   tags: string;
   key: string;
   ingameKey: string;
@@ -138,17 +137,10 @@ export default interface IAugments {
   tag2: string | null;
 }
 
-export interface IPortalType {
-  id: number;
-  photos: IPhoto[];
-  portal_type: string;
-  pk: number;
-  file: string;
-}
-
 export default interface IPortals {
-  id: number;
-  portal_type: IPortalType;
-  name: string;
-  description: string;
+  _type: string;
+  _key: string;
+  title: string;
+  desc: string;
+  iconImageUrl: string;
 }

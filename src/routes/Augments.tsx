@@ -32,7 +32,7 @@ export default function Augments() {
           증강
         </Text>
       </Box>
-      <Box bg={'#27282e'} mx={20} mb={5} display="flex" justifyContent="space-between">
+      <Box bg={'#27282e'} mx={20} display="flex" justifyContent="space-between">
         {/* 3등분 레이아웃 및 스크롤 기능 적용 */}
         <Box p={5} _hover={{bg: '#d0a28a'}} width="33.33%" cursor={'pointer'} textAlign="center">
           <Link to={'/augments/silver'}>
@@ -56,7 +56,7 @@ export default function Augments() {
           </Link>
         </Box>
       </Box>
-      <VStack mx={20} mb={5} alignItems={'flex-start'}>
+      <VStack p={5} mx={20} mb={5} alignItems={'flex-start'}>
         {filteredAugments.map((augment) => (
           <Box key={augment.key} mb={5}>
             <HStack>

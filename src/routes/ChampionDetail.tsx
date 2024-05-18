@@ -5,6 +5,7 @@ import {FaFlask, FaCoins} from 'react-icons/fa';
 import {Box, Container, HStack, Image, Text, VStack, Grid, useMediaQuery} from '@chakra-ui/react';
 import IChampion from '../components/types';
 import Champion from '../components/Champion';
+import React from 'react';
 
 export default function ChampionDetail() {
   // 특정 챔피언 1개만 가져오기 (url)
@@ -27,7 +28,7 @@ export default function ChampionDetail() {
   });
 
   const [mediaSize] = useMediaQuery('(min-width: 1200px)');
-  allChampionsData?.sort((a, b) => a.cost - b.cost);
+  allChampionsData?.sort((a, b) => a.cost1 - b.cost1);
 
   // 시너지 데이터로부터 이름 가져오는 함수
   const getTraitName = (key: string): string => {
@@ -207,15 +208,21 @@ export default function ChampionDetail() {
             >
               <VStack>
                 <Text>체력</Text>
-                <Text as={'b'}>{championData?.health1}</Text>
+                <Text as={'b'}>
+                  {championData?.health1}/{championData?.health2}/{championData?.health3}
+                </Text>
               </VStack>
               <VStack>
                 <Text>공격력</Text>
-                <Text as={'b'}>{championData?.attackDamage1}</Text>
+                <Text as={'b'}>
+                  {championData?.attackDamage1}/{championData?.attackDamage2}/{championData?.attackDamage3}
+                </Text>
               </VStack>
               <VStack>
                 <Text>DPS</Text>
-                <Text as={'b'}>{championData?.damagePerSecond1}</Text>
+                <Text as={'b'}>
+                  {championData?.damagePerSecond1}/{championData?.damagePerSecond2}/{championData?.damagePerSecond3}
+                </Text>
               </VStack>
               <VStack>
                 <Text>공격사거리</Text>
@@ -246,6 +253,30 @@ export default function ChampionDetail() {
               gap={5}
               bgColor={'#fffffe'}
             >
+              <HStack alignItems="flex-start">
+                <Box>
+                  <Image mr={5} src={championData?.skill_imageUrl} />
+                </Box>
+                <Box>
+                  <VStack alignItems="flex-start">
+                    <Text fontSize={'17px'} as={'b'}>
+                      {championData?.skill_name}
+                    </Text>
+                    <Text color={'gray'}>
+                      액티브 | 마나: {championData?.skill_startingMana}/{championData?.skill_skillMana}
+                    </Text>
+                    <Text>
+                      {championData?.skill_desc?.split('<br>').map((line, index) => (
+                        <React.Fragment key={index}>
+                          {line}
+                          {index < championData.skill_desc.split('<br>').length - 1 && <br />}
+                        </React.Fragment>
+                      ))}
+                    </Text>
+                  </VStack>
+                </Box>
+              </HStack>
+
               {/* <Image src={championData?.skill.photos[0].file} /> */}
 
               {/* <VStack alignItems={'flex-start'}>

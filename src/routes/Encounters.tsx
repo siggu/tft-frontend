@@ -8,6 +8,7 @@ export default function Encounters() {
     queryKey: ['encounters'],
     queryFn: getEncounters,
   });
+  const sortedData = data ? [...data].sort((a, b) => a.ingameKey.localeCompare(b.ingameKey)) : [];
 
   return (
     <Container maxW={'container.xl'} minH={'500px'}>
@@ -22,8 +23,8 @@ export default function Encounters() {
         ) : (
           <Box>
             <Grid gap={5} templateColumns={'2fr 2fr'}>
-              {data &&
-                data.map((encounter: IEncounter) => (
+              {sortedData &&
+                sortedData.map((encounter: IEncounter) => (
                   <VStack
                     alignItems={'flex-start'}
                     key={encounter.ingameKey}

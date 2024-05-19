@@ -287,7 +287,7 @@ export default function Champion({
                 display={'flex'}
                 textAlign={'end'}
                 as={'b'}
-                textShadow="1px 0px 2px black"
+                textShadow={'-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black'}
                 fontSize={'13px'}
                 color={'white'}
               >
@@ -297,7 +297,7 @@ export default function Champion({
             <HStack justifyContent={'center'}>
               <Text
                 as={'b'}
-                textShadow="1px 0px 4px black"
+                textShadow={'-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black'}
                 position={'relative'}
                 bottom={'20px'}
                 fontSize={'13px'}

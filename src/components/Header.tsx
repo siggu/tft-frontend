@@ -4,54 +4,62 @@ import {FaSearch} from 'react-icons/fa';
 import {Link, useNavigate} from 'react-router-dom';
 
 export default function Header() {
-  const [searchName, setSearchName] = useState('');
+  const [gameName, setgameName] = useState('');
+  const [tagLine, setSearchTag] = useState('');
   const navigate = useNavigate();
 
   const handleSearch = async () => {
     try {
-      if (searchName.trim() !== '') {
-        const profileResponse = await fetch(`http://127.0.0.1:8000/api/v1/profiles/fetch-puuid/${searchName}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-
-        if (profileResponse.ok) {
-          const matchesResponse = await fetch(`http://127.0.0.1:8000/api/v1/profiles/matches-by-puuid/${searchName}`, {
+      if (gameName.trim() !== '') {
+        const profileResponse = await fetch(
+          `http://127.0.0.1:8000/api/v1/profiles/fetch-puuid/${gameName}/${tagLine}`,
+          {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
             },
-          });
+          }
+        );
+        if (profileResponse.ok) {
+          const matchesResponse = await fetch(
+            `http://127.0.0.1:8000/api/v1/profiles/matches-by-puuid/${gameName}/${tagLine}`,
+            {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            }
+          );
 
+          const matchesData = await matchesResponse.json();
           if (matchesResponse.ok) {
-            const matchesData = await matchesResponse.json();
-            // navigate(`/profile/${searchName}`, {state: {name: searchName, matches: matchesData}});
-            navigate(`/profile_backend_test/${searchName}`, {state: {name: searchName, matches: matchesData}});
+            // navigate(`/profile/${gameName}`, {state: {gameName: gameName, matches: matchesData}});
+            navigate(`/profile_backend_test/${gameName}/${tagLine}`, {
+              state: {gameName: gameName, tagLine: tagLine, matches: matchesData},
+            });
           } else {
-            await fetch(`http://127.0.0.1:8000/api/v1/profiles/matches-by-puuid/${searchName}`, {
+            await fetch(`http://127.0.0.1:8000/api/v1/profiles/matches-by-puuid/${gameName}/${tagLine}`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
               },
-              body: JSON.stringify({summonerName: searchName}),
+              body: JSON.stringify({gameName: gameName, tagLine: tagLine, mathces: matchesData}),
             });
 
-            // navigate(`/profile/${searchName}`, {state: {name: searchName}});
-            navigate(`/profile_backend_test/${searchName}`, {state: {name: searchName}});
+            // navigate(`/profile/${gameName}`, {state: {gameName: gameName}});
+            navigate(`/profile_backend_test/${gameName}/${tagLine}`, {state: {gameName: gameName, tagLine: tagLine}});
           }
         } else {
-          await fetch('http://127.0.0.1:8000/api/v1/profiles/fetch-puuid/', {
+          await fetch(`http://127.0.0.1:8000/api/v1/profiles/fetch-puuid/${gameName}/${tagLine}`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({summonerName: searchName}),
+            body: JSON.stringify({gameName: gameName, tagLine: tagLine}),
           });
-
-          // navigate(`/profile/${searchName}`, {state: {name: searchName}});
-          navigate(`/profile_backend_test/${searchName}`, {state: {name: searchName}});
+          // console.log(4)
+          // navigate(`/profile/${gameName}`, {state: {gameName: gameName}});
+          navigate(`/profile_backend_test/${gameName}/${tagLine}`, {state: {gameName: gameName, tagLine: tagLine}});
         }
       }
     } catch (error) {
@@ -59,8 +67,12 @@ export default function Header() {
     }
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchName(event.target.value);
+  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setgameName(event.target.value);
+  };
+
+  const handleTagChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTag(event.target.value);
   };
 
   return (
@@ -73,7 +85,10 @@ export default function Header() {
         </Box>
         <HStack>
           <FormControl>
-            <Input placeholder="플레이어 전적 검색" color={'white'} value={searchName} onChange={handleChange} />
+            <HStack>
+              <Input placeholder="소환사 닉네임" color={'white'} value={gameName} onChange={handleNameChange} />
+              <Input placeholder="태그" color={'white'} value={tagLine} onChange={handleTagChange} />
+            </HStack>
           </FormControl>
           <Button type="button" onClick={handleSearch}>
             <FaSearch />

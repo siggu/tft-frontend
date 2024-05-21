@@ -153,7 +153,7 @@ interface IProfileId {
 export default function Profile() {
   const location = useLocation();
   const {name, matches} = location.state || {}; // 기본값 설정
-  // console.log(name, matches);
+  console.log(name, matches);
 
   // console.log('Name:', name);
   // console.log('Matches:', matches);

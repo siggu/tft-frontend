@@ -20,9 +20,15 @@ export default function Header() {
             },
           }
         );
+        // 위에서 유저 이름 + 태그 -> 유저계정 정보 존재 유무를 확인 
         if (profileResponse.ok) {
+          // 존재한다면 puuid를 가져오도록 한다 summonerPuuid에 저장
+          const profileData = await profileResponse.json();
+          const summonerPuuid = profileData.puuid;
+
+          // puuid기반으로 유저의 match 데이터 가져오기
           const matchesResponse = await fetch(
-            `http://127.0.0.1:8000/api/v1/profiles/matches-by-puuid/${gameName}/${tagLine}`,
+            `http://127.0.0.1:8000/api/v1/profiles/matches-by-puuid/${summonerPuuid}`,
             {
               method: 'GET',
               headers: {

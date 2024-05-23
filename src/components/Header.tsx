@@ -11,6 +11,7 @@ export default function Header() {
   const handleSearch = async () => {
     try {
       if (gameName.trim() !== '') {
+        // 검색한 유저가 우리 서버 디비에 있는지 확인
         const profileResponse = await fetch(
           `http://127.0.0.1:8000/api/v1/profiles/fetch-puuid/${gameName}/${tagLine}`,
           {
@@ -20,7 +21,7 @@ export default function Header() {
             },
           }
         );
-        // 위에서 유저 이름 + 태그 -> 유저계정 정보 존재 유무를 확인 
+        // 검색한 유저가 우리 디비에 있다 🟢
         if (profileResponse.ok) {
           // 존재한다면 puuid를 가져오도록 한다 summonerPuuid에 저장
           const profileData = await profileResponse.json();
@@ -56,7 +57,8 @@ export default function Header() {
             navigate(`/profile_backend_test/${gameName}/${tagLine}`, {state: {gameName: gameName, tagLine: tagLine}});
           }
         } else {
-          await fetch(`http://127.0.0.1:8000/api/v1/profiles/fetch-puuid/${gameName}/${tagLine}`, {
+          // 검색한 유저가 우리 디비에 없다 ❌
+          await fetch(`http://127.0.0.1:8000/api/v1/profiles/fetch-puuid`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -69,7 +71,7 @@ export default function Header() {
         }
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error('handleSearch Error:', error);
     }
   };
 
@@ -79,6 +81,9 @@ export default function Header() {
 
   const handleTagChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTag(event.target.value);
+  };
+  const handleSearchtoAdapter = () => {
+    navigate(`/search/${gameName}/${tagLine}`);
   };
 
   return (
@@ -96,7 +101,7 @@ export default function Header() {
               <Input placeholder="태그" color={'white'} value={tagLine} onChange={handleTagChange} />
             </HStack>
           </FormControl>
-          <Button type="button" onClick={handleSearch}>
+          <Button type="button" onClick={handleSearchtoAdapter}>
             <FaSearch />
           </Button>
         </HStack>

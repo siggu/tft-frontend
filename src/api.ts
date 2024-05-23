@@ -30,9 +30,17 @@ export const getEncounters = () => instance.get('encounters/').then((response) =
 export const getPortals = () => instance.get('portals/').then((response) => response.data);
 
 export const getSummonerData = ({queryKey}: QueryFunctionContext) => {
-  const [_, summonerName] = queryKey;
-  return instance.get(`profiles/matches-by-puuid/${summonerName}`).then((response) => response.data);
+  const [_, gameName, tagLine] = queryKey;
+  return instance
+    .get(`http://127.0.0.1:8000/api/v1/profiles/fetch-puuid/${gameName}/${tagLine}`)
+    .then((response) => response.data);
 };
+export const postSummonerData = ({queryKey}: QueryFunctionContext) => {
+  const [_, gameName, tagLine] = queryKey;
+  const data = {gameName, tagLine}; // Create an object with the required data
+  return instance.post('http://127.0.0.1:8000/api/v1/profiles/fetch-puuid', data).then((response) => response.data);
+};
+
 // api.js 파일
 
 export async function fetchMatchData(summonerName: string | undefined, matchId: string | undefined) {

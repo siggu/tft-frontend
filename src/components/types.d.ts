@@ -144,3 +144,12 @@ export default interface IPortals {
   desc: string;
   iconImageUrl: string;
 }
+export default interface IProfileMiniBox {
+  puuid: string;
+  gameName: string;
+  tagLine: string;
+  accountId: string;
+  profileIconId: number;
+  summonerId: string;
+  summonerLevel: number;
+}

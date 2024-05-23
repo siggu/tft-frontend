@@ -10,6 +10,7 @@ import Portals from './routes/Portals';
 import Synergies from './routes/Synergies';
 import ProfileBackendTest from './routes/ProfileBackendTest';
 import Profile from './components/Profile';
+import ProfileSearchAdapter from './routes/ProfileSearchAdapter';
 
 const router = createBrowserRouter([
   {
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
       {
         path: 'profile_backend_test/:summonerName',
         element: <ProfileBackendTest />,
+      },
+      {
+        path: 'search/:userName/:tagLine',
+        element: <ProfileSearchAdapter />,
       },
     ],
   },

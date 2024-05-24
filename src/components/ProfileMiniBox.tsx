@@ -19,9 +19,17 @@ export default function ProfileMiniBox({
   summonerLevel,
 }: IProfileMiniBox) {
   return (
-    <HStack w={"400px"} h={"200px"} mb={"300px"}>
+    <HStack
+      w={"350px"}
+      h={"100px"}
+      mb={"300px"}
+      backgroundColor="#25262a"
+      justifyContent={"space-around"}
+      borderRadius={"20px"}
+    >
       <Image
-        borderRadius={"10px"}
+        borderStyle={"10px black solid"}
+        borderRadius={"full"}
         w={"70px"}
         h={"70px"}
         src={`https://ddragon.leagueoflegends.com/cdn/14.10.1/img/profileicon/${profileIconId}.png`}
@@ -31,7 +39,7 @@ export default function ProfileMiniBox({
           <Text fontSize={"24px"}>{gameName}</Text>
           <Text fontSize={"16px"}>{tagLine}</Text>
         </HStack>
-        <Text color={"gray"} fontSize={"16px"}>
+        <Text color={"white"} fontSize={"16px"}>
           LV. {summonerLevel}
         </Text>
       </VStack>

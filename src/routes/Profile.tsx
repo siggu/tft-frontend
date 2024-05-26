@@ -1,10 +1,11 @@
-import {Box, Button, Container, HStack, Heading, Input, Text, VStack} from '@chakra-ui/react';
+import {Box, Button, Container, HStack, Heading, Input, Image, Text, VStack} from '@chakra-ui/react';
 import {useEffect, useState} from 'react';
 import {useQuery} from '@tanstack/react-query';
 import {useLocation, useParams} from 'react-router-dom';
 import {FaSearch} from 'react-icons/fa';
-import RIOT_API_KEY from '../constants';
-// import {getItems, getMatchesByMatchid, getMatchesByPuuid, getSummonerInfo, getSummonerProfile} from '../api';
+import ILeagueEntryDTO from '../components/types';
+import IProfileMiniBox from '../components/types';
+import {getLeagueEntries, getSummonerData} from '../api';
 
 interface IProfile {
   accountId: string;
@@ -151,58 +152,91 @@ interface IProfileId {
 }
 
 export default function Profile() {
+  const {gameName, tagLine} = useParams();
+  const {data: summonerData, isLoading: isSummonerDataLoading} = useQuery<IProfileMiniBox>({
+    queryKey: ['', gameName, tagLine],
+    queryFn: getSummonerData,
+  });
+  const summonerId = summonerData?.summonerId;
+  const {data: leagueEntryData, isLoading: isLeagueEntryDataLoading} = useQuery<ILeagueEntryDTO>({
+    queryKey: ['', summonerId],
+    queryFn: getLeagueEntries,
+  });
   const location = useLocation();
   const {name, matches} = location.state || {}; // 기본값 설정
-  console.log(name, matches);
 
   // console.log('Name:', name);
   // console.log('Matches:', matches);
   const [matchData, setMatchData] = useState<IMatch[]>([]);
 
-  const handleSearch = async () => {
-    try {
-      const responses = await Promise.all(
-        matches.map(async (match: any) => {
-          const response = await fetch(
-            `http://127.0.0.1:8000/api/v1/profiles/matches-by-puuid/${name}/${match.match_id}`,
-            {
-              method: 'GET',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-            }
-          );
-          return response.json();
-        })
-      );
-      if (responses) {
-        setMatchData(responses);
-        console.log(matchData);
-      } else {
-        const responses = await Promise.all(
-          matches.map(async (match: any) => {
-            const response = await fetch(
-              `http://127.0.0.1:8000/api/v1/profiles/matches-by-puuid/${name}/${match.match_id}`,
-              {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({summonerName: name, matchId: match.match_id}),
-              }
-            );
-            return response.json();
-          })
-        );
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const handleSearch = async () => {
+  //   try {
+  //     const responses = await Promise.all(
+  //       matches.map(async (match: any) => {
+  //         const response = await fetch(
+  //           `http://127.0.0.1:8000/api/v1/profiles/matches-by-puuid/${name}/${match.match_id}`,
+  //           {
+  //             method: 'GET',
+  //             headers: {
+  //               'Content-Type': 'application/json',
+  //             },
+  //           }
+  //         );
+  //         return response.json();
+  //       })
+  //     );
+  //     if (responses) {
+  //       setMatchData(responses);
+  //       console.log(matchData);
+  //     } else {
+  //       const responses = await Promise.all(
+  //         matches.map(async (match: any) => {
+  //           const response = await fetch(
+  //             `http://127.0.0.1:8000/api/v1/profiles/matches-by-puuid/${name}/${match.match_id}`,
+  //             {
+  //               method: 'POST',
+  //               headers: {
+  //                 'Content-Type': 'application/json',
+  //               },
+  //               body: JSON.stringify({summonerName: name, matchId: match.match_id}),
+  //             }
+  //           );
+  //           return response.json();
+  //         })
+  //       );
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <VStack>
       <Container maxW={'container.xl'}>
+        <HStack color={'white'}>
+          <Image
+            borderStyle={'10px black solid'}
+            borderRadius={'full'}
+            w={'100px'}
+            h={'100px'}
+            src={`https://ddragon.leagueoflegends.com/cdn/14.10.1/img/profileicon/${summonerData?.profileIconId}.png`}
+          />
+          <VStack>
+            <HStack>
+              <Text>{summonerData?.gameName}</Text>
+              <Text>{summonerData?.tagLine}</Text>
+            </HStack>
+            <HStack>
+              <Text>{leagueEntryData?.tier}</Text>
+              <Text>{leagueEntryData?.rank}</Text>
+              <Text>{leagueEntryData?.leaguePoints}</Text>
+            </HStack>
+            <HStack>
+              <Text>승 - {leagueEntryData?.wins}</Text>
+              <Text>패 - {leagueEntryData?.losses}</Text>
+            </HStack>
+          </VStack>
+        </HStack>
         <Box>
           <Text fontSize={'20px'} as={'b'} color={'#dca555'}>
             유저 전적
@@ -212,7 +246,8 @@ export default function Profile() {
           <Box>
             <HStack>
               <Text color={'white'}>매치 데이터:</Text>
-              <Button type="button" onClick={handleSearch}>
+              {/* <Button type="button" onClick={handleSearch}> */}
+              <Button type="button">
                 <FaSearch />
               </Button>
             </HStack>

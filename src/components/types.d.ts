@@ -153,3 +153,18 @@ export default interface IProfileMiniBox {
   summonerId: string;
   summonerLevel: number;
 }
+export default interface ILeagueEntryDTO {
+  summonerId: string;
+  puuid: string;
+  leagueId: string;
+  queueType: string;
+  tier: string;
+  rank: string;
+  leaguePoints: number;
+  wins: number;
+  losses: number;
+  veteran: boolean;
+  inactive: boolean;
+  freshBlood: boolean;
+  hotStreak: boolean;
+}

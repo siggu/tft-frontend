@@ -22,8 +22,6 @@ export default function ProfileSearchAdapter() {
       queryKey: ["", gameName, tagLine],
       queryFn: getSummonerData,
     });
-  console.log(summonerData);
-  console.log("isSummonerDataLoading", isSummonerDataLoading);
 
   return (
     <VStack>

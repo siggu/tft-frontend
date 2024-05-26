@@ -31,17 +31,13 @@ export const getPortals = () => instance.get('portals/').then((response) => resp
 
 export const getSummonerData = ({queryKey}: QueryFunctionContext) => {
   const [_, gameName, tagLine] = queryKey;
-  return instance
-    .get(`http://127.0.0.1:8000/api/v1/profiles/fetch-puuid/${gameName}/${tagLine}`)
-    .then((response) => response.data);
+  return instance.get(`profiles/fetch-puuid/${gameName}/${tagLine}`).then((response) => response.data);
 };
 export const postSummonerData = ({queryKey}: QueryFunctionContext) => {
   const [_, gameName, tagLine] = queryKey;
   const data = {gameName, tagLine}; // Create an object with the required data
   return instance.post('http://127.0.0.1:8000/api/v1/profiles/fetch-puuid', data).then((response) => response.data);
 };
-
-// api.js 파일
 
 export async function fetchMatchData(summonerName: string | undefined, matchId: string | undefined) {
   if (summonerName === undefined) throw new Error('summonerName should be string!');
@@ -61,3 +57,8 @@ export async function fetchMatchData(summonerName: string | undefined, matchId: 
     throw error; // 오류를 다시 throw하여 상위 컴포넌트에서 처리할 수 있도록 함
   }
 }
+
+export const getLeagueEntries = ({queryKey}: QueryFunctionContext) => {
+  const [_, summonerId] = queryKey;
+  return instance.get(`profiles/entry/${summonerId}`).then((response) => response.data);
+};

@@ -5,7 +5,7 @@ import {useLocation, useParams} from 'react-router-dom';
 import {FaSearch} from 'react-icons/fa';
 import ILeagueEntryDTO from '../components/types';
 import IProfileMiniBox from '../components/types';
-import {getLeagueEntries, getSummonerData} from '../api';
+import {getLeagueEntries, getMatchesByPuuid, getSummonerData} from '../api';
 
 interface IProfile {
   accountId: string;
@@ -158,10 +158,16 @@ export default function Profile() {
     queryFn: getSummonerData,
   });
   const summonerId = summonerData?.summonerId;
+  const puuid = summonerData?.puuid;
   const {data: leagueEntryData, isLoading: isLeagueEntryDataLoading} = useQuery<ILeagueEntryDTO>({
     queryKey: ['', summonerId],
     queryFn: getLeagueEntries,
   });
+  const {data: matchesByPuuidData, isLoading: ismatchByPuuidDataLoading} = useQuery<ILeagueEntryDTO>({
+    queryKey: ['', puuid],
+    queryFn: getMatchesByPuuid,
+  });
+
   const location = useLocation();
   const {name, matches} = location.state || {}; // 기본값 설정
 

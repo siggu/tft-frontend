@@ -10,6 +10,7 @@ import {
   Container,
   Skeleton,
   SkeletonText,
+  Button,
 } from "@chakra-ui/react";
 import ProfileMiniBox from "../components/ProfileMiniBox";
 import { useParams } from "react-router-dom";
@@ -23,23 +24,13 @@ export default function ProfileSearchAdapter() {
       queryKey: ["", gameName, tagLine],
       queryFn: getSummonerData,
     });
-  // 로컬 state로 summonerData를 관리
-  const [localSummonerData, setLocalSummonerData] = useState(summonerData);
-
-  // summonerData가 변경될 때마다 로컬 state를 업데이트
-  useEffect(() => {
-    if (summonerData) {
-      setLocalSummonerData(summonerData);
-    }
-  }, [summonerData]);
 
   console.log("summonerData", summonerData);
   console.log("isSummonerDataLoading", isSummonerDataLoading);
-  console.log("localSummonerData", localSummonerData);
 
   return (
     <VStack>
-      {!localSummonerData ? (
+      {isSummonerDataLoading ? (
         <HStack w={"400px"} h={"200px"} mb={"300px"}>
           <Skeleton borderRadius={"10px"} w={"70px"} h={"70px"} />
           <VStack>

@@ -85,6 +85,7 @@ export default interface IComp {
   name: string;
   champions: IChampionDetail[];
   elements: ICompElement[];
+  isBlind: boolean;
 }
 export default interface ICompElement {
   championLevelChoice: number;

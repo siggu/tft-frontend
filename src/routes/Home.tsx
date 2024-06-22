@@ -63,8 +63,8 @@ export default function Home() {
   //     : etcItemArr.push(iele);
   // });
 
-  normalItemArr.forEach((normalItemArrEle) => {
-    basicItemArr.forEach((basicItemArrEle) => {
+  normalItemArr?.forEach((normalItemArrEle) => {
+    basicItemArr?.forEach((basicItemArrEle) => {
       if (basicItemArrEle.key === normalItemArrEle.composition1) {
         normalItemArrEle.composition1 = basicItemArrEle.imageUrl;
       }
@@ -74,8 +74,8 @@ export default function Home() {
     });
   });
 
-  emblemItemArr.forEach((emblemItemArrEle) => {
-    basicItemArr.forEach((basicItemArrEle) => {
+  emblemItemArr?.forEach((emblemItemArrEle) => {
+    basicItemArr?.forEach((basicItemArrEle) => {
       if (basicItemArrEle.key === emblemItemArrEle.composition1) {
         emblemItemArrEle.composition1 = basicItemArrEle.imageUrl;
       }
@@ -127,57 +127,57 @@ export default function Home() {
     }[] = [];
     const counts: {[key: string]: number} = {};
 
-    comp.elements.forEach((elementByComp) => {
+    comp.elements?.forEach((elementByComp) => {
       if (elementByComp.recommendedItem1 && elementByComp.recommendedItem1.tags === 'normal') {
-        basicItemArr.forEach((basicItem) => {
+        basicItemArr?.forEach((basicItem) => {
           if (basicItem.key === elementByComp.recommendedItem1.composition1) {
             elementByComp.recommendedItem1.composition1 = basicItem.imageUrl;
           }
         });
       }
       if (elementByComp.recommendedItem2 && elementByComp.recommendedItem2.tags === 'normal') {
-        basicItemArr.forEach((basicItem) => {
+        basicItemArr?.forEach((basicItem) => {
           if (basicItem.key === elementByComp.recommendedItem2.composition1) {
             elementByComp.recommendedItem2.composition1 = basicItem.imageUrl;
           }
         });
       }
       if (elementByComp.recommendedItem3 && elementByComp.recommendedItem3.tags === 'normal') {
-        basicItemArr.forEach((basicItem) => {
+        basicItemArr?.forEach((basicItem) => {
           if (basicItem.key === elementByComp.recommendedItem3.composition1) {
             elementByComp.recommendedItem3.composition1 = basicItem.imageUrl;
           }
         });
       }
       if (elementByComp.recommendedItem1 && elementByComp.recommendedItem1.tags === 'normal') {
-        basicItemArr.forEach((basicItem) => {
+        basicItemArr?.forEach((basicItem) => {
           if (basicItem.key === elementByComp.recommendedItem1.composition2) {
             elementByComp.recommendedItem1.composition2 = basicItem.imageUrl;
           }
         });
       }
       if (elementByComp.recommendedItem2 && elementByComp.recommendedItem2.tags === 'normal') {
-        basicItemArr.forEach((basicItem) => {
+        basicItemArr?.forEach((basicItem) => {
           if (basicItem.key === elementByComp.recommendedItem2.composition2) {
             elementByComp.recommendedItem2.composition2 = basicItem.imageUrl;
           }
         });
       }
       if (elementByComp.recommendedItem3 && elementByComp.recommendedItem3.tags === 'normal') {
-        basicItemArr.forEach((basicItem) => {
+        basicItemArr?.forEach((basicItem) => {
           if (basicItem.key === elementByComp.recommendedItem3.composition2) {
             elementByComp.recommendedItem3.composition2 = basicItem.imageUrl;
           }
         });
       }
-      elementByComp.champion.origin.forEach((originByChampion: {name: string}) => {
+      elementByComp.champion.origin?.forEach((originByChampion: {name: string}) => {
         if (counts[originByChampion.name]) {
           counts[originByChampion.name]++;
         } else {
           counts[originByChampion.name] = 1;
         }
       });
-      elementByComp.champion.job.forEach((jobByChampion: {name: string}) => {
+      elementByComp.champion.job?.forEach((jobByChampion: {name: string}) => {
         if (counts[jobByChampion.name]) {
           counts[jobByChampion.name]++;
         } else {
@@ -188,7 +188,7 @@ export default function Home() {
 
     const sortedEntries = Object.entries(counts).sort((a, b) => b[1] - a[1]);
 
-    sortedEntries.forEach(([name, count]) => {
+    sortedEntries?.forEach(([name, count]) => {
       let entry = {
         synergyName: name,
         frequency: count,
@@ -201,7 +201,7 @@ export default function Home() {
         effect_6: '',
       };
 
-      // originData?.forEach((origin_ele) => {
+      // originData??.forEach((origin_ele) => {
       //   if (origin_ele.name === name) {
       //     entry = {
       //       synergyName: name,
@@ -216,7 +216,7 @@ export default function Home() {
       //     };
       //   }
       // });
-      // jobData?.forEach((job_ele) => {
+      // jobData??.forEach((job_ele) => {
       //   if (job_ele.name === name) {
       //     entry = {
       //       synergyName: name,
@@ -235,6 +235,8 @@ export default function Home() {
     });
     synergiesArr.push(compArray);
   });
+
+  console.log(compData);
 
   return (
     <VStack gap={20}>

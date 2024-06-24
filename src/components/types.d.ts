@@ -19,12 +19,12 @@ export default interface ISynergy {
   style3_max: number;
   style4: string;
   style4_min: number;
-  stats_1: string;
-  stats_2: string;
-  stats_3: string;
-  stats_4: string;
-  stats_5: string;
-  stats_6: string;
+  stats1: string;
+  stats2: string;
+  stats3: string;
+  stats4: string;
+  stats5: string;
+  stats6: string;
 }
 export default interface IChampion {
   key: string;
@@ -83,11 +83,11 @@ export default interface IChampionDetail extends IChampion {
 export default interface IComp {
   pk: number;
   name: string;
-  champions: IChampionDetail[];
   elements: ICompElement[];
   isBlind: boolean;
 }
 export default interface ICompElement {
+  id: number;
   championLevelChoice: number;
   champion: IChampionDetail;
   recommendedItem1: IItems;

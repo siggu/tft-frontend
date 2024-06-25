@@ -10,6 +10,16 @@ import { Link } from 'react-router-dom';
 import Champion from '../components/Champion';
 import Item from '../components/Item';
 
+interface IProfileMiniBox {
+  puuid: string | undefined;
+  gameName: string | undefined;
+  tagLine: string | undefined;
+  accountId: string | undefined;
+  profileIconId: number | undefined;
+  summonerId: string | undefined;
+  summonerLevel: number | undefined;
+}
+
 const b = 'bronze';
 const s = 'silver';
 const g = 'gold';
@@ -155,9 +165,11 @@ export default function Home() {
       });
     });
 
+    const sortedTraits = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+
     return {
       ...comp,
-      counts,
+      sortedTraits,
     };
   });
 
@@ -181,13 +193,13 @@ export default function Home() {
             <VStack gap={3} alignItems={'flex-start'}>
               {/* # 2.1 시너지 표시 */}
               <HStack>
-                {synergiesData?.map((synergy) => {
-                  const count = comp.counts[synergy.key] || 0;
-                  return count > 0 ? (
-                    <Box key={synergy.key} textAlign="center">
-                      <Image src={synergy.imageUrl} alt={synergy.name} />
+                {comp.sortedTraits.map(([trait, count]) => {
+                  const synergy = synergiesData?.find((synergy) => synergy.key === trait);
+                  return synergy && count > 0 ? (
+                    <HStack gap={0} key={synergy.key} textAlign="center">
+                      <Image w={'30px'} src={synergy.whiteImageUrl} alt={synergy.name} />
                       <Text color={'white'}>{count}</Text>
-                    </Box>
+                    </HStack>
                   ) : null;
                 })}
               </HStack>
@@ -326,6 +338,11 @@ export default function Home() {
                               />
                             </Box>
                           </Box>
+                        ) : null}
+                        {compEle.recommendedItem1 == null &&
+                        compEle.recommendedItem2 == null &&
+                        compEle.recommendItems3 == null ? (
+                          <Box w={'17px'} h={'17px'}></Box>
                         ) : null}
                       </HStack>
                     </VStack>

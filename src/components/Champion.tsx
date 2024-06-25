@@ -1,8 +1,8 @@
-import {Box, Text, VStack, Image, HStack, Tooltip} from '@chakra-ui/react';
-import {Link, useParams} from 'react-router-dom';
-import {FaCoins} from 'react-icons/fa';
-import {useQuery} from '@tanstack/react-query';
-import {getChampion, getChampions, getItems, getSynergies} from '../api';
+import { Box, Text, VStack, Image, HStack, Tooltip } from '@chakra-ui/react';
+import { Link, useParams } from 'react-router-dom';
+import { FaCoins } from 'react-icons/fa';
+import { useQuery } from '@tanstack/react-query';
+import { getChampion, getChampions, getItems, getSynergies } from '../api';
 import IChampion from '../components/types';
 
 interface IChampionData {
@@ -97,7 +97,7 @@ export default function Champion({
   skill_stats5,
 }: IChampionData) {
   // 시너지 가져오기
-  const {data: synergiesData} = useQuery({
+  const { data: synergiesData } = useQuery({
     queryKey: ['synergy'],
     queryFn: getSynergies,
   });
@@ -105,35 +105,35 @@ export default function Champion({
   // 시너지 데이터로부터 계열 또는 직업의 이름과 이미지 URL을 가져오는 함수
   const getTraitNamesAndImages = (
     traits: (string | null)[]
-  ): {classList: {name: string; whiteImageUrl: string}[]; jobsList: {name: string; whiteImageUrl: string}[]} => {
-    const classList: {name: string; whiteImageUrl: string}[] = [];
-    const jobsList: {name: string; whiteImageUrl: string}[] = [];
+  ): { classList: { name: string; whiteImageUrl: string }[]; jobsList: { name: string; whiteImageUrl: string }[] } => {
+    const classList: { name: string; whiteImageUrl: string }[] = [];
+    const jobsList: { name: string; whiteImageUrl: string }[] = [];
 
     if (!synergiesData || synergiesData.length === 0) {
-      return {classList, jobsList};
+      return { classList, jobsList };
     }
 
     traits.forEach((trait) => {
       if (trait) {
-        const synergy = synergiesData.find((syn: {key: any}) => syn.key === trait);
+        const synergy = synergiesData.find((syn: { key: any }) => syn.key === trait);
         if (synergy) {
           if (synergy._type === 'CLASS') {
-            classList.push({name: synergy.name, whiteImageUrl: synergy.whiteImageUrl || ''});
+            classList.push({ name: synergy.name, whiteImageUrl: synergy.whiteImageUrl || '' });
           } else {
-            jobsList.push({name: synergy.name, whiteImageUrl: synergy.whiteImageUrl || ''});
+            jobsList.push({ name: synergy.name, whiteImageUrl: synergy.whiteImageUrl || '' });
           }
         }
       }
     });
 
-    return {classList, jobsList};
+    return { classList, jobsList };
   };
 
   // 시너지 데이터로부터 계열 또는 직업의 이름과 이미지 URL을 가져옴
-  const {classList, jobsList} = getTraitNamesAndImages([traits1, traits2, traits3, traits4]);
+  const { classList, jobsList } = getTraitNamesAndImages([traits1, traits2, traits3, traits4]);
 
   // 아이템 가져오기
-  const {data: itemData} = useQuery({
+  const { data: itemData } = useQuery({
     queryKey: ['item'],
     queryFn: getItems,
   });
@@ -143,7 +143,7 @@ export default function Champion({
     if (!itemData || !itemName) return undefined; // 아이템 데이터가 없거나 itemName이 없는 경우 undefined 반환
 
     // itemData에서 itemName과 일치하는 아이템 찾기
-    const item = itemData.find((item: {ingameKey: string; name: string}) => item.ingameKey === itemName);
+    const item = itemData.find((item: { ingameKey: string; name: string }) => item.ingameKey === itemName);
 
     // 일치하는 아이템이 없을 경우 undefined 반환
     if (!item) return undefined;
@@ -155,7 +155,7 @@ export default function Champion({
   const recommendedItems = [recommendItems1, recommendItems2, recommendItems3, recommendItems4, recommendItems5];
 
   return (
-    <VStack>
+    <Box>
       <Tooltip
         hasArrow
         placement="right"
@@ -215,7 +215,7 @@ export default function Champion({
               </VStack>
             </HStack>
             <VStack spacing={0}>
-              <Text color={'gray'} dangerouslySetInnerHTML={{__html: skill_desc.replace(/<br>/g, '<br />')}} />
+              <Text color={'gray'} dangerouslySetInnerHTML={{ __html: skill_desc.replace(/<br>/g, '<br />') }} />
             </VStack>
             <VStack alignItems={'left'} spacing={0}>
               <>
@@ -294,21 +294,23 @@ export default function Champion({
                 ${cost1}
               </Text>
             </Box>
-            <HStack justifyContent={'center'}>
+
+            <Box display={'flex'} justifyContent={'center'} alignItems={'center'}>
               <Text
+                noOfLines={1}
                 as={'b'}
                 textShadow={'-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black'}
-                position={'relative'}
-                bottom={'20px'}
+                position={'absolute'}
                 fontSize={'13px'}
                 color={'white'}
+                bottom={'0px'}
               >
                 {name}
               </Text>
-            </HStack>
+            </Box>
           </Box>
         </Link>
       </Tooltip>
-    </VStack>
+    </Box>
   );
 }

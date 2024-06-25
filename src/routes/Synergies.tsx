@@ -1,16 +1,16 @@
-import {useQuery} from '@tanstack/react-query';
-import {getChampions, getSynergies} from '../api';
-import {Container, VStack, Text, Grid, Box, Image, HStack, Tooltip, GridItem} from '@chakra-ui/react';
+import { useQuery } from '@tanstack/react-query';
+import { getChampions, getSynergies } from '../api';
+import { Container, VStack, Text, Grid, Box, Image, HStack, Tooltip, GridItem } from '@chakra-ui/react';
 import ISynergy from '../components/types';
 import IChampionDetail from './../components/types.d';
 import Champion from '../components/Champion';
 
 export default function Synergies() {
-  const {data: synergiesData, isLoading: isSynergiesLoading} = useQuery<ISynergy[]>({
+  const { data: synergiesData, isLoading: isSynergiesLoading } = useQuery<ISynergy[]>({
     queryKey: ['synergies'],
     queryFn: getSynergies,
   });
-  const {data: championsData, isLoading: isChampionsLoading} = useQuery<IChampionDetail[]>({
+  const { data: championsData, isLoading: isChampionsLoading } = useQuery<IChampionDetail[]>({
     queryKey: ['champions'],
     queryFn: getChampions,
   });
@@ -46,21 +46,21 @@ export default function Synergies() {
                 }}
               />
               <Box mb={10}>
-                {Array.from({length: 6}).map((_, index) => {
+                {Array.from({ length: 6 }).map((_, index) => {
                   const statKey = `stats${index + 1}`;
                   if (synergy?.[statKey]) {
                     return (
                       <Text
                         key={index}
                         color={'gray'}
-                        dangerouslySetInnerHTML={{__html: synergy[statKey].replace(/<br>/g, '<br />')}}
+                        dangerouslySetInnerHTML={{ __html: synergy[statKey].replace(/<br>/g, '<br />') }}
                       />
                     );
                   }
                   return null;
                 })}
               </Box>
-              <Grid alignItems={'center'} gap={5} templateColumns="repeat(5, 1fr)" mt={3}>
+              <HStack justifyContent={'center'}>
                 {championsData
                   .filter((champion) =>
                     [champion.traits1, champion.traits2, champion.traits3, champion.traits4].includes(synergy.key)
@@ -113,7 +113,7 @@ export default function Synergies() {
                       skill_skillMana={champion.skill_skillMana}
                     />
                   ))}
-              </Grid>
+              </HStack>
             </Box>
           ))}
         </Grid>

@@ -16,14 +16,24 @@ import {
 import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useLocation, useParams } from 'react-router-dom';
-import { FaSearch } from 'react-icons/fa';
+import { FaSearch, FaStar } from 'react-icons/fa';
 import ILeagueEntryDTO from '../components/types';
 import IProfileMiniBox from '../components/types';
 import IMatch from '../components/types';
-import { getAugments, getLeagueEntries, getMatchesByPuuid, getSummonerData, getSynergies } from '../api';
+import {
+  getAugments,
+  getChampions,
+  getItems,
+  getLeagueEntries,
+  getMatchesByPuuid,
+  getSummonerData,
+  getSynergies,
+} from '../api';
 import ISynergy from '../components/types';
 import IAugments from '../components/types';
 import { getTraitBackgroundImageUrl } from '../traitColors';
+import ProfileChampion from './../components/ProfileChampion';
+import Item from '../components/Item';
 
 export default function Profile() {
   const { gameName, tagLine } = useParams();
@@ -49,6 +59,14 @@ export default function Profile() {
     queryKey: ['augment'],
     queryFn: getAugments,
   });
+  const { data: chamiponsData, isLoading: isChampionsDataLoading } = useQuery({
+    queryKey: ['champions'],
+    queryFn: getChampions,
+  });
+  const { data: itemsData, isLoading: isItemsDataLoading } = useQuery({
+    queryKey: ['items'],
+    queryFn: getItems,
+  });
 
   const location = useLocation();
   const { name, matches } = location.state || {}; // 기본값 설정
@@ -62,6 +80,10 @@ export default function Profile() {
     const minutes = Math.floor(totalSeconds / 60);
     const seconds = totalSeconds % 60;
     return `${minutes}분 ${seconds}초`;
+  };
+
+  const generateStars = (tier: number) => {
+    return Array.from({ length: tier }, (_, index) => <FaStar key={index} />);
   };
 
   return (
@@ -122,7 +144,6 @@ export default function Profile() {
           {matchesByPuuidData?.map((match: IMatch) => (
             <Box key={match.match_id} p={4} borderWidth={1} borderRadius={8} borderColor="gray.700" mb={4}>
               {match.match_detail.info.participants
-                .slice()
                 .sort((a, b) => a.placement - b.placement)
                 .map((participant) => (
                   <VStack
@@ -130,6 +151,7 @@ export default function Profile() {
                     alignItems="flex-start"
                     pl={4}
                     pt={2}
+                    pb={5}
                     borderBottom="1px"
                     borderColor="gray.600"
                     mb={2}
@@ -142,7 +164,7 @@ export default function Profile() {
                     </HStack>
                     {/* 전설이 */}
                     <HStack>
-                      <Box position={'relative'} mr={3}>
+                      <Box width={'80px'} display={'flex'} position={'relative'} mr={3}>
                         <Image
                           border="5px gray solid"
                           borderRadius="full"
@@ -169,8 +191,9 @@ export default function Profile() {
                           </Text>
                         </Box>
                       </Box>
+
                       {/* 시너지 */}
-                      <HStack mr={3} w={'170px'} flexWrap={'wrap'} gap={'1'}>
+                      <HStack display={'flex'} w={'160px'} flexWrap={'wrap'} gap={'1'}>
                         {participant.traits
                           .sort((a, b) => b.num_units - a.num_units)
                           .map((trait) => {
@@ -181,14 +204,14 @@ export default function Profile() {
 
                             return backgroundImageUrl ? (
                               <HStack key={trait.name} display={'flex'} justifyContent={'center'} alignItems={'center'}>
-                                <Image src={backgroundImageUrl} w="30px" h="30px" />
+                                <Image src={backgroundImageUrl} w="26px" h="26px" />
                                 {synergy && (
                                   <Image
                                     position={'absolute'}
                                     src={synergy.blackImageUrl}
                                     alt={synergy.name}
-                                    w="20px"
-                                    h="20px"
+                                    w="18px"
+                                    h="18px"
                                   />
                                 )}
                               </HStack>
@@ -197,7 +220,7 @@ export default function Profile() {
                       </HStack>
 
                       {/* 증강 */}
-                      <Box>
+                      <Box ml={3} mr={5}>
                         {participant.augments.map((participant_augment) => {
                           const augment = augmentsData?.find((augment) => augment.ingameKey === participant_augment);
                           return (
@@ -207,6 +230,111 @@ export default function Profile() {
                           );
                         })}
                       </Box>
+
+                      {/* 챔피언 */}
+                      <HStack w={'1000px'} flexWrap={'wrap'}>
+                        {participant.units.map((unit) => {
+                          const champion = chamiponsData?.find(
+                            (champion: { ingameKey: string }) => champion.ingameKey === unit.character_id
+                          );
+
+                          return champion ? (
+                            <VStack
+                              key={unit.character_id}
+                              display={'flex'}
+                              justifyContent={'center'}
+                              alignItems={'center'}
+                              gap={1}
+                            >
+                              <HStack
+                                fontSize={'13px'}
+                                spacing={0}
+                                color={
+                                  unit.rarity === 0
+                                    ? 'gray'
+                                    : unit.rarity === 1
+                                    ? 'green'
+                                    : unit.rarity === 2
+                                    ? 'blue'
+                                    : unit.rarity === 4
+                                    ? 'purple'
+                                    : unit.rarity === 6
+                                    ? 'gold'
+                                    : 'gray'
+                                }
+                              >
+                                {generateStars(unit.tier)}
+                              </HStack>
+                              <ProfileChampion
+                                championKey={champion.championKey}
+                                ingameKey={champion.ingameKey}
+                                name={champion.name}
+                                imageUrl={champion.imageUrl}
+                                splashUrl={champion.splashUrl}
+                                traits1={champion.traits1}
+                                traits2={champion.traits2}
+                                traits3={champion.traits3}
+                                traits4={champion.traits4}
+                                isHiddenGuide={champion.isHiddenGuide}
+                                isHiddenLanding={champion.isHiddenLanding}
+                                isHiddenTeamBuiler={champion.isHiddenTeamBuiler}
+                                cost1={champion.cost1}
+                                cost2={champion.cost2}
+                                cost3={champion.cost3}
+                                health1={champion.health1}
+                                health2={champion.health2}
+                                health3={champion.health3}
+                                attackDamage1={champion.attackDamage1}
+                                attackDamage2={champion.attackDamage2}
+                                attackDamage3={champion.attackDamage3}
+                                damagePerSecond1={champion.damagePerSecond1}
+                                damagePerSecond2={champion.damagePerSecond2}
+                                damagePerSecond3={champion.damagePerSecond3}
+                                attackRange={champion.attackRange}
+                                attackSpeed={champion.attackSpeed}
+                                armor={champion.armor}
+                                magicalResistance={champion.magicalResistance}
+                                recommendItems1={champion.recommendItems1}
+                                recommendItems2={champion.recommendItems2}
+                                recommendItems3={champion.recommendItems3}
+                                recommendItems4={champion.recommendItems4}
+                                recommendItems5={champion.recommendItems5}
+                                skill_name={champion.skill_name}
+                                skill_imageUrl={champion.skill_imageUrl}
+                                skill_desc={champion.skill_desc}
+                                skill_startingMana={champion.skill_startingMana}
+                                skill_skillMana={champion.skill_skillMana}
+                                skill_stats1={champion.skill_stats1}
+                                skill_stats2={champion.skill_stats2}
+                                skill_stats3={champion.skill_stats3}
+                                skill_stats4={champion.skill_stats4}
+                                skill_stats5={champion.skill_stats5}
+                              />
+                              <Item
+                                key={''}
+                                ingameKey={''}
+                                name={''}
+                                description={''}
+                                shortDesc={''}
+                                imageUrl={''}
+                                composition1={''}
+                                composition2={''}
+                                isFromItem={false}
+                                isNormal={false}
+                                isEmblem={false}
+                                isSupport={false}
+                                isArtifact={false}
+                                isRadiant={false}
+                                isUnique={false}
+                                isNew={false}
+                                tag1={''}
+                                tag2={''}
+                                tag3={''}
+                              ></Item>
+                            </VStack>
+                          ) : null;
+                        })}
+                      </HStack>
                       {/* <Text>남은 골드: {participant.gold_left}</Text> */}
                     </HStack>
                   </VStack>

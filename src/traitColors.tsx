@@ -29,7 +29,7 @@ const traitColorConditions: { [key: string]: TraitColorCondition } = {
   // 예술가
   TFT11_Artist: {
     thresholds: [1],
-    urls: ['https://cdn.dak.gg/tft/images2/tft/traits/background/gold.svg'],
+    urls: ['https://cdn.dak.gg/tft/images2/tft/traits/background/unique.svg'],
   },
 
   // 거대괴수
@@ -129,7 +129,7 @@ const traitColorConditions: { [key: string]: TraitColorCondition } = {
   // 호걸
   TFT11_Great: {
     thresholds: [1],
-    urls: ['https://cdn.dak.gg/tft/images2/tft/traits/background/gold.svg'],
+    urls: ['https://cdn.dak.gg/tft/images2/tft/traits/background/unique.svg'],
   },
 
   // 천계
@@ -165,7 +165,7 @@ const traitColorConditions: { [key: string]: TraitColorCondition } = {
   // 연인
   TFT11_Lovers: {
     thresholds: [1],
-    urls: ['https://cdn.dak.gg/tft/images2/tft/traits/background/gold.svg'],
+    urls: ['https://cdn.dak.gg/tft/images2/tft/traits/background/unique.svg'],
   },
 
   // 신화
@@ -222,7 +222,7 @@ const traitColorConditions: { [key: string]: TraitColorCondition } = {
   // 정령 주술사
   TFT11_SpiritWalker: {
     thresholds: [1],
-    urls: ['https://cdn.dak.gg/tft/images2/tft/traits/background/gold.svg'],
+    urls: ['https://cdn.dak.gg/tft/images2/tft/traits/background/unique.svg'],
   },
 
   // 이야기꾼
@@ -463,13 +463,15 @@ export const getTraitBackgroundImageUrl = (traitName: string, numUnits: number):
 
   if (numUnits < condition.thresholds[0]) {
     return undefined; // 첫 번째 threshold보다 작으면 undefined 반환
-  } else if (numUnits <= condition.thresholds[1]) {
+  } else if (numUnits <= condition.thresholds[0]) {
     return condition.urls[0]; // 첫 번째 threshold 이내일 때 첫 번째 URL 반환
-  } else if (numUnits <= condition.thresholds[2]) {
+  } else if (numUnits <= condition.thresholds[1]) {
     return condition.urls[1]; // 두 번째 threshold 이내일 때 두 번째 URL 반환
-  } else if (numUnits <= condition.thresholds[3]) {
+  } else if (numUnits <= condition.thresholds[2]) {
     return condition.urls[2]; // 세 번째 threshold 이내일 때 세 번째 URL 반환
+  } else if (numUnits <= condition.thresholds[3]) {
+    return condition.urls[2]; // 네 번째 threshold 이상일 때 마지막 URL 반환
   } else {
-    return condition.urls[3]; // 네 번째 threshold 이상일 때 마지막 URL 반환
+    return condition.urls[3];
   }
 };

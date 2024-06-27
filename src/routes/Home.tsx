@@ -7,8 +7,9 @@ import IItems from '../components/types';
 import ICompElement from '../components/types';
 import { FaCoins } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import Champion from '../components/Champion';
+import ProfileChampion from '../components/ProfileChampion';
 import Item from '../components/Item';
+import Profile from './Profile';
 
 interface IProfileMiniBox {
   puuid: string | undefined;
@@ -210,7 +211,7 @@ export default function Home() {
                   <>
                     <VStack>
                       <Box key={compEle.champion.key} zIndex={0}>
-                        <Champion
+                        <ProfileChampion
                           championKey={compEle.champion.key}
                           name={compEle.champion.name}
                           cost1={compEle.champion.cost1}
@@ -257,7 +258,7 @@ export default function Home() {
                         />
                       </Box>
                       {/* 추천 아이템 */}
-                      <HStack mt={-3} zIndex={1} gap={0.5}>
+                      <HStack mt={-1} zIndex={1} gap={0.5}>
                         {compEle.recommendedItem2 ? (
                           <Box gap="3px">
                             <Box w="17px" h="17px">

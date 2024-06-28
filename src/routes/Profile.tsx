@@ -1,18 +1,4 @@
-import {
-  Box,
-  Button,
-  Container,
-  HStack,
-  Heading,
-  Input,
-  Image,
-  Text,
-  VStack,
-  SkeletonText,
-  Circle,
-  Grid,
-  GridItem,
-} from '@chakra-ui/react';
+import { Box, Container, HStack, Image, Text, VStack, SkeletonText } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useLocation, useParams } from 'react-router-dom';
@@ -86,18 +72,59 @@ export default function Profile() {
     return Array.from({ length: tier }, (_, index) => <FaStar key={index} />);
   };
 
+  const getTierImageSrc = (tier: string) => {
+    switch (tier?.toLowerCase()) {
+      case 'bronze':
+        return 'https://cdn.metatft.com/file/metatft/ranks/wings_bronze.png';
+      case 'silver':
+        return 'https://cdn.metatft.com/file/metatft/ranks/wings_silver.png';
+      case 'gold':
+        return 'https://cdn.metatft.com/file/metatft/ranks/wings_gold.png';
+      case 'platinum':
+        return 'https://cdn.metatft.com/file/metatft/ranks/wings_platinum.png';
+      case 'emerald':
+        return 'https://cdn.metatft.com/file/metatft/ranks/wings_emerald.png';
+      case 'diamond':
+        return 'https://cdn.metatft.com/file/metatft/ranks/wings_diamond.png';
+      case 'master':
+        return 'https://cdn.metatft.com/file/metatft/ranks/wings_master.png';
+      case 'grandmaster':
+        return 'https://cdn.metatft.com/file/metatft/ranks/wings_grandmaster.png';
+      case 'challenger':
+        return 'https://cdn.metatft.com/file/metatft/ranks/wings_challenger.png';
+      default:
+        return '';
+    }
+  };
+
   return (
     <VStack>
       <Container maxW="container.xl">
-        <HStack textColor={'white'}>
-          <Image
-            border="10px black solid"
-            borderRadius="full"
-            w="100px"
-            h="100px"
-            src={`https://ddragon.leagueoflegends.com/cdn/14.12.1/img/profileicon/${summonerData?.profileIconId}.png`}
-            alt="Profile Icon"
-          />
+        <HStack flexWrap={'wrap'} textColor={'white'}>
+          <Box
+            mt={20}
+            mb={20}
+            w="300px"
+            position={'relative'}
+            display={'flex'}
+            justifyContent={'center'}
+            alignItems={'center'}
+          >
+            <Image
+              top={-180}
+              position={'absolute'}
+              w={'300px'}
+              src={getTierImageSrc(String(leagueEntryData?.tier || ''))}
+            />
+            <Image
+              // border="10px black solid"
+              borderRadius="full"
+              w="100px"
+              h="100px"
+              src={`https://ddragon.leagueoflegends.com/cdn/14.12.1/img/profileicon/${summonerData?.profileIconId}.png`}
+              alt="Profile Icon"
+            />
+          </Box>
           <VStack alignItems="flex-start">
             <HStack>
               <Text>{summonerData?.gameName}</Text>
@@ -141,21 +168,17 @@ export default function Profile() {
         </Box>
 
         <Box textColor={'white'}>
-          {matchesByPuuidData?.map((match: IMatch) => (
-            <Box key={match.match_id} p={4} borderWidth={1} borderRadius={8} borderColor="gray.700" mb={4}>
-              {match.match_detail.info.participants
-                .sort((a, b) => a.placement - b.placement)
-                .map((participant) => (
-                  <VStack
-                    key={participant.puuid}
-                    alignItems="flex-start"
-                    pl={4}
-                    pt={2}
-                    pb={5}
-                    borderBottom="1px"
-                    borderColor="gray.600"
-                    mb={2}
-                  >
+          {matchesByPuuidData
+            ?.filter((match) => match.match_detail.metadata.participants)
+            .map((match: IMatch) => {
+              const participant = match.match_detail.info.participants.find(
+                (participant) => participant.puuid === puuid
+              );
+
+              if (!participant) return null;
+              return (
+                <Box key={match.match_id} p={4} borderWidth={1} borderRadius={8} borderColor="gray.700" mb={4}>
+                  <VStack alignItems="flex-start" pl={4} pt={2} pb={5} borderBottom="1px" borderColor="gray.600" mb={2}>
                     {/* 등수 */}
                     <HStack>
                       <Text>matchID: {match.match_id}</Text>
@@ -164,12 +187,12 @@ export default function Profile() {
                     </HStack>
                     {/* 전설이 */}
                     <HStack>
-                      <Box width={'80px'} display={'flex'} position={'relative'} mr={3}>
+                      <Box width={'70px'} display={'flex'} position={'relative'} mr={3}>
                         <Image
                           border="5px gray solid"
                           borderRadius="full"
-                          w="70px"
-                          h="70px"
+                          minW={'70px'}
+                          maxW={'70px'}
                           src={`https://cdn.metatft.com/file/metatft/tacticians/${participant.companion.content_ID}.png`}
                           alt="Profile Icon"
                         />
@@ -183,7 +206,7 @@ export default function Profile() {
                           w={'22px'}
                           h={'22px'}
                           background={'black'}
-                          right={0}
+                          right={2}
                           bottom={0}
                         >
                           <Text as={'b'} fontSize={12} color="gray">
@@ -193,7 +216,7 @@ export default function Profile() {
                       </Box>
 
                       {/* 시너지 */}
-                      <HStack display={'flex'} w={'160px'} flexWrap={'wrap'} gap={'1'}>
+                      <HStack display={'flex'} minW={'150px'} maxW={'150px'} flexWrap={'wrap'} gap={'1'}>
                         {participant.traits
                           .sort((a, b) => b.num_units - a.num_units)
                           .map((trait) => {
@@ -220,7 +243,7 @@ export default function Profile() {
                       </HStack>
 
                       {/* 증강 */}
-                      <Box ml={3} mr={5}>
+                      <Box minW={'30px'} ml={3} mr={5}>
                         {participant.augments.map((participant_augment) => {
                           const augment = augmentsData?.find((augment) => augment.ingameKey === participant_augment);
                           return (
@@ -232,7 +255,7 @@ export default function Profile() {
                       </Box>
 
                       {/* 챔피언 */}
-                      <HStack w={'1000px'} flexWrap={'wrap'}>
+                      <HStack flexWrap={'wrap'}>
                         {participant.units.map((unit) => {
                           const champion = chamiponsData?.find(
                             (champion: { ingameKey: string }) => champion.ingameKey === unit.character_id
@@ -310,37 +333,63 @@ export default function Profile() {
                                 skill_stats4={champion.skill_stats4}
                                 skill_stats5={champion.skill_stats5}
                               />
-                              <Item
-                                key={''}
-                                ingameKey={''}
-                                name={''}
-                                description={''}
-                                shortDesc={''}
-                                imageUrl={''}
-                                composition1={''}
-                                composition2={''}
-                                isFromItem={false}
-                                isNormal={false}
-                                isEmblem={false}
-                                isSupport={false}
-                                isArtifact={false}
-                                isRadiant={false}
-                                isUnique={false}
-                                isNew={false}
-                                tag1={''}
-                                tag2={''}
-                                tag3={''}
-                              ></Item>
+                              <Box>
+                                <HStack gap={0}>
+                                  {unit.itemNames?.length > 0 ? (
+                                    unit.itemNames.map((items: string) => {
+                                      const item = itemsData?.find(
+                                        (item: { ingameKey: string }) => item.ingameKey === items
+                                      );
+
+                                      if (item) {
+                                        return <Image key={item.ingameKey} width={'20px'} src={item.imageUrl} />;
+                                      } else {
+                                        // 아이템이 없는 경우 처리
+                                        return <Box key={items} width={'20px'} height={'20px'} />;
+                                      }
+                                    })
+                                  ) : (
+                                    // unit.itemNames가 없는 경우 처리
+                                    <Box width={'20px'} height={'20px'} />
+                                  )}
+                                </HStack>
+                              </Box>
+                              {/* {unit.itemNames?.map((items: string) => {
+                                const item = itemsData?.find((item: { ingameKey: string }) => item.ingameKey === items);
+
+                                return item ? (
+                                  <Item
+                                    key={item.ingameKey}
+                                    ingameKey={item.ingameKey}
+                                    name={item.name}
+                                    description={item.desc}
+                                    shortDesc={item.shortDesc}
+                                    imageUrl={item.imageUrl}
+                                    composition1={item.composition1}
+                                    composition2={item.composition2}
+                                    isFromItem={item.isFromItem}
+                                    isNormal={item.isNormal}
+                                    isEmblem={item.isEmblem}
+                                    isSupport={item.isSupport}
+                                    isArtifact={item.isArtifact}
+                                    isRadiant={item.isRadiant}
+                                    isUnique={item.isUnique}
+                                    isNew={item.isNew}
+                                    tag1={item.tag1}
+                                    tag2={item.tag2}
+                                    tag3={item.tag3}
+                                  />
+                                ) : null;
+                              })} */}
                             </VStack>
                           ) : null;
                         })}
                       </HStack>
-                      {/* <Text>남은 골드: {participant.gold_left}</Text> */}
                     </HStack>
                   </VStack>
-                ))}
-            </Box>
-          ))}
+                </Box>
+              );
+            })}
         </Box>
       </Container>
     </VStack>

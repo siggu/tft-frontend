@@ -20,6 +20,8 @@ import IAugments from '../components/types';
 import { getTraitBackgroundImageUrl } from '../traitColors';
 import ProfileChampion from './../components/ProfileChampion';
 import Item from '../components/Item';
+import Augment from '../components/Augment';
+import Synergy from '../components/Synergy';
 
 export default function Profile() {
   const { gameName, tagLine } = useParams();
@@ -63,9 +65,9 @@ export default function Profile() {
 
   const convertRawTimeToMinutesSeconds = (rawTime: any) => {
     const totalSeconds = Math.floor(rawTime);
-    const minutes = Math.floor(totalSeconds / 60);
-    const seconds = totalSeconds % 60;
-    return `${minutes}분 ${seconds}초`;
+    const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, '0');
+    const seconds = String(totalSeconds % 60).padStart(2, '0');
+    return `${minutes}:${seconds}`;
   };
 
   const generateStars = (tier: number) => {
@@ -73,28 +75,56 @@ export default function Profile() {
   };
 
   const getTierImageSrc = (tier: string) => {
-    switch (tier?.toLowerCase()) {
-      case 'bronze':
-        return 'https://cdn.metatft.com/file/metatft/ranks/wings_bronze.png';
-      case 'silver':
-        return 'https://cdn.metatft.com/file/metatft/ranks/wings_silver.png';
-      case 'gold':
-        return 'https://cdn.metatft.com/file/metatft/ranks/wings_gold.png';
-      case 'platinum':
-        return 'https://cdn.metatft.com/file/metatft/ranks/wings_platinum.png';
-      case 'emerald':
-        return 'https://cdn.metatft.com/file/metatft/ranks/wings_emerald.png';
-      case 'diamond':
-        return 'https://cdn.metatft.com/file/metatft/ranks/wings_diamond.png';
-      case 'master':
-        return 'https://cdn.metatft.com/file/metatft/ranks/wings_master.png';
-      case 'grandmaster':
-        return 'https://cdn.metatft.com/file/metatft/ranks/wings_grandmaster.png';
-      case 'challenger':
-        return 'https://cdn.metatft.com/file/metatft/ranks/wings_challenger.png';
-      default:
-        return '';
+    const baseUrl = 'https://cdn.metatft.com/file/metatft/ranks/wings_';
+    const validTiers = [
+      'bronze',
+      'silver',
+      'gold',
+      'platinum',
+      'emerald',
+      'diamond',
+      'master',
+      'grandmaster',
+      'challenger',
+    ];
+
+    if (tier) {
+      const lowerCaseTier = tier.toLowerCase();
+      if (validTiers.includes(lowerCaseTier)) {
+        return `${baseUrl}${lowerCaseTier}.png`;
+      }
     }
+    return '';
+  };
+
+  const extractDate = (inputString: string) => {
+    // 정규 표현식을 사용하여 날짜 형식을 찾습니다.
+    const datePattern = /\b(\w{3} \d{1,2} \d{4})\b/;
+    const match = inputString.match(datePattern);
+
+    // 날짜가 발견되면 반환하고, 그렇지 않으면 빈 문자열을 반환합니다.
+    return match ? match[0] : '';
+  };
+
+  const formatDate = (dateString: string): string => {
+    // 월 이름을 숫자로 변환합니다.
+    const months: { [key: string]: string } = {
+      Jan: '1월',
+      Feb: '2월',
+      Mar: '3월',
+      Apr: '4월',
+      May: '5월',
+      Jun: '6월',
+      Jul: '7월',
+      Aug: '8월',
+      Sep: '9월',
+      Oct: '10월',
+      Nov: '11월',
+      Dec: '12월',
+    };
+
+    const [month, day] = dateString.split(' ');
+    return `${months[month]} ${day}일`;
   };
 
   return (
@@ -110,12 +140,14 @@ export default function Profile() {
             justifyContent={'center'}
             alignItems={'center'}
           >
+            {/* 티어 사진 */}
             <Image
               top={-180}
               position={'absolute'}
               w={'300px'}
               src={getTierImageSrc(String(leagueEntryData?.tier || ''))}
             />
+            {/* 유저 프로필 사진 */}
             <Image
               // border="10px black solid"
               borderRadius="full"
@@ -178,12 +210,20 @@ export default function Profile() {
               if (!participant) return null;
               return (
                 <Box key={match.match_id} p={4} borderWidth={1} borderRadius={8} borderColor="gray.700" mb={4}>
-                  <VStack alignItems="flex-start" pl={4} pt={2} pb={5} borderBottom="1px" borderColor="gray.600" mb={2}>
+                  <VStack alignItems="flex-start">
                     {/* 등수 */}
-                    <HStack>
-                      <Text>matchID: {match.match_id}</Text>
-                      <Text>등수: {participant.placement}</Text>
-                      <Text>게임 시간: {convertRawTimeToMinutesSeconds(participant.time_eliminated)}</Text>
+                    <HStack display={'flex'} justifyContent={'center'} alignItems={'center'}>
+                      {/* <Text>matchID: {match.match_id}</Text> */}
+                      <HStack
+                        fontSize={'20px'}
+                        gap={0}
+                        color={participant.placement <= 1 ? 'gold' : participant.placement <= 4 ? 'white' : 'gray.600'}
+                      >
+                        <Text>#</Text>
+                        <Text>{participant.placement}</Text>
+                      </HStack>
+                      <Text fontSize={'14px'}>{convertRawTimeToMinutesSeconds(participant.time_eliminated)}</Text>
+                      <Text>{formatDate(extractDate(match.match_detail.info.game_version))}</Text>
                     </HStack>
                     {/* 전설이 */}
                     <HStack>
@@ -221,36 +261,27 @@ export default function Profile() {
                           .sort((a, b) => b.num_units - a.num_units)
                           .map((trait) => {
                             const synergy = synergiesData?.find((synergy) => synergy.ingameKey === trait.name);
-                            const backgroundImageUrl = getTraitBackgroundImageUrl(trait.name, trait.num_units);
 
-                            if (!backgroundImageUrl) return undefined; // 배경 이미지가 없으면 null 반환
-
-                            return backgroundImageUrl ? (
-                              <HStack key={trait.name} display={'flex'} justifyContent={'center'} alignItems={'center'}>
-                                <Image src={backgroundImageUrl} w="26px" h="26px" />
-                                {synergy && (
-                                  <Image
-                                    position={'absolute'}
-                                    src={synergy.blackImageUrl}
-                                    alt={synergy.name}
-                                    w="18px"
-                                    h="18px"
-                                  />
-                                )}
-                              </HStack>
-                            ) : null;
+                            return <Synergy key={trait.name} trait={trait} synergy={synergy} />;
                           })}
                       </HStack>
 
                       {/* 증강 */}
                       <Box minW={'30px'} ml={3} mr={5}>
-                        {participant.augments.map((participant_augment) => {
-                          const augment = augmentsData?.find((augment) => augment.ingameKey === participant_augment);
-                          return (
-                            <HStack key={participant_augment}>
-                              {augment && <Image src={augment.imageUrl} alt={augment.name} w={'30px'} h={'30px'} />}
-                            </HStack>
+                        {participant.augments.map((augment) => {
+                          const findAugment = augmentsData?.find(
+                            (findAugment: { ingameKey: string }) => findAugment.ingameKey === augment
                           );
+
+                          return findAugment ? (
+                            <Augment
+                              key={findAugment.ingameKey}
+                              ingameKey={findAugment.ingameKey}
+                              name={findAugment.name}
+                              desc={findAugment.desc}
+                              imageUrl={findAugment.imageUrl}
+                            />
+                          ) : null;
                         })}
                       </Box>
 
@@ -333,6 +364,7 @@ export default function Profile() {
                                 skill_stats4={champion.skill_stats4}
                                 skill_stats5={champion.skill_stats5}
                               />
+                              {/* 유닛 착용 아이템 */}
                               <Box>
                                 <HStack gap={0}>
                                   {unit.itemNames?.length > 0 ? (

@@ -365,7 +365,7 @@ export default function Profile() {
                                 skill_stats5={champion.skill_stats5}
                               />
                               {/* 유닛 착용 아이템 */}
-                              <Box>
+                              {/* <Box>
                                 <HStack gap={0}>
                                   {unit.itemNames?.length > 0 ? (
                                     unit.itemNames.map((items: string) => {
@@ -385,34 +385,46 @@ export default function Profile() {
                                     <Box width={'20px'} height={'20px'} />
                                   )}
                                 </HStack>
-                              </Box>
-                              {/* {unit.itemNames?.map((items: string) => {
-                                const item = itemsData?.find((item: { ingameKey: string }) => item.ingameKey === items);
+                              </Box> */}
+                              <HStack gap={0}>
+                                {unit.itemNames.length > 0 ? (
+                                  unit.itemNames?.map((items: string) => {
+                                    const item = itemsData?.find(
+                                      (item: { ingameKey: string }) => item.ingameKey === items
+                                    );
 
-                                return item ? (
-                                  <Item
-                                    key={item.ingameKey}
-                                    ingameKey={item.ingameKey}
-                                    name={item.name}
-                                    description={item.desc}
-                                    shortDesc={item.shortDesc}
-                                    imageUrl={item.imageUrl}
-                                    composition1={item.composition1}
-                                    composition2={item.composition2}
-                                    isFromItem={item.isFromItem}
-                                    isNormal={item.isNormal}
-                                    isEmblem={item.isEmblem}
-                                    isSupport={item.isSupport}
-                                    isArtifact={item.isArtifact}
-                                    isRadiant={item.isRadiant}
-                                    isUnique={item.isUnique}
-                                    isNew={item.isNew}
-                                    tag1={item.tag1}
-                                    tag2={item.tag2}
-                                    tag3={item.tag3}
-                                  />
-                                ) : null;
-                              })} */}
+                                    if (item) {
+                                      return (
+                                        <Box w={'20px'}>
+                                          <Item
+                                            key={item.ingameKey}
+                                            ingameKey={item.ingameKey}
+                                            name={item.name}
+                                            description={item.description}
+                                            shortDesc={item.shortDesc}
+                                            imageUrl={item.imageUrl}
+                                            composition1={item.composition1}
+                                            composition2={item.composition2}
+                                            isFromItem={item.isFromItem}
+                                            isNormal={item.isNormal}
+                                            isEmblem={item.isEmblem}
+                                            isSupport={item.isSupport}
+                                            isArtifact={item.isArtifact}
+                                            isRadiant={item.isRadiant}
+                                            isUnique={item.isUnique}
+                                            isNew={item.isNew}
+                                            tag1={item.tag1}
+                                            tag2={item.tag2}
+                                            tag3={item.tag3}
+                                          />
+                                        </Box>
+                                      );
+                                    }
+                                  })
+                                ) : (
+                                  <Box width={'20px'} height={'20px'} />
+                                )}
+                              </HStack>
                             </VStack>
                           ) : null;
                         })}

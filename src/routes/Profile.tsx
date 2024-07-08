@@ -75,11 +75,11 @@ export default function Profile() {
   // console.log('Matches:', matches);
   const [matchData, setMatchData] = useState<IMatch[]>([]);
 
-  const convertRawTimeToMinutesSeconds = (rawTime: any) => {
-    const totalSeconds = Math.floor(rawTime);
-    const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, '0');
-    const seconds = String(totalSeconds % 60).padStart(2, '0');
-    return `${minutes}:${seconds}`;
+  const convertRawTimeToMinutesSeconds = (rawTime: number): string => {
+    const totalSeconds = Math.floor(rawTime); // 주어진 시간을 초 단위로 변환
+    const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, '0'); // 분 단위로 변환 후 2자리로 포맷팅
+    const seconds = String(totalSeconds % 60).padStart(2, '0'); // 초 단위로 변환 후 2자리로 포맷팅
+    return `${minutes}:${seconds}`; // "분:초" 형식의 문자열 반환
   };
 
   const generateStars = (tier: number) => {
@@ -144,6 +144,24 @@ export default function Profile() {
     await refetchLeagueEntries();
     await refetchMatchesByPuuid();
   };
+  const formatTimestampKST = (timestamp: number): string => {
+    const date = new Date(timestamp);
+    const kstOffset = 9 * 60 * 60 * 1000; // 한국 시간대는 UTC+9
+    const kstDate = new Date(date.getTime() + kstOffset);
+
+    const months = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
+    const month = months[kstDate.getMonth()];
+    const day = kstDate.getDate();
+
+    let hours = kstDate.getHours();
+    const minutes = kstDate.getMinutes();
+    const ampm = hours >= 12 ? '오후' : '오전';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // 시간 '0'을 '12'로 변환
+    const formattedMinutes = minutes.toString().padStart(2, '0');
+
+    return `${month} ${day}일 ${ampm} ${hours}시 ${formattedMinutes}분`;
+  };
 
   return (
     <VStack>
@@ -156,8 +174,7 @@ export default function Profile() {
             position={'relative'}
             display={'flex'}
             justifyContent={'center'}
-            alignItems={'center'}
-          >
+            alignItems={'center'}>
             {/* 티어 사진 */}
             <Image
               top={-180}
@@ -241,13 +258,12 @@ export default function Profile() {
                       <HStack
                         fontSize={'20px'}
                         gap={0}
-                        color={participant.placement <= 1 ? 'gold' : participant.placement <= 4 ? 'white' : 'gray.600'}
-                      >
+                        color={participant.placement <= 1 ? 'gold' : participant.placement <= 4 ? 'white' : 'gray.600'}>
                         <Text>#</Text>
                         <Text>{participant.placement}</Text>
                       </HStack>
                       <Text fontSize={'14px'}>{convertRawTimeToMinutesSeconds(participant.time_eliminated)}</Text>
-                      <Text>{formatDate(extractDate(match.match_detail.info.game_version))}</Text>
+                      <Text>{formatTimestampKST(match.match_detail.info.game_datetime)}</Text>
                     </HStack>
                     {/* 전설이 */}
                     <HStack>
@@ -271,8 +287,7 @@ export default function Profile() {
                           h={'22px'}
                           background={'black'}
                           right={2}
-                          bottom={0}
-                        >
+                          bottom={0}>
                           <Text as={'b'} fontSize={12} color="gray">
                             {participant.level}
                           </Text>
@@ -322,8 +337,7 @@ export default function Profile() {
                               display={'flex'}
                               justifyContent={'center'}
                               alignItems={'center'}
-                              gap={1}
-                            >
+                              gap={1}>
                               <HStack
                                 fontSize={'13px'}
                                 spacing={0}
@@ -339,8 +353,7 @@ export default function Profile() {
                                     : unit.rarity === 6
                                     ? 'gold'
                                     : 'gray'
-                                }
-                              >
+                                }>
                                 {generateStars(unit.tier)}
                               </HStack>
                               <ProfileChampion

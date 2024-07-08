@@ -1,4 +1,4 @@
-import { Box, Container, HStack, Image, Text, VStack, SkeletonText } from '@chakra-ui/react';
+import { Box, Container, HStack, Image, Text, VStack, SkeletonText, Button } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useLocation, useParams } from 'react-router-dom';
@@ -25,17 +25,29 @@ import Synergy from '../components/Synergy';
 
 export default function Profile() {
   const { gameName, tagLine } = useParams();
-  const { data: summonerData, isLoading: isSummonerDataLoading } = useQuery<IProfileMiniBox>({
+  const {
+    data: summonerData,
+    isLoading: isSummonerDataLoading,
+    refetch: refetchSummonerData,
+  } = useQuery<IProfileMiniBox>({
     queryKey: ['', gameName, tagLine],
     queryFn: getSummonerData,
   });
   const summonerId = summonerData?.summonerId;
   const puuid = summonerData?.puuid;
-  const { data: leagueEntryData, isLoading: isLeagueEntryDataLoading } = useQuery<ILeagueEntryDTO>({
+  const {
+    data: leagueEntryData,
+    isLoading: isLeagueEntryDataLoading,
+    refetch: refetchLeagueEntries,
+  } = useQuery<ILeagueEntryDTO>({
     queryKey: ['', summonerId],
     queryFn: getLeagueEntries,
   });
-  const { data: matchesByPuuidData, isLoading: ismatchByPuuidDataLoading } = useQuery<IMatch[]>({
+  const {
+    data: matchesByPuuidData,
+    isLoading: ismatchByPuuidDataLoading,
+    refetch: refetchMatchesByPuuid,
+  } = useQuery<IMatch[]>({
     queryKey: ['', puuid],
     queryFn: getMatchesByPuuid,
   });
@@ -127,6 +139,12 @@ export default function Profile() {
     return `${months[month]} ${day}일`;
   };
 
+  const handleUpdateClick = async () => {
+    await refetchSummonerData();
+    await refetchLeagueEntries();
+    await refetchMatchesByPuuid();
+  };
+
   return (
     <VStack>
       <Container maxW="container.xl">
@@ -197,6 +215,12 @@ export default function Profile() {
           <Text fontSize="20px" as="b" color="#dca555">
             유저 전적
           </Text>
+        </Box>
+
+        <Box>
+          <Button colorScheme="blue" onClick={handleUpdateClick}>
+            전적 업데이트
+          </Button>
         </Box>
 
         <Box textColor={'white'}>
@@ -365,27 +389,6 @@ export default function Profile() {
                                 skill_stats5={champion.skill_stats5}
                               />
                               {/* 유닛 착용 아이템 */}
-                              {/* <Box>
-                                <HStack gap={0}>
-                                  {unit.itemNames?.length > 0 ? (
-                                    unit.itemNames.map((items: string) => {
-                                      const item = itemsData?.find(
-                                        (item: { ingameKey: string }) => item.ingameKey === items
-                                      );
-
-                                      if (item) {
-                                        return <Image key={item.ingameKey} width={'20px'} src={item.imageUrl} />;
-                                      } else {
-                                        // 아이템이 없는 경우 처리
-                                        return <Box key={items} width={'20px'} height={'20px'} />;
-                                      }
-                                    })
-                                  ) : (
-                                    // unit.itemNames가 없는 경우 처리
-                                    <Box width={'20px'} height={'20px'} />
-                                  )}
-                                </HStack>
-                              </Box> */}
                               <HStack gap={0}>
                                 {unit.itemNames.length > 0 ? (
                                   unit.itemNames?.map((items: string) => {

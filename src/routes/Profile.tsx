@@ -198,7 +198,8 @@ export default function Profile() {
             position={'relative'}
             display={'flex'}
             justifyContent={'center'}
-            alignItems={'center'}>
+            alignItems={'center'}
+          >
             {/* 티어 사진 */}
             <Image
               top={-180}
@@ -283,7 +284,8 @@ export default function Profile() {
                       <HStack
                         fontSize={'20px'}
                         gap={0}
-                        color={participant.placement <= 1 ? 'gold' : participant.placement <= 4 ? 'white' : 'gray.600'}>
+                        color={participant.placement <= 1 ? 'gold' : participant.placement <= 4 ? 'white' : 'gray.600'}
+                      >
                         <Text>#</Text>
                         <Text>{participant.placement}</Text>
                       </HStack>
@@ -312,7 +314,8 @@ export default function Profile() {
                           h={'22px'}
                           background={'black'}
                           right={2}
-                          bottom={0}>
+                          bottom={0}
+                        >
                           <Text as={'b'} fontSize={12} color="gray">
                             {participant.level}
                           </Text>
@@ -362,7 +365,8 @@ export default function Profile() {
                               display={'flex'}
                               justifyContent={'center'}
                               alignItems={'center'}
-                              gap={1}>
+                              gap={1}
+                            >
                               <HStack
                                 fontSize={'13px'}
                                 spacing={0}
@@ -378,7 +382,8 @@ export default function Profile() {
                                     : unit.rarity === 6
                                     ? 'gold'
                                     : 'gray'
-                                }>
+                                }
+                              >
                                 {generateStars(unit.tier)}
                               </HStack>
                               <ProfileChampion

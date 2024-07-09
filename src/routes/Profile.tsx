@@ -141,6 +141,10 @@ export default function Profile() {
   };
 
   const handleUpdateClick = async () => {
+    await refetchSummonerData();
+    await refetchLeagueEntries();
+    await refetchMatchesByPuuid();
+
     try {
       // DELETE 요청으로 전적 데이터 삭제
       const deleteResponse = await axios.delete(`http://127.0.0.1:8000/api/v1/profiles/matches-by-puuid/${puuid}`);
@@ -151,10 +155,17 @@ export default function Profile() {
       }
     } catch (error) {
       console.error('전적 데이터 업데이트 중 오류 발생:', error);
-      // alert('전적 데이터 업데이트 중 오류가 발생했습니다.');
+      alert('전적 데이터 업데이트 중 오류가 발생했습니다.');
     }
-    window.location.reload();
+
+    // 새로운 데이터를 가져오는 로직
+    try {
+      await axios.post(`http://127.0.0.1:8000/api/v1/profiles/matches-by-matchid/${puuid}`);
+    } catch (error) {
+      console.error('새로운 데이터 가져오는 중 오류 발생:', error);
+    }
   };
+
   const formatTimestampKST = (timestamp: number): string => {
     const date = new Date(timestamp);
     const kstOffset = 9 * 60 * 60 * 1000; // 한국 시간대는 UTC+9

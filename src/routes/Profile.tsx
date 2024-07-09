@@ -22,6 +22,7 @@ import ProfileChampion from './../components/ProfileChampion';
 import Item from '../components/Item';
 import Augment from '../components/Augment';
 import Synergy from '../components/Synergy';
+import axios from 'axios';
 
 export default function Profile() {
   const { gameName, tagLine } = useParams();
@@ -140,9 +141,19 @@ export default function Profile() {
   };
 
   const handleUpdateClick = async () => {
-    await refetchSummonerData();
-    await refetchLeagueEntries();
-    await refetchMatchesByPuuid();
+    try {
+      // DELETE 요청으로 전적 데이터 삭제
+      const deleteResponse = await axios.delete(`http://127.0.0.1:8000/api/v1/profiles/matches-by-puuid/${puuid}`);
+      if (deleteResponse.status === 200) {
+        alert('전적 데이터가 성공적으로 삭제되었습니다.');
+      } else {
+        alert('전적 데이터 삭제 중 오류가 발생했습니다.');
+      }
+    } catch (error) {
+      console.error('전적 데이터 업데이트 중 오류 발생:', error);
+      // alert('전적 데이터 업데이트 중 오류가 발생했습니다.');
+    }
+    window.location.reload();
   };
   const formatTimestampKST = (timestamp: number): string => {
     const date = new Date(timestamp);
@@ -174,7 +185,8 @@ export default function Profile() {
             position={'relative'}
             display={'flex'}
             justifyContent={'center'}
-            alignItems={'center'}>
+            alignItems={'center'}
+          >
             {/* 티어 사진 */}
             <Image
               top={-180}
@@ -258,7 +270,8 @@ export default function Profile() {
                       <HStack
                         fontSize={'20px'}
                         gap={0}
-                        color={participant.placement <= 1 ? 'gold' : participant.placement <= 4 ? 'white' : 'gray.600'}>
+                        color={participant.placement <= 1 ? 'gold' : participant.placement <= 4 ? 'white' : 'gray.600'}
+                      >
                         <Text>#</Text>
                         <Text>{participant.placement}</Text>
                       </HStack>
@@ -287,7 +300,8 @@ export default function Profile() {
                           h={'22px'}
                           background={'black'}
                           right={2}
-                          bottom={0}>
+                          bottom={0}
+                        >
                           <Text as={'b'} fontSize={12} color="gray">
                             {participant.level}
                           </Text>
@@ -337,7 +351,8 @@ export default function Profile() {
                               display={'flex'}
                               justifyContent={'center'}
                               alignItems={'center'}
-                              gap={1}>
+                              gap={1}
+                            >
                               <HStack
                                 fontSize={'13px'}
                                 spacing={0}
@@ -353,7 +368,8 @@ export default function Profile() {
                                     : unit.rarity === 6
                                     ? 'gold'
                                     : 'gray'
-                                }>
+                                }
+                              >
                                 {generateStars(unit.tier)}
                               </HStack>
                               <ProfileChampion

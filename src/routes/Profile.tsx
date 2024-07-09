@@ -267,6 +267,7 @@ export default function Profile() {
         <Box textColor={'white'}>
           {matchesByPuuidData
             ?.filter((match) => match.match_detail.metadata.participants)
+            .sort((a, b) => b.match_detail.info.game_datetime - a.match_detail.info.game_datetime) // 최신 매치부터 정렬
             .map((match: IMatch) => {
               const participant = match.match_detail.info.participants.find(
                 (participant) => participant.puuid === puuid

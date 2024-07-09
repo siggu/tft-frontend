@@ -280,15 +280,37 @@ export default function Profile() {
                   <VStack alignItems="flex-start">
                     {/* 등수 */}
                     <HStack display={'flex'} justifyContent={'center'} alignItems={'center'}>
-                      {/* <Text>matchID: {match.match_id}</Text> */}
                       <HStack
                         fontSize={'20px'}
                         gap={0}
-                        color={participant.placement <= 1 ? 'gold' : participant.placement <= 4 ? 'white' : 'gray.600'}
+                        color={
+                          match.match_detail.info.queueId === 1160 && Math.trunc((participant.placement + 1) / 2) <= 1
+                            ? 'gold'
+                            : participant.placement <= 1
+                            ? 'gold'
+                            : participant.placement <= 4
+                            ? 'white'
+                            : 'gray.600'
+                        }
                       >
                         <Text>#</Text>
-                        <Text>{participant.placement}</Text>
+                        <Text>
+                          {match.match_detail.info.queueId === 1160
+                            ? Math.trunc((participant.placement + 1) / 2)
+                            : participant.placement}
+                        </Text>
                       </HStack>
+                      <Text>
+                        {match.match_detail.info.queueId === 6120
+                          ? '펭구의 파티'
+                          : match.match_detail.info.queueId === 1160
+                          ? '더블업'
+                          : match.match_detail.info.queueId === 1130
+                          ? '초고속 모드'
+                          : match.match_detail.info.queueId === 1100
+                          ? '랭크'
+                          : '일반'}
+                      </Text>
                       <Text fontSize={'14px'}>{convertRawTimeToMinutesSeconds(participant.time_eliminated)}</Text>
                       <Text>{formatTimestampKST(match.match_detail.info.game_datetime)}</Text>
                     </HStack>

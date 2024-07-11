@@ -1,6 +1,6 @@
 import { Box, Container, HStack, Text, VStack, Image } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
-import { getComps, getSynergies, getItems } from '../api';
+import { getComps, getSynergies, getItems, getMetaDecks } from '../api';
 import IComp from '../components/types';
 import ISynergy from '../components/types';
 import IItems from '../components/types';
@@ -45,7 +45,21 @@ export default function Home() {
     queryKey: ['origins'],
     queryFn: getSynergies,
   });
+  interface IChampionDeck {
+    champion: string;
+    items: string[];
+  }
+  interface IMetaDeck {
+    id: number;
+    name: string;
+    decks: IChampionDeck[];
+  }
 
+  const { data: metaDecksData, isLoading: isMetaDecksLoading } = useQuery<IMetaDeck[]>({
+    queryKey: ['metaDecks'],
+    queryFn: getMetaDecks,
+  });
+  console.log('metaDecksData', metaDecksData);
   // 아이템 가져오기
   const { data: itemsDate } = useQuery<IItems>({
     queryKey: ['item'],

@@ -1,4 +1,4 @@
-import {createBrowserRouter} from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 import Root from './components/Root';
 import Champions from './routes/Champions';
 import ChampionDetail from './routes/ChampionDetail';
@@ -11,6 +11,7 @@ import Synergies from './routes/Synergies';
 import ProfileBackendTest from './routes/ProfileBackendTest';
 import Profile from './routes/Profile';
 import ProfileSearchAdapter from './routes/ProfileSearchAdapter';
+import MetaHome from './routes/MetaHome';
 
 const router = createBrowserRouter([
   {
@@ -18,7 +19,7 @@ const router = createBrowserRouter([
     element: <Root />,
     children: [
       {
-        path: '',
+        path: 'oldHome',
         element: <Home />,
       },
       {
@@ -57,7 +58,11 @@ const router = createBrowserRouter([
         path: 'search/:gameName/:tagLine',
         element: <ProfileSearchAdapter />,
       },
-      {path: 'profile/:gameName/:tagLine', element: <Profile />},
+      { path: 'profile/:gameName/:tagLine', element: <Profile /> },
+      {
+        path: '',
+        element: <MetaHome />,
+      },
     ],
   },
 ]);

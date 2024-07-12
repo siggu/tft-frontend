@@ -1,4 +1,4 @@
-import { Box, Container, HStack, Image, Text, VStack, SkeletonText, Button } from '@chakra-ui/react';
+import { Box, Container, HStack, Image, Text, VStack, SkeletonText, Button, Tooltip } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useLocation, useParams } from 'react-router-dom';
@@ -23,6 +23,47 @@ import Item from '../components/Item';
 import Augment from '../components/Augment';
 import Synergy from '../components/Synergy';
 import axios from 'axios';
+
+const calculateAveragePlacement = (matches: any[] | undefined, puuid: string | undefined) => {
+  if (!matches || matches.length === 0) return 0;
+  const totalPlacement = matches.reduce((sum: any, match: { match_detail: { info: { participants: any[] } } }) => {
+    const participant = match.match_detail.info.participants.find((p: { puuid: any }) => p.puuid === puuid);
+    return sum + (participant?.placement || 0);
+  }, 0);
+  return totalPlacement / matches.length;
+};
+
+const calculateTopFourRate = (matches: any[] | undefined, puuid: string | undefined) => {
+  if (!matches || matches.length === 0) return 0;
+  const topFourCount = matches.reduce(
+    (sum: any, match: { match_detail: { info: { participants: any[]; queueId: number } } }) => {
+      const participant = match.match_detail.info.participants.find((p: { puuid: any }) => p.puuid === puuid);
+      if (!participant) return sum;
+
+      if (match.match_detail.info.queueId === 1160) {
+        return sum + (Math.trunc((participant.placement + 1) / 2) <= 4 ? 1 : 0);
+      } else {
+        return sum + (participant.placement <= 4 ? 1 : 0);
+      }
+    },
+    0
+  );
+  return ((topFourCount / matches.length) * 100).toFixed(2);
+};
+
+const calculateFirstPlaceCount = (matches: any[] | undefined, puuid: string | undefined) => {
+  if (!matches || matches.length === 0) return 0;
+  return matches.reduce((sum: any, match: { match_detail: { info: { participants: any[]; queueId: number } } }) => {
+    const participant = match.match_detail.info.participants.find((p: { puuid: any }) => p.puuid === puuid);
+    if (!participant) return sum;
+
+    if (match.match_detail.info.queueId === 1160) {
+      return sum + (Math.trunc((participant.placement + 1) / 2) === 1 ? 1 : 0);
+    } else {
+      return sum + (participant.placement === 1 ? 1 : 0);
+    }
+  }, 0);
+};
 
 export default function Profile() {
   const { gameName, tagLine } = useParams();
@@ -110,36 +151,6 @@ export default function Profile() {
     return '';
   };
 
-  const extractDate = (inputString: string) => {
-    // 정규 표현식을 사용하여 날짜 형식을 찾습니다.
-    const datePattern = /\b(\w{3} \d{1,2} \d{4})\b/;
-    const match = inputString.match(datePattern);
-
-    // 날짜가 발견되면 반환하고, 그렇지 않으면 빈 문자열을 반환합니다.
-    return match ? match[0] : '';
-  };
-
-  const formatDate = (dateString: string): string => {
-    // 월 이름을 숫자로 변환합니다.
-    const months: { [key: string]: string } = {
-      Jan: '1월',
-      Feb: '2월',
-      Mar: '3월',
-      Apr: '4월',
-      May: '5월',
-      Jun: '6월',
-      Jul: '7월',
-      Aug: '8월',
-      Sep: '9월',
-      Oct: '10월',
-      Nov: '11월',
-      Dec: '12월',
-    };
-
-    const [month, day] = dateString.split(' ');
-    return `${months[month]} ${day}일`;
-  };
-
   const handleUpdateClick = async () => {
     await refetchSummonerData();
     await refetchLeagueEntries();
@@ -187,10 +198,14 @@ export default function Profile() {
     return `${month} ${day}일 ${ampm} ${hours}시 ${formattedMinutes}분`;
   };
 
+  const averagePlacement = calculateAveragePlacement(matchesByPuuidData, puuid);
+  const topFourRate = calculateTopFourRate(matchesByPuuidData, puuid);
+  const firstPlaceCount = calculateFirstPlaceCount(matchesByPuuidData, puuid);
+
   return (
     <VStack>
       <Container maxW="container.xl">
-        <HStack flexWrap={'wrap'} textColor={'white'}>
+        <HStack display={'flex'} justifyContent={'center'} alignItems={'center'} flexWrap={'wrap'} textColor={'white'}>
           <Box
             mt={20}
             mb={20}
@@ -253,18 +268,107 @@ export default function Profile() {
           </VStack>
         </HStack>
 
-        <Box>
+        <Box mb={3}>
           <Text fontSize="20px" as="b" color="#dca555">
             유저 전적
           </Text>
         </Box>
 
         <Box>
-          <Button colorScheme="blue" onClick={handleUpdateClick}>
+          <Button colorScheme="green" onClick={handleUpdateClick}>
             전적 업데이트
           </Button>
         </Box>
 
+        <VStack gap={0} p={3} m={5} display={'flex'} justifyContent={'center'} alignItems={'center'}>
+          <Text fontWeight={'700'} fontSize={'20px'} color={'white'}>
+            최근 게임 전적
+          </Text>
+          <Text color={'gray'} mb={5}>
+            (일반, 랭크, 초고속, 더블업, 펭구의 파티)
+          </Text>
+          <HStack>
+            <HStack mr={5} w={'290px'} flexWrap={'wrap'}>
+              {matchesByPuuidData
+                ?.filter((match) => match.match_detail.metadata.participants)
+                .sort((a, b) => b.match_detail.info.game_datetime - a.match_detail.info.game_datetime)
+                .map((match: IMatch) => {
+                  const participant = match.match_detail.info.participants.find(
+                    (participant) => participant.puuid === puuid
+                  );
+                  if (!participant) return null;
+
+                  return (
+                    <Box
+                      display={'flex'}
+                      justifyContent={'center'}
+                      alignItems={'center'}
+                      w={'20px'}
+                      h={'30px'}
+                      fontSize={'20px'}
+                      gap={0}
+                      color={'black'}
+                      borderRadius={3}
+                      bgColor={
+                        match.match_detail.info.queueId === 1160 && Math.trunc((participant.placement + 1) / 2) <= 1
+                          ? 'gold'
+                          : participant.placement <= 1
+                          ? 'gold'
+                          : participant.placement <= 4
+                          ? 'white'
+                          : 'gray.600'
+                      }
+                    >
+                      <Text fontSize={'15px'} fontWeight={700}>
+                        {match.match_detail.info.queueId === 1160
+                          ? Math.trunc((participant.placement + 1) / 2)
+                          : participant.placement}
+                      </Text>
+                    </Box>
+                  );
+                })}
+            </HStack>
+            <HStack gap={3}>
+              <VStack gap={1}>
+                <Text fontSize={'17px'} color={'white'}>
+                  평균 등수
+                </Text>
+                <Text fontSize="15px" color="white">
+                  {averagePlacement.toFixed(2)}등
+                </Text>
+              </VStack>
+              <VStack gap={1}>
+                <Tooltip
+                  fontSize={'13px'}
+                  hasArrow
+                  bg={'black'}
+                  rounded={'md'}
+                  p={3}
+                  label="상위 4등 안에 든 비율"
+                  placement="top"
+                >
+                  <Text fontSize={'17px'} color="white">
+                    순방률
+                  </Text>
+                </Tooltip>
+                <Text fontSize="15px" color="white">
+                  {topFourRate}%
+                </Text>
+              </VStack>
+              <VStack gap={1}>
+                <Text fontSize={'17px'} color={'white'}>
+                  1등 횟수
+                </Text>
+                <Text fontSize={'15px'} color={'white'}>
+                  {firstPlaceCount}회
+                </Text>
+              </VStack>
+              <VStack>
+                <Text color={'white'}></Text>
+              </VStack>
+            </HStack>
+          </HStack>
+        </VStack>
         <Box textColor={'white'}>
           {matchesByPuuidData
             ?.filter((match) => match.match_detail.metadata.participants)
@@ -311,6 +415,7 @@ export default function Profile() {
                           ? '랭크'
                           : '일반'}
                       </Text>
+                      {/* <Text>{match.match_id}</Text> */}
                       <Text fontSize={'14px'}>{convertRawTimeToMinutesSeconds(participant.time_eliminated)}</Text>
                       <Text>{formatTimestampKST(match.match_detail.info.game_datetime)}</Text>
                     </HStack>
@@ -463,7 +568,7 @@ export default function Profile() {
 
                                     if (item) {
                                       return (
-                                        <Box w={'20px'}>
+                                        <Box w={'15px'}>
                                           <Item
                                             key={item.ingameKey}
                                             ingameKey={item.ingameKey}
@@ -490,7 +595,7 @@ export default function Profile() {
                                     }
                                   })
                                 ) : (
-                                  <Box width={'20px'} height={'20px'} />
+                                  <Box width={'15px'} height={'15px'} />
                                 )}
                               </HStack>
                             </VStack>

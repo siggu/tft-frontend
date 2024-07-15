@@ -1,23 +1,14 @@
-import { useQuery } from "@tanstack/react-query";
-import { getItems } from "../api";
-import { useParams } from "react-router-dom";
-import {
-  Box,
-  Container,
-  HStack,
-  Image,
-  Text,
-  Tooltip,
-  VStack,
-  Wrap,
-} from "@chakra-ui/react";
-import IItems from "../components/types";
-import Item from "../components/Item";
+import { useQuery } from '@tanstack/react-query';
+import { getItems } from '../../set11api';
+import { useParams } from 'react-router-dom';
+import { Box, Container, HStack, Image, Text, Tooltip, VStack, Wrap } from '@chakra-ui/react';
+import IItems from '../../components/types';
+import Item from '../../components/set11/Item';
 
 export default function Items() {
   // 아이템 가져오기
   const { data: itemsData, isLoading: isItemLoading } = useQuery<IItems[]>({
-    queryKey: ["item"],
+    queryKey: ['item'],
     queryFn: getItems,
   });
 
@@ -49,15 +40,15 @@ export default function Items() {
   );
 
   return (
-    <Container maxW={"container.xl"} minH={"500px"}>
+    <Container maxW={'container.xl'} minH={'500px'}>
       {isItemLoading ? (
-        <Text color={"white"}>로딩중!!!</Text>
+        <Text color={'white'}>로딩중!!!</Text>
       ) : (
-        <VStack color={"white"} fontSize={"30px"} alignItems={"left"}>
+        <VStack color={'white'} fontSize={'30px'} alignItems={'left'}>
           <Text>재료 아이템</Text>
           <Wrap>
             {fromItemArr.map((item_ele) => (
-              <Box w={"64px"} h={"64px"}>
+              <Box w={'64px'} h={'64px'}>
                 <Item
                   key={item_ele.key}
                   ingameKey={item_ele.ingameKey}
@@ -85,7 +76,7 @@ export default function Items() {
           <Text>기본 조합 아이템</Text>
           <Wrap>
             {normalItemArr.map((item_ele) => (
-              <Box w={"64px"} h={"64px"}>
+              <Box w={'64px'} h={'64px'}>
                 <Item
                   key={item_ele.key}
                   ingameKey={item_ele.ingameKey}
@@ -113,7 +104,7 @@ export default function Items() {
           <Text>상징 아이템</Text>
           <Wrap>
             {emblemItemArr.map((item_ele) => (
-              <Box w={"64px"} h={"64px"}>
+              <Box w={'64px'} h={'64px'}>
                 <Item
                   key={item_ele.key}
                   ingameKey={item_ele.ingameKey}
@@ -141,7 +132,7 @@ export default function Items() {
           <Text>지원 아이템</Text>
           <Wrap>
             {supportItemArr.map((item_ele) => (
-              <Box w={"64px"} h={"64px"}>
+              <Box w={'64px'} h={'64px'}>
                 <Item
                   key={item_ele.key}
                   ingameKey={item_ele.ingameKey}
@@ -169,7 +160,7 @@ export default function Items() {
           <Text>유물 오른 아이템</Text>
           <Wrap>
             {artifactItemArr.map((item_ele) => (
-              <Box w={"64px"} h={"64px"}>
+              <Box w={'64px'} h={'64px'}>
                 <Item
                   key={item_ele.key}
                   ingameKey={item_ele.ingameKey}
@@ -197,7 +188,7 @@ export default function Items() {
           <Text>찬란한 아이템</Text>
           <Wrap>
             {radiantItemArr.map((item_ele) => (
-              <Box w={"64px"} h={"64px"}>
+              <Box w={'64px'} h={'64px'}>
                 <Item
                   key={item_ele.key}
                   ingameKey={item_ele.ingameKey}

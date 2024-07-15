@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
-import { getChampions, getSynergies } from '../api';
+import { getChampions, getSynergies } from '../../set11api';
 import { Container, VStack, Text, Grid, Box, Image, HStack, Tooltip, GridItem } from '@chakra-ui/react';
-import ISynergy from '../components/types';
-import IChampionDetail from './../components/types.d';
-import Champion from '../components/Champion';
+import ISynergy from '../../components/types';
+import IChampionDetail from '../../components/types';
+import Champion from '../../components/set11/Champion';
 
 export default function Synergies() {
   const { data: synergiesData, isLoading: isSynergiesLoading } = useQuery<ISynergy[]>({

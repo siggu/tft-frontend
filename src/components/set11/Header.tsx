@@ -1,7 +1,7 @@
-import {HStack, Box, Text, Image, Container, VStack, Input, FormControl, Button} from '@chakra-ui/react';
-import {useState} from 'react';
-import {FaSearch} from 'react-icons/fa';
-import {Link, useNavigate} from 'react-router-dom';
+import { HStack, Box, Text, Image, Container, VStack, Input, FormControl, Button } from '@chakra-ui/react';
+import { useState } from 'react';
+import { FaSearch } from 'react-icons/fa';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Header() {
   const [gameName, setgameName] = useState('');
@@ -42,7 +42,7 @@ export default function Header() {
           if (matchesResponse.ok) {
             // navigate(`/profile/${gameName}`, {state: {gameName: gameName, matches: matchesData}});
             navigate(`/profile_backend_test/${gameName}/${tagLine}`, {
-              state: {gameName: gameName, tagLine: tagLine, matches: matchesData},
+              state: { gameName: gameName, tagLine: tagLine, matches: matchesData },
             });
           } else {
             await fetch(`http://127.0.0.1:8000/api/v1/profiles/matches-by-puuid/${gameName}/${tagLine}`, {
@@ -50,11 +50,13 @@ export default function Header() {
               headers: {
                 'Content-Type': 'application/json',
               },
-              body: JSON.stringify({gameName: gameName, tagLine: tagLine, mathces: matchesData}),
+              body: JSON.stringify({ gameName: gameName, tagLine: tagLine, mathces: matchesData }),
             });
 
             // navigate(`/profile/${gameName}`, {state: {gameName: gameName}});
-            navigate(`/profile_backend_test/${gameName}/${tagLine}`, {state: {gameName: gameName, tagLine: tagLine}});
+            navigate(`/profile_backend_test/${gameName}/${tagLine}`, {
+              state: { gameName: gameName, tagLine: tagLine },
+            });
           }
         } else {
           // 검색한 유저가 우리 디비에 없다 ❌
@@ -63,11 +65,11 @@ export default function Header() {
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({gameName: gameName, tagLine: tagLine}),
+            body: JSON.stringify({ gameName: gameName, tagLine: tagLine }),
           });
           // console.log(4)
           // navigate(`/profile/${gameName}`, {state: {gameName: gameName}});
-          navigate(`/profile_backend_test/${gameName}/${tagLine}`, {state: {gameName: gameName, tagLine: tagLine}});
+          navigate(`/profile_backend_test/${gameName}/${tagLine}`, { state: { gameName: gameName, tagLine: tagLine } });
         }
       }
     } catch (error) {
@@ -83,14 +85,14 @@ export default function Header() {
     setSearchTag(event.target.value);
   };
   const handleSearchtoAdapter = () => {
-    navigate(`/search/${gameName}/${tagLine}`);
+    navigate(`/set11/search/${gameName}/${tagLine}`);
   };
 
   return (
     <Box p={10} mb={10}>
       <VStack gap={10}>
         <Box>
-          <Link to={'/'}>
+          <Link to={'/set11'}>
             <Image src="https://cdn.dak.gg/tft/images2/sets/set11/logo-title-ko.png" />
           </Link>
         </Box>
@@ -118,7 +120,7 @@ export default function Header() {
             fontSize={'14px'}
             border={'1px solid black'}
           >
-            <Link to={'/encounters'}>
+            <Link to={'/set11/encounters'}>
               <Text fontWeight={'600'} color={'white'}>
                 조우자
               </Text>
@@ -136,7 +138,7 @@ export default function Header() {
             fontSize={'14px'}
             border={'1px solid black'}
           >
-            <Link to={'/champions/Aatrox'}>
+            <Link to={'/set11/champions/Aatrox'}>
               <Text fontWeight={'600'} color={'white'}>
                 챔피언
               </Text>
@@ -154,7 +156,7 @@ export default function Header() {
             fontSize={'14px'}
             border={'1px solid black'}
           >
-            <Link to={'/synergies'}>
+            <Link to={'/set11/synergies'}>
               <Text fontWeight={'600'} color={'white'}>
                 시너지
               </Text>
@@ -172,7 +174,7 @@ export default function Header() {
             fontSize={'14px'}
             border={'1px solid black'}
           >
-            <Link to={'/items'}>
+            <Link to={'/set11/items'}>
               <Text fontWeight={'600'} color={'white'}>
                 아이템
               </Text>
@@ -190,7 +192,7 @@ export default function Header() {
             fontSize={'14px'}
             border={'1px solid black'}
           >
-            <Link to={'/augments/silver'}>
+            <Link to={'/set11/augments/silver'}>
               <Text fontWeight={'600'} color={'white'}>
                 증강체
               </Text>
@@ -208,7 +210,7 @@ export default function Header() {
             fontSize={'14px'}
             border={'1px solid black'}
           >
-            <Link to={'/portals'}>
+            <Link to={'/set11/portals'}>
               <Text fontWeight={'600'} color={'white'}>
                 차원문
               </Text>

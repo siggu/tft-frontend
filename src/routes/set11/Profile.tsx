@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useLocation, useParams } from 'react-router-dom';
 import { FaSearch, FaStar } from 'react-icons/fa';
-import ILeagueEntryDTO from '../components/types';
-import IProfileMiniBox from '../components/types';
-import IMatch from '../components/types';
+import ILeagueEntryDTO from '../../components/types';
+import IProfileMiniBox from '../../components/types';
+import IMatch from '../../components/types';
 import {
   getAugments,
   getChampions,
@@ -14,14 +14,14 @@ import {
   getMatchesByPuuid,
   getSummonerData,
   getSynergies,
-} from '../api';
-import ISynergy from '../components/types';
-import IAugments from '../components/types';
-import { getTraitBackgroundImageUrl } from '../traitColors';
-import ProfileChampion from './../components/ProfileChampion';
-import Item from '../components/Item';
-import Augment from '../components/Augment';
-import Synergy from '../components/Synergy';
+} from '../../set11api';
+import ISynergy from '../../components/types';
+import IAugments from '../../components/types';
+import { getTraitBackgroundImageUrl } from '../../traitColors';
+import ProfileChampion from '../../components/set11/ProfileChampion';
+import Item from '../../components/set11/Item';
+import Augment from '../../components/set11/Augment';
+import Synergy from '../../components/set11/Synergy';
 import axios from 'axios';
 
 const calculateAveragePlacement = (matches: any[] | undefined, puuid: string | undefined) => {

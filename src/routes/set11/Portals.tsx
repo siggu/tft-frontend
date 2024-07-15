@@ -1,10 +1,10 @@
-import {useQuery} from '@tanstack/react-query';
-import {getPortals} from '../api';
-import IPortals from './../components/types.d';
-import {Container, VStack, Text, Image, Divider, Spinner, HStack, Box} from '@chakra-ui/react';
+import { useQuery } from '@tanstack/react-query';
+import { getPortals } from '../../set11api';
+import IPortals from '../../components/types';
+import { Container, VStack, Text, Image, Divider, Spinner, HStack, Box } from '@chakra-ui/react';
 
 export default function Portals() {
-  const {data, isLoading, error} = useQuery<IPortals[]>({
+  const { data, isLoading, error } = useQuery<IPortals[]>({
     queryKey: ['portals'],
     queryFn: getPortals,
   });
@@ -14,7 +14,7 @@ export default function Portals() {
   if (error) return <Text color="red.500">Error fetching portals: {error.message}</Text>;
 
   // 각 타입에 따라 데이터를 분류합니다.
-  const portalsByType: {[key: string]: IPortals[]} = {};
+  const portalsByType: { [key: string]: IPortals[] } = {};
 
   // 데이터를 분류합니다.
   data?.forEach((portal) => {

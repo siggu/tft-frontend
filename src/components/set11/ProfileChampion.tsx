@@ -2,8 +2,8 @@ import { Box, Text, VStack, Image, HStack, Tooltip } from '@chakra-ui/react';
 import { Link, useParams } from 'react-router-dom';
 import { FaCoins } from 'react-icons/fa';
 import { useQuery } from '@tanstack/react-query';
-import { getChampion, getChampions, getItems, getSynergies } from '../api';
-import IChampion from '../components/types';
+import { getChampion, getChampions, getItems, getSynergies } from '../../set11api';
+import IChampion from '../types';
 
 interface IChampionData {
   championKey: string;
@@ -51,7 +51,7 @@ interface IChampionData {
   skill_stats5: string | null;
 }
 
-export default function Champion({
+export default function ProfileChampion({
   championKey,
   ingameKey,
   name,
@@ -237,79 +237,30 @@ export default function Champion({
           </VStack>
         }
         bg={'black'}
-        rounded={'md'}
+        rounded={'lg'}
         p={3}
       >
-        <Link to={`/champions/${championKey}`}>
-          <Box
-            w={'60px'}
-            h={'60px'}
-            border={
-              cost1 === 1
-                ? '3px solid gray'
-                : cost1 === 2
-                ? '3px solid green'
-                : cost1 === 3
-                ? '3px solid blue'
-                : cost1 === 4
-                ? '3px solid purple'
-                : cost1 === 5
-                ? '3px solid gold'
-                : '3px solid black'
-            }
-            borderRadius={'2xl'}
-            position={'relative'}
-          >
-            <Image w={'full'} h={'full'} rounded={'13px'} src={imageUrl} />
-
-            <Box
-              position={'absolute'} // 부모 요소를 기준으로 절대적으로 위치
-              top={0} // 부모 요소의 위쪽에 배치
-              right={0} // 부모 요소의 오른쪽에 배치
-              bg={
-                cost1 === 1
-                  ? 'gray'
-                  : cost1 === 2
-                  ? 'green'
-                  : cost1 === 3
-                  ? 'blue'
-                  : cost1 === 4
-                  ? 'purple'
-                  : cost1 === 5
-                  ? 'gold'
-                  : undefined
-              } // 배경색 지정
-              pl={1}
-              pr={1}
-              roundedTopRight={'10px'} // 라운드 처리
-            >
-              <Text
-                display={'flex'}
-                textAlign={'end'}
-                as={'b'}
-                textShadow={'-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black'}
-                fontSize={'13px'}
-                color={'white'}
-              >
-                ${cost1}
-              </Text>
-            </Box>
-
-            <Box display={'flex'} justifyContent={'center'} alignItems={'center'}>
-              <Text
-                noOfLines={1}
-                as={'b'}
-                textShadow={'-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black'}
-                position={'absolute'}
-                fontSize={'13px'}
-                color={'white'}
-                bottom={'0px'}
-              >
-                {name}
-              </Text>
-            </Box>
-          </Box>
-        </Link>
+        <Box
+          w={'45px'}
+          h={'45px'}
+          border={
+            cost1 === 1
+              ? '3px solid gray'
+              : cost1 === 2
+              ? '3px solid green'
+              : cost1 === 3
+              ? '3px solid blue'
+              : cost1 === 4
+              ? '3px solid purple'
+              : cost1 === 5
+              ? '3px solid gold'
+              : '3px solid gray'
+          }
+          borderRadius={'lg'}
+          position={'relative'}
+        >
+          <Image w={'full'} h={'full'} rounded={4} src={imageUrl} />
+        </Box>
       </Tooltip>
     </Box>
   );

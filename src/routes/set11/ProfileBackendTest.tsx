@@ -1,12 +1,12 @@
-import {Box, Button, Container, HStack, Heading, Input, Text, VStack} from '@chakra-ui/react';
-import {useQuery} from '@tanstack/react-query';
-import {useParams} from 'react-router-dom';
-import {useEffect, useState} from 'react';
-import {FaSearch} from 'react-icons/fa';
-import IChampionDetail from '../components/types';
-import IItems from '../components/types';
-import {getSummonerData, fetchMatchData, getChampions, getItems} from '../api';
-import Item from '../components/Item';
+import { Box, Button, Container, HStack, Heading, Input, Text, VStack } from '@chakra-ui/react';
+import { useQuery } from '@tanstack/react-query';
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { FaSearch } from 'react-icons/fa';
+import IChampionDetail from '../../components/types';
+import IItems from '../../components/types';
+import { getSummonerData, fetchMatchData, getChampions, getItems } from '../../set11api';
+import Item from '../../components/set11/Item';
 interface IMatchDataByPuuid {
   id: number;
   match_id: string;
@@ -160,11 +160,11 @@ interface IProfileId {
   hotStreak: boolean;
 }
 export default function ProfileBackendTest() {
-  const {data: allChampionsData} = useQuery<IChampionDetail[]>({
+  const { data: allChampionsData } = useQuery<IChampionDetail[]>({
     queryKey: ['champions'],
     queryFn: getChampions,
   });
-  const {data: itemsData, isLoading: isItemsLoading} = useQuery<IItems>({
+  const { data: itemsData, isLoading: isItemsLoading } = useQuery<IItems>({
     queryKey: ['item'],
     queryFn: getItems,
   });
@@ -223,8 +223,8 @@ export default function ProfileBackendTest() {
     radiantItemArr,
     etcItemArr,
   ];
-  const {summonerName} = useParams();
-  const {data: summonerMatchData} = useQuery<IMatchDataByPuuid[]>({
+  const { summonerName } = useParams();
+  const { data: summonerMatchData } = useQuery<IMatchDataByPuuid[]>({
     queryKey: ['summoner', summonerName],
     queryFn: getSummonerData,
   });

@@ -6,28 +6,28 @@ const instance = axios.create({
   baseURL: 'http://127.0.0.1:8000/api/v1/',
 });
 // 증강
-export const getAugments = () => instance.get('augments/').then((response) => response.data);
+export const getAugments = () => instance.get('augments/set11').then((response) => response.data);
 
 // 챔피언
-export const getChampions = () => instance.get('champions/').then((response) => response.data);
+export const getChampions = () => instance.get('champions/set11').then((response) => response.data);
 
 export const getChampion = ({ queryKey }: QueryFunctionContext) => {
   const [_, championPk] = queryKey;
-  return instance.get(`champions/${championPk}`).then((response) => response.data);
+  return instance.get(`champions/set11/${championPk}`).then((response) => response.data);
 };
 
 // 추천메타
-export const getComps = () => instance.get('comps/').then((response) => response.data);
+export const getComps = () => instance.get('comps/set11').then((response) => response.data);
 
 // 아이템
-export const getItems = () => instance.get('items/').then((response) => response.data);
+export const getItems = () => instance.get('items/set11').then((response) => response.data);
 
 // 시너지
-export const getSynergies = () => instance.get('synergies').then((response) => response.data);
+export const getSynergies = () => instance.get('synergies/set11').then((response) => response.data);
 
-export const getEncounters = () => instance.get('encounters/').then((response) => response.data);
+export const getEncounters = () => instance.get('encounters/set11').then((response) => response.data);
 
-export const getPortals = () => instance.get('portals/').then((response) => response.data);
+export const getPortals = () => instance.get('portals/set11').then((response) => response.data);
 
 export const postSummonerData = ({ queryKey }: QueryFunctionContext) => {
   const [_, gameName, tagLine] = queryKey;

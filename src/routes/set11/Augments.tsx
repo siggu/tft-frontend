@@ -1,17 +1,17 @@
 import React from 'react';
-import {useNavigate, useParams, Link} from 'react-router-dom';
-import {useQuery} from '@tanstack/react-query';
-import {getAugments} from '../api';
-import {Box, Container, HStack, Image, Text, VStack} from '@chakra-ui/react';
-import IAugments from './../components/types.d';
+import { useNavigate, useParams, Link } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { getAugments } from '../../set11api';
+import { Box, Container, HStack, Image, Text, VStack } from '@chakra-ui/react';
+import IAugments from '../../components/types';
 
 export default function Augments() {
-  const {data, isLoading} = useQuery<IAugments[]>({
+  const { data, isLoading } = useQuery<IAugments[]>({
     queryKey: ['augments'],
     queryFn: getAugments,
   });
 
-  const {tier} = useParams();
+  const { tier } = useParams();
   const navigate = useNavigate();
 
   if (isLoading) return <div>Loading...</div>;
@@ -34,21 +34,21 @@ export default function Augments() {
       </Box>
       <Box bg={'#27282e'} mx={20} display="flex" justifyContent="space-between">
         {/* 3등분 레이아웃 및 스크롤 기능 적용 */}
-        <Box p={5} _hover={{bg: '#d0a28a'}} width="33.33%" cursor={'pointer'} textAlign="center">
+        <Box p={5} _hover={{ bg: '#d0a28a' }} width="33.33%" cursor={'pointer'} textAlign="center">
           <Link to={'/augments/silver'}>
             <Text fontWeight={'700'} fontSize={'13px'} color={'white'}>
               실버
             </Text>
           </Link>
         </Box>
-        <Box p={5} _hover={{bg: '#d0a28a'}} width="33.33%" cursor={'pointer'} textAlign="center">
+        <Box p={5} _hover={{ bg: '#d0a28a' }} width="33.33%" cursor={'pointer'} textAlign="center">
           <Link to={'/augments/gold'}>
             <Text fontWeight={'700'} fontSize={'13px'} color={'white'}>
               골드
             </Text>
           </Link>
         </Box>
-        <Box p={5} _hover={{bg: '#d0a28a'}} width="33.33%" cursor={'pointer'} textAlign="center">
+        <Box p={5} _hover={{ bg: '#d0a28a' }} width="33.33%" cursor={'pointer'} textAlign="center">
           <Link to={'/augments/prismatic'}>
             <Text fontWeight={'700'} fontSize={'13px'} color={'white'}>
               프리즘

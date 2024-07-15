@@ -1,6 +1,6 @@
 import { Tooltip, Image, Text, VStack, HStack } from '@chakra-ui/react';
-import ISynergy from './types.d';
-import { getTraitBackgroundImageUrl } from '../traitColors';
+import ISynergy from '../types';
+import { getTraitBackgroundImageUrl } from '../../traitColors';
 
 interface SynergyProps {
   trait: {

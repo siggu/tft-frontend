@@ -1,28 +1,28 @@
-import {useQuery} from '@tanstack/react-query';
-import {getChampion, getChampions, getSynergies} from '../api';
-import {useParams} from 'react-router-dom';
-import {FaFlask, FaCoins} from 'react-icons/fa';
-import {Box, Container, HStack, Image, Text, VStack, Grid, useMediaQuery} from '@chakra-ui/react';
-import IChampion from '../components/types';
-import Champion from '../components/Champion';
+import { useQuery } from '@tanstack/react-query';
+import { getChampion, getChampions, getSynergies } from '../../set11api';
+import { useParams } from 'react-router-dom';
+import { FaFlask, FaCoins } from 'react-icons/fa';
+import { Box, Container, HStack, Image, Text, VStack, Grid, useMediaQuery } from '@chakra-ui/react';
+import IChampion from '../../components/types';
+import Champion from '../../components/set11/Champion';
 import React from 'react';
 
 export default function ChampionDetail() {
   // 특정 챔피언 1개만 가져오기 (url)
-  const {championPk} = useParams();
-  const {data: championData, isLoading: isChampionDataLoading} = useQuery<IChampion>({
+  const { championPk } = useParams();
+  const { data: championData, isLoading: isChampionDataLoading } = useQuery<IChampion>({
     queryKey: ['champion', championPk],
     queryFn: getChampion,
   });
 
   // 모든 챔피언 가져오기
-  const {data: allChampionsData, isLoading: isAllChampionDataLoading} = useQuery<IChampion[]>({
+  const { data: allChampionsData, isLoading: isAllChampionDataLoading } = useQuery<IChampion[]>({
     queryKey: ['champions'],
     queryFn: getChampions,
   });
 
   // 시너지 가져오기
-  const {data: synergiesData, isLoading: isSynergiesLoading} = useQuery({
+  const { data: synergiesData, isLoading: isSynergiesLoading } = useQuery({
     queryKey: ['synergy'],
     queryFn: getSynergies,
   });
@@ -32,7 +32,7 @@ export default function ChampionDetail() {
 
   // 시너지 데이터로부터 이름 가져오는 함수
   const getTraitName = (key: string): string => {
-    const synergy = synergiesData.find((syn: {key: string}) => syn.key === key);
+    const synergy = synergiesData.find((syn: { key: string }) => syn.key === key);
     return synergy ? synergy.name : '';
   };
 
@@ -42,13 +42,13 @@ export default function ChampionDetail() {
       return undefined;
     }
 
-    const synergy = synergiesData.find((syn: {key: any}) => syn.key === key);
+    const synergy = synergiesData.find((syn: { key: any }) => syn.key === key);
     return synergy ? synergy.whiteImageUrl : undefined;
   };
 
   // 계열과 직업 리스트 초기화
-  const classListWithImages: {name: string; whiteImageUrl: string}[] = [];
-  const jobsListWithImages: {name: string; whiteImageUrl: string}[] = [];
+  const classListWithImages: { name: string; whiteImageUrl: string }[] = [];
+  const jobsListWithImages: { name: string; whiteImageUrl: string }[] = [];
 
   // 챔피언 데이터가 있고, 시너지 데이터가 있는 경우에만 처리
   if (championData && synergiesData) {
@@ -58,12 +58,12 @@ export default function ChampionDetail() {
         const traitKeys = championData[traitKey]?.split(',');
         // 각 계열 또는 직업을 적절한 리스트에 추가
         traitKeys?.forEach((trait: string) => {
-          const synergy = synergiesData.find((syn: {key: any}) => syn.key === trait);
+          const synergy = synergiesData.find((syn: { key: any }) => syn.key === trait);
           if (synergy) {
             if (synergy._type === 'CLASS') {
-              classListWithImages.push({name: getTraitName(trait), whiteImageUrl: getTraitImage(trait) || ''});
+              classListWithImages.push({ name: getTraitName(trait), whiteImageUrl: getTraitImage(trait) || '' });
             } else {
-              jobsListWithImages.push({name: getTraitName(trait), whiteImageUrl: getTraitImage(trait) || ''});
+              jobsListWithImages.push({ name: getTraitName(trait), whiteImageUrl: getTraitImage(trait) || '' });
             }
           }
         });
@@ -330,14 +330,14 @@ export default function ChampionDetail() {
                             }}
                           />
                           <Box mb={10}>
-                            {Array.from({length: 6}).map((_, index) => {
+                            {Array.from({ length: 6 }).map((_, index) => {
                               const statKey = `stats${index + 1}`;
                               if (synergy?.[statKey]) {
                                 return (
                                   <Text
                                     key={index}
                                     color={'gray'}
-                                    dangerouslySetInnerHTML={{__html: synergy[statKey].replace(/<br>/g, '<br />')}}
+                                    dangerouslySetInnerHTML={{ __html: synergy[statKey].replace(/<br>/g, '<br />') }}
                                   />
                                 );
                               }

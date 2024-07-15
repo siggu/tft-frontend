@@ -1,10 +1,10 @@
-import {useQuery} from '@tanstack/react-query';
-import {getEncounters} from '../api';
-import IEncounter from './../components/types.d';
-import {Box, Grid, Text, VStack, Image, HStack, Container} from '@chakra-ui/react';
+import { useQuery } from '@tanstack/react-query';
+import { getEncounters } from '../../set11api';
+import IEncounter from '../../components/types';
+import { Box, Grid, Text, VStack, Image, HStack, Container } from '@chakra-ui/react';
 
 export default function Encounters() {
-  const {data, isLoading} = useQuery<IEncounter[]>({
+  const { data, isLoading } = useQuery<IEncounter[]>({
     queryKey: ['encounters'],
     queryFn: getEncounters,
   });

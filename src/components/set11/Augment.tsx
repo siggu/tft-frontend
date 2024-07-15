@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { getAugments } from '../api';
+import { getAugments } from '../../set11api';
 import { HStack, Tooltip, VStack, Text, Image } from '@chakra-ui/react';
 
 interface IAugment {

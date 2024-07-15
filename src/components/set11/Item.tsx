@@ -1,6 +1,6 @@
-import {Box, Text, VStack, Image, HStack, Tooltip} from '@chakra-ui/react';
-import {useQuery} from '@tanstack/react-query';
-import {getItems} from '../api';
+import { Box, Text, VStack, Image, HStack, Tooltip } from '@chakra-ui/react';
+import { useQuery } from '@tanstack/react-query';
+import { getItems } from '../../set11api';
 
 interface IItems {
   key: string;
@@ -47,7 +47,7 @@ export default function Item({
 }: IItems) {
   const filteredShortDesc = shortDesc.replace(/<br>/g, ' ');
 
-  const {data, isLoading} = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['items'],
     queryFn: getItems,
   });

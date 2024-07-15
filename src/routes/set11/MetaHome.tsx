@@ -1,15 +1,15 @@
 import { Box, Container, HStack, Text, VStack, Image } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
-import { getComps, getSynergies, getItems, getMetaDecks, getChampions } from '../api';
-import IComp from '../components/types';
-import ISynergy from '../components/types';
-import IItems from '../components/types';
-import ICompElement from '../components/types';
+import { getComps, getSynergies, getItems, getMetaDecks, getChampions } from '../../set11api';
+import IComp from '../../components/types';
+import ISynergy from '../../components/types';
+import IItems from '../../components/types';
+import ICompElement from '../../components/types';
 import { FaCoins } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import ProfileChampion from '../components/ProfileChampion';
-import Item from '../components/Item';
-import IChampion from '../components/types';
+import ProfileChampion from '../../components/set11/ProfileChampion';
+import Item from '../../components/set11/Item';
+import IChampion from '../../components/types';
 import Profile from './Profile';
 
 interface IProfileMiniBox {

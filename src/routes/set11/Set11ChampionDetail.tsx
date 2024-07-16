@@ -84,7 +84,7 @@ export default function Set11ChampionDetail() {
         <HStack gap={'5px'} flexWrap="wrap" p={mediaSize ? '0px' : '20px'}>
           {allChampionsData?.map(
             (allChampionsData_ele, index) =>
-              index > 1 && (
+              !allChampionsData_ele.isHiddenLanding && (
                 <Champion
                   key={allChampionsData_ele.key}
                   championKey={allChampionsData_ele.key}

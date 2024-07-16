@@ -71,4 +71,4 @@ export const getSet11MatchDetailsByMatchID = ({ queryKey }: QueryFunctionContext
   return instance.get(`profiles/matchDetails/${matchID}`).then((response) => response.data);
 };
 
-export const getSet11MetaDecks = () => instance.get('comps/meta/decks').then((response) => response.data);
+export const getSet11MetaDecks = () => instance.get('comps/set11/meta/decks').then((response) => response.data);

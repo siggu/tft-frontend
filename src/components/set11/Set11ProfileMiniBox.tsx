@@ -10,7 +10,7 @@ interface IProfileMiniBox {
   summonerId: string | undefined;
   summonerLevel: number | undefined;
 }
-export default function ProfileMiniBox({
+export default function Set11ProfileMiniBox({
   puuid,
   gameName,
   tagLine,

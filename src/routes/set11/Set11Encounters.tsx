@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
-import { getEncounters } from '../../set11api';
+import { getSet11Encounters } from '../../set11api';
 import IEncounter from '../../components/types';
 import { Box, Grid, Text, VStack, Image, HStack, Container } from '@chakra-ui/react';
 
-export default function Encounters() {
+export default function Set11Encounters() {
   const { data, isLoading } = useQuery<IEncounter[]>({
     queryKey: ['encounters'],
-    queryFn: getEncounters,
+    queryFn: getSet11Encounters,
   });
   const sortedData = data ? [...data].sort((a, b) => a.ingameKey.localeCompare(b.ingameKey)) : [];
 

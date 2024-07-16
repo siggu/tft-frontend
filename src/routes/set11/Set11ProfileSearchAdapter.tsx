@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Box, Grid, Text, VStack, Image, HStack, Container, Skeleton, SkeletonText, Button } from '@chakra-ui/react';
-import ProfileMiniBox from '../../components/set11/ProfileMiniBox';
+import ProfileMiniBox from '../../components/set11/Set11ProfileMiniBox';
 import { useParams } from 'react-router-dom';
 import IProfileMiniBox from '../../components/types';
-import { getSummonerData, postSummonerData } from '../../set11api';
+import { getSet11SummonerData, postSummonerData } from '../../set11api';
 
-export default function ProfileSearchAdapter() {
+export default function Set11ProfileSearchAdapter() {
   const { gameName, tagLine } = useParams();
   const { data: summonerData, isLoading: isSummonerDataLoading } = useQuery<IProfileMiniBox>({
     queryKey: ['', gameName, tagLine],
-    queryFn: getSummonerData,
+    queryFn: getSet11SummonerData,
   });
 
   console.log('summonerData', summonerData);

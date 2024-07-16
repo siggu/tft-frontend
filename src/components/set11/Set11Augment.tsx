@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { getAugments } from '../../set11api';
+import { getSet11Augments } from '../../set11api';
 import { HStack, Tooltip, VStack, Text, Image } from '@chakra-ui/react';
 
 interface IAugment {
@@ -10,10 +10,10 @@ interface IAugment {
   imageUrl: string;
 }
 
-export default function Augment({ key, ingameKey, name, desc, imageUrl }: IAugment) {
+export default function Set11Augment({ key, ingameKey, name, desc, imageUrl }: IAugment) {
   const { data: augmentsData } = useQuery({
     queryKey: ['augments'],
-    queryFn: getAugments,
+    queryFn: getSet11Augments,
   });
 
   return (

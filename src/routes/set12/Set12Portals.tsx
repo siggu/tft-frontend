@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
-import { getPortals } from '../../set11api';
+import { getSet12Portals } from '../../set12api';
 import IPortals from '../../components/types';
 import { Container, VStack, Text, Image, Divider, Spinner, HStack, Box } from '@chakra-ui/react';
 
-export default function Portals() {
+export default function Set12Portals() {
   const { data, isLoading, error } = useQuery<IPortals[]>({
     queryKey: ['portals'],
-    queryFn: getPortals,
+    queryFn: getSet12Portals,
   });
 
   if (isLoading) return <Spinner size="xl" />;

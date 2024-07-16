@@ -1,16 +1,16 @@
 import { Box, Container, HStack, Text, VStack, Image } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
-import { getComps, getSynergies, getItems, getMetaDecks, getChampions } from '../../set11api';
+import { getSet11Comps, getSet11Synergies, getSet11Items, getSet11MetaDecks, getSet11Champions } from '../../set11api';
 import IComp from '../../components/types';
 import ISynergy from '../../components/types';
 import IItems from '../../components/types';
 import ICompElement from '../../components/types';
 import { FaCoins } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import ProfileChampion from '../../components/set11/ProfileChampion';
-import Item from '../../components/set11/Item';
+import ProfileChampion from '../../components/set11/Set11ProfileChampion';
+import Item from '../../components/set11/Set11Item';
 import IChampion from '../../components/types';
-import Profile from './Profile';
+import Profile from './Set11Profile';
 
 interface IProfileMiniBox {
   puuid: string | undefined;
@@ -43,32 +43,32 @@ interface IMetaDeck {
   decks: IChampionDeck[];
 }
 
-export default function MetaHome() {
+export default function Set11MetaHome() {
   // 모든 챔피언 가져오기
   const { data: allChampionsData, isLoading: isAllChampionDataLoading } = useQuery<IChampion[]>({
     queryKey: ['champions'],
-    queryFn: getChampions,
+    queryFn: getSet11Champions,
   });
   // synergy origins api - get
   const { data: compData, isLoading: compIsLoading } = useQuery<IComp[]>({
     queryKey: ['comps'],
-    queryFn: getComps,
+    queryFn: getSet11Comps,
   });
 
   // 시너지 get
   const { data: synergiesData, isLoading: isSynergiesLoading } = useQuery<ISynergy[]>({
     queryKey: ['origins'],
-    queryFn: getSynergies,
+    queryFn: getSet11Synergies,
   });
 
   const { data: metaDecksData, isLoading: isMetaDecksLoading } = useQuery<IMetaDeck[]>({
     queryKey: ['metaDecks'],
-    queryFn: getMetaDecks,
+    queryFn: getSet11MetaDecks,
   });
   // 아이템 가져오기
   const { data: allItemsData, isLoading: isItemsLoading } = useQuery<IItems[]>({
     queryKey: ['item'],
-    queryFn: getItems,
+    queryFn: getSet11Items,
   });
 
   const findChampionByIngameKey = (ingameKey: string) => {

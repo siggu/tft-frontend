@@ -7,21 +7,21 @@ import ILeagueEntryDTO from '../../components/types';
 import IProfileMiniBox from '../../components/types';
 import IMatch from '../../components/types';
 import {
-  getAugments,
-  getChampions,
-  getItems,
-  getLeagueEntries,
-  getMatchesByPuuid,
-  getSummonerData,
-  getSynergies,
+  getSet11Augments,
+  getSet11Champions,
+  getSet11Items,
+  getSet11LeagueEntries,
+  getSet11MatchesByPuuid,
+  getSet11SummonerData,
+  getSet11Synergies,
 } from '../../set11api';
 import ISynergy from '../../components/types';
 import IAugments from '../../components/types';
 import { getTraitBackgroundImageUrl } from '../../traitColors';
-import ProfileChampion from '../../components/set11/ProfileChampion';
-import Item from '../../components/set11/Item';
-import Augment from '../../components/set11/Augment';
-import Synergy from '../../components/set11/Synergy';
+import ProfileChampion from '../../components/set11/Set11ProfileChampion';
+import Item from '../../components/set11/Set11Item';
+import Augment from '../../components/set11/Set11Augment';
+import Synergy from '../../components/set11/Set11Synergy';
 import axios from 'axios';
 
 const calculateAveragePlacement = (matches: any[] | undefined, puuid: string | undefined) => {
@@ -65,7 +65,7 @@ const calculateFirstPlaceCount = (matches: any[] | undefined, puuid: string | un
   }, 0);
 };
 
-export default function Profile() {
+export default function Set11Profile() {
   const { gameName, tagLine } = useParams();
   const {
     data: summonerData,
@@ -73,7 +73,7 @@ export default function Profile() {
     refetch: refetchSummonerData,
   } = useQuery<IProfileMiniBox>({
     queryKey: ['', gameName, tagLine],
-    queryFn: getSummonerData,
+    queryFn: getSet11SummonerData,
   });
   const summonerId = summonerData?.summonerId;
   const puuid = summonerData?.puuid;
@@ -83,7 +83,7 @@ export default function Profile() {
     refetch: refetchLeagueEntries,
   } = useQuery<ILeagueEntryDTO>({
     queryKey: ['', summonerId],
-    queryFn: getLeagueEntries,
+    queryFn: getSet11LeagueEntries,
   });
   const {
     data: matchesByPuuidData,
@@ -91,23 +91,23 @@ export default function Profile() {
     refetch: refetchMatchesByPuuid,
   } = useQuery<IMatch[]>({
     queryKey: ['', puuid],
-    queryFn: getMatchesByPuuid,
+    queryFn: getSet11MatchesByPuuid,
   });
   const { data: synergiesData, isLoading: isSynergiesDataLoading } = useQuery<ISynergy[]>({
     queryKey: ['synergy'],
-    queryFn: getSynergies,
+    queryFn: getSet11Synergies,
   });
   const { data: augmentsData, isLoading: isAugmentsDataLoading } = useQuery<IAugments[]>({
     queryKey: ['augment'],
-    queryFn: getAugments,
+    queryFn: getSet11Augments,
   });
   const { data: chamiponsData, isLoading: isChampionsDataLoading } = useQuery({
     queryKey: ['champions'],
-    queryFn: getChampions,
+    queryFn: getSet11Champions,
   });
   const { data: itemsData, isLoading: isItemsDataLoading } = useQuery({
     queryKey: ['items'],
-    queryFn: getItems,
+    queryFn: getSet11Items,
   });
 
   const location = useLocation();

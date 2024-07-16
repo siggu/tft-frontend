@@ -2,7 +2,7 @@ import { Box, Text, VStack, Image, HStack, Tooltip } from '@chakra-ui/react';
 import { Link, useParams } from 'react-router-dom';
 import { FaCoins } from 'react-icons/fa';
 import { useQuery } from '@tanstack/react-query';
-import { getChampion, getChampions, getItems, getSynergies } from '../../set11api';
+import { getSet11Champion, getSet11Champions, getSet11Items, getSet11Synergies } from '../../set11api';
 import IChampion from '../types';
 
 interface IChampionData {
@@ -51,7 +51,7 @@ interface IChampionData {
   skill_stats5: string | null;
 }
 
-export default function Champion({
+export default function Set11Champion({
   championKey,
   ingameKey,
   name,
@@ -99,7 +99,7 @@ export default function Champion({
   // 시너지 가져오기
   const { data: synergiesData } = useQuery({
     queryKey: ['synergy'],
-    queryFn: getSynergies,
+    queryFn: getSet11Synergies,
   });
 
   // 시너지 데이터로부터 계열 또는 직업의 이름과 이미지 URL을 가져오는 함수
@@ -135,7 +135,7 @@ export default function Champion({
   // 아이템 가져오기
   const { data: itemData } = useQuery({
     queryKey: ['item'],
-    queryFn: getItems,
+    queryFn: getSet11Items,
   });
 
   // 아이템 데이터로부터 아이템의 이미지 URL을 가져오는 함수

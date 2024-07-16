@@ -1,15 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
-import { getItems } from '../../set11api';
+import { getSet11Items } from '../../set11api';
 import { useParams } from 'react-router-dom';
 import { Box, Container, HStack, Image, Text, Tooltip, VStack, Wrap } from '@chakra-ui/react';
 import IItems from '../../components/types';
-import Item from '../../components/set11/Item';
+import Set11Item from '../../components/set11/Set11Item';
 
-export default function Items() {
+export default function Set11Items() {
   // 아이템 가져오기
   const { data: itemsData, isLoading: isItemLoading } = useQuery<IItems[]>({
     queryKey: ['item'],
-    queryFn: getItems,
+    queryFn: getSet11Items,
   });
 
   // uniqueItem, newItem은 따로 안넣어줘도 될듯함
@@ -49,7 +49,7 @@ export default function Items() {
           <Wrap>
             {fromItemArr.map((item_ele) => (
               <Box w={'64px'} h={'64px'}>
-                <Item
+                <Set11Item
                   key={item_ele.key}
                   ingameKey={item_ele.ingameKey}
                   name={item_ele.name}
@@ -77,7 +77,7 @@ export default function Items() {
           <Wrap>
             {normalItemArr.map((item_ele) => (
               <Box w={'64px'} h={'64px'}>
-                <Item
+                <Set11Item
                   key={item_ele.key}
                   ingameKey={item_ele.ingameKey}
                   name={item_ele.name}
@@ -105,7 +105,7 @@ export default function Items() {
           <Wrap>
             {emblemItemArr.map((item_ele) => (
               <Box w={'64px'} h={'64px'}>
-                <Item
+                <Set11Item
                   key={item_ele.key}
                   ingameKey={item_ele.ingameKey}
                   name={item_ele.name}
@@ -133,7 +133,7 @@ export default function Items() {
           <Wrap>
             {supportItemArr.map((item_ele) => (
               <Box w={'64px'} h={'64px'}>
-                <Item
+                <Set11Item
                   key={item_ele.key}
                   ingameKey={item_ele.ingameKey}
                   name={item_ele.name}
@@ -161,7 +161,7 @@ export default function Items() {
           <Wrap>
             {artifactItemArr.map((item_ele) => (
               <Box w={'64px'} h={'64px'}>
-                <Item
+                <Set11Item
                   key={item_ele.key}
                   ingameKey={item_ele.ingameKey}
                   name={item_ele.name}
@@ -189,7 +189,7 @@ export default function Items() {
           <Wrap>
             {radiantItemArr.map((item_ele) => (
               <Box w={'64px'} h={'64px'}>
-                <Item
+                <Set11Item
                   key={item_ele.key}
                   ingameKey={item_ele.ingameKey}
                   name={item_ele.name}

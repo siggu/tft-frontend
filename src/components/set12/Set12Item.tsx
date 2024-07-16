@@ -1,6 +1,6 @@
 import { Box, Text, VStack, Image, HStack, Tooltip } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
-import { getItems } from '../../set11api';
+import { getSet12Items } from '../../set12api';
 
 interface IItems {
   key: string;
@@ -24,7 +24,7 @@ interface IItems {
   tag3: string;
 }
 
-export default function Item({
+export default function Set12Item({
   key,
   ingameKey,
   name,
@@ -49,7 +49,7 @@ export default function Item({
 
   const { data, isLoading } = useQuery({
     queryKey: ['items'],
-    queryFn: getItems,
+    queryFn: getSet12Items,
   });
 
   const getCompositionImage = (compositionKey: string) => {

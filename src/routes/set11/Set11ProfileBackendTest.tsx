@@ -5,8 +5,8 @@ import { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import IChampionDetail from '../../components/types';
 import IItems from '../../components/types';
-import { getSummonerData, fetchMatchData, getChampions, getItems } from '../../set11api';
-import Item from '../../components/set11/Item';
+import { getSet11SummonerData, fetchMatchData, getSet11Champions, getSet11Items } from '../../set11api';
+import Item from '../../components/set11/Set11Item';
 interface IMatchDataByPuuid {
   id: number;
   match_id: string;
@@ -159,14 +159,14 @@ interface IProfileId {
   freshBlood: boolean;
   hotStreak: boolean;
 }
-export default function ProfileBackendTest() {
+export default function Set11ProfileBackendTest() {
   const { data: allChampionsData } = useQuery<IChampionDetail[]>({
     queryKey: ['champions'],
-    queryFn: getChampions,
+    queryFn: getSet11Champions,
   });
   const { data: itemsData, isLoading: isItemsLoading } = useQuery<IItems>({
     queryKey: ['item'],
-    queryFn: getItems,
+    queryFn: getSet11Items,
   });
   const basicItemArr: IItems[] = [];
   const normalItemArr: IItems[] = [];
@@ -226,7 +226,7 @@ export default function ProfileBackendTest() {
   const { summonerName } = useParams();
   const { data: summonerMatchData } = useQuery<IMatchDataByPuuid[]>({
     queryKey: ['summoner', summonerName],
-    queryFn: getSummonerData,
+    queryFn: getSet11SummonerData,
   });
   const [matchData, setMatchData] = useState<IMatchRoot[]>([]);
 

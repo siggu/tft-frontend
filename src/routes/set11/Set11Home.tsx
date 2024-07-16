@@ -1,15 +1,15 @@
 import { Box, Container, HStack, Text, VStack, Image } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
-import { getComps, getSynergies, getItems, getMetaDecks } from '../../set11api';
+import { getSet11Comps, getSet11Synergies, getSet11Items, getSet11MetaDecks } from '../../set11api';
 import IComp from '../../components/types';
 import ISynergy from '../../components/types';
 import IItems from '../../components/types';
 import ICompElement from '../../components/types';
 import { FaCoins } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import ProfileChampion from '../../components/set11/ProfileChampion';
-import Item from '../../components/set11/Item';
-import Profile from './Profile';
+import ProfileChampion from '../../components/set11/Set11ProfileChampion';
+import Item from '../../components/set11/Set11Item';
+import Profile from './Set11Profile';
 
 interface IProfileMiniBox {
   puuid: string | undefined;
@@ -17,7 +17,7 @@ interface IProfileMiniBox {
   tagLine: string | undefined;
   accountId: string | undefined;
   profileIconId: number | undefined;
-  summonerId: string | undefined;
+  summonerIad: string | undefined;
   summonerLevel: number | undefined;
 }
 
@@ -33,17 +33,17 @@ const tierColors: Record<string, string> = {
   [p]: '#9932CC', // prism
 };
 
-export default function Home() {
+export default function Set11Home() {
   // synergy origins api - get
   const { data: compData, isLoading: compIsLoading } = useQuery<IComp[]>({
     queryKey: ['comps'],
-    queryFn: getComps,
+    queryFn: getSet11Comps,
   });
 
   // 시너지 get
   const { data: synergiesData, isLoading: isSynergiesLoading } = useQuery<ISynergy[]>({
     queryKey: ['origins'],
-    queryFn: getSynergies,
+    queryFn: getSet11Synergies,
   });
   interface IChampionDeck {
     champion: string;
@@ -57,13 +57,13 @@ export default function Home() {
 
   const { data: metaDecksData, isLoading: isMetaDecksLoading } = useQuery<IMetaDeck[]>({
     queryKey: ['metaDecks'],
-    queryFn: getMetaDecks,
+    queryFn: getSet11MetaDecks,
   });
   console.log('metaDecksData', metaDecksData);
   // 아이템 가져오기
   const { data: itemsDate } = useQuery<IItems>({
     queryKey: ['item'],
-    queryFn: getItems,
+    queryFn: getSet11Items,
   });
   const basicItemArr: IItems[] = [];
   const normalItemArr: IItems[] = [];

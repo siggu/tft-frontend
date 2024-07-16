@@ -1,18 +1,18 @@
 import { useQuery } from '@tanstack/react-query';
-import { getChampions, getSynergies } from '../../set11api';
+import { getSet11Champions, getSet11Synergies } from '../../set11api';
 import { Container, VStack, Text, Grid, Box, Image, HStack, Tooltip, GridItem } from '@chakra-ui/react';
 import ISynergy from '../../components/types';
 import IChampionDetail from '../../components/types';
-import Champion from '../../components/set11/Champion';
+import Champion from '../../components/set11/Set11Champion';
 
-export default function Synergies() {
+export default function Set11Synergies() {
   const { data: synergiesData, isLoading: isSynergiesLoading } = useQuery<ISynergy[]>({
     queryKey: ['synergies'],
-    queryFn: getSynergies,
+    queryFn: getSet11Synergies,
   });
   const { data: championsData, isLoading: isChampionsLoading } = useQuery<IChampionDetail[]>({
     queryKey: ['champions'],
-    queryFn: getChampions,
+    queryFn: getSet11Champions,
   });
 
   if (isSynergiesLoading || isChampionsLoading) return <div>Loading...</div>;

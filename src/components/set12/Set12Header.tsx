@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 
-export default function Header() {
+export default function Set12Header() {
   const [gameName, setgameName] = useState('');
   const [tagLine, setSearchTag] = useState('');
   const navigate = useNavigate();
@@ -85,134 +85,170 @@ export default function Header() {
     setSearchTag(event.target.value);
   };
   const handleSearchtoAdapter = () => {
-    navigate(`/set11/search/${gameName}/${tagLine}`);
+    navigate(`/set12/search/${gameName}/${tagLine}`);
   };
 
   return (
-    <Box p={10} mb={10}>
+    <Box mb={10} display={'flex'} justifyContent={'center'} alignItems={'center'}>
       <VStack gap={10}>
-        <Box>
-          <Link to={'/set11'}>
-            <Image src="https://cdn.dak.gg/tft/images2/sets/set12/logo-title-ko.png" />
+        <Box mb={5}>
+          <Link to={'/set12'}>
+            <Box pt={20} pb={6} opacity={'100%'} display={'flex'} justifyContent={'center'} alignItems={'center'}>
+              <Image src="https://cdn.dak.gg/tft/images2/sets/set12/logo-title-ko.png" />
+            </Box>
           </Link>
         </Box>
         <HStack>
           <FormControl>
             <HStack>
-              <Input placeholder="소환사 닉네임" color={'white'} value={gameName} onChange={handleNameChange} />
-              <Input placeholder="태그" color={'white'} value={tagLine} onChange={handleTagChange} />
+              <Input
+                placeholder="소환사 닉네임"
+                color={'white'}
+                value={gameName}
+                onChange={handleNameChange}
+                sx={{
+                  '::placeholder': {
+                    color: 'white',
+                  },
+                }}
+                fontSize={'13px'}
+              />
+              <Input
+                placeholder="태그"
+                color={'white'}
+                value={tagLine}
+                onChange={handleTagChange}
+                sx={{
+                  '::placeholder': {
+                    color: 'white',
+                  },
+                }}
+                fontSize={'13px'}
+              />
             </HStack>
           </FormControl>
-          <Button type="button" onClick={handleSearchtoAdapter}>
+          <Button
+            _hover={{
+              bgGradient: 'linear(#5120c7, #6e43d9, #8861e8)',
+            }}
+            bgGradient={'linear(#8861e8, #6e43d9, #5120c7)'}
+            type="button"
+            onClick={handleSearchtoAdapter}
+            color={'white'}
+          >
             <FaSearch />
           </Button>
         </HStack>
-        <HStack gap={5}>
-          {/* 조우자 */}
+        <HStack display={'flex'} justifyContent={'center'} alignItems={'center'} w={'500px'} flexWrap={'wrap'} gap={5}>
+          {/* 주술 */}
           <Box
             _hover={{
-              bgGradient: 'linear(#a95f24, #c37843, #ddb062)',
+              bgGradient: 'linear(#5120c7, #6e43d9, #8861e8)',
             }}
-            bgGradient={'linear(#ddb062, #c38843, #a95f24)'}
+            bgGradient={'linear(#8861e8, #6e43d9, #5120c7)'}
             rounded={'5px'}
             paddingX={5}
             paddingY={3}
             fontSize={'14px'}
             border={'1px solid black'}
+            w={'130px'}
+            display={'flex'}
+            justifyContent={'center'}
+            alignItems={'center'}
           >
-            <Link to={'/set11/encounters'}>
+            <Link to={'/set12/charms'}>
               <Text fontWeight={'600'} color={'white'}>
-                조우자
+                12시즌 주술
               </Text>
             </Link>
           </Box>
           {/* 챔피언 */}
           <Box
             _hover={{
-              bgGradient: 'linear(#a95f24, #c37843, #ddb062)',
+              bgGradient: 'linear(#5120c7, #6e43d9, #8861e8)',
             }}
-            bgGradient={'linear(#ddb062, #c38843, #a95f24)'}
+            bgGradient={'linear(#8861e8, #6e43d9, #5120c7)'}
             rounded={'5px'}
             paddingX={5}
             paddingY={3}
             fontSize={'14px'}
             border={'1px solid black'}
           >
-            <Link to={'/set11/champions/Aatrox'}>
+            <Link to={'/set12/champions/Rumble'}>
               <Text fontWeight={'600'} color={'white'}>
-                챔피언
+                12시즌 챔피언
               </Text>
             </Link>
           </Box>
           {/* 시너지 */}
           <Box
             _hover={{
-              bgGradient: 'linear(#a95f24, #c37843, #ddb062)',
+              bgGradient: 'linear(#5120c7, #6e43d9, #8861e8)',
             }}
-            bgGradient={'linear(#ddb062, #c38843, #a95f24)'}
+            bgGradient={'linear(#8861e8, #6e43d9, #5120c7)'}
             rounded={'5px'}
             paddingX={5}
             paddingY={3}
             fontSize={'14px'}
             border={'1px solid black'}
           >
-            <Link to={'/set11/synergies'}>
+            <Link to={'/set12/synergies'}>
               <Text fontWeight={'600'} color={'white'}>
-                시너지
+                12시즌 시너지
               </Text>
             </Link>
           </Box>
           {/* 아이템 */}
           <Box
             _hover={{
-              bgGradient: 'linear(#a95f24, #c37843, #ddb062)',
+              bgGradient: 'linear(#5120c7, #6e43d9, #8861e8)',
             }}
-            bgGradient={'linear(#ddb062, #c38843, #a95f24)'}
+            bgGradient={'linear(#8861e8, #6e43d9, #5120c7)'}
             rounded={'5px'}
             paddingX={5}
             paddingY={3}
             fontSize={'14px'}
             border={'1px solid black'}
           >
-            <Link to={'/set11/items'}>
+            <Link to={'/set12/items'}>
               <Text fontWeight={'600'} color={'white'}>
-                아이템
+                12시즌 아이템
               </Text>
             </Link>
           </Box>
           {/* 증강체 */}
           <Box
             _hover={{
-              bgGradient: 'linear(#a95f24, #c37843, #ddb062)',
+              bgGradient: 'linear(#5120c7, #6e43d9, #8861e8)',
             }}
-            bgGradient={'linear(#ddb062, #c38843, #a95f24)'}
+            bgGradient={'linear(#8861e8, #6e43d9, #5120c7)'}
             rounded={'5px'}
             paddingX={5}
             paddingY={3}
             fontSize={'14px'}
             border={'1px solid black'}
           >
-            <Link to={'/set11/augments/silver'}>
+            <Link to={'/set12/augments/silver'}>
               <Text fontWeight={'600'} color={'white'}>
-                증강체
+                12시즌 증강체
               </Text>
             </Link>
           </Box>
           {/* 차원문 */}
           <Box
             _hover={{
-              bgGradient: 'linear(#a95f24, #c37843, #ddb062)',
+              bgGradient: 'linear(#5120c7, #6e43d9, #8861e8)',
             }}
-            bgGradient={'linear(#ddb062, #c38843, #a95f24)'}
+            bgGradient={'linear(#8861e8, #6e43d9, #5120c7)'}
             rounded={'5px'}
             paddingX={5}
             paddingY={3}
             fontSize={'14px'}
             border={'1px solid black'}
           >
-            <Link to={'/set11/portals'}>
+            <Link to={'/set12/portals'}>
               <Text fontWeight={'600'} color={'white'}>
-                차원문
+                12시즌 차원문
               </Text>
             </Link>
           </Box>

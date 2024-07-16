@@ -10,7 +10,7 @@ interface SynergyProps {
   synergy: ISynergy | undefined;
 }
 
-const Synergy = ({ trait, synergy }: SynergyProps) => {
+const Set12Synergy = ({ trait, synergy }: SynergyProps) => {
   const backgroundImageUrl = getTraitBackgroundImageUrl(trait.name, trait.num_units);
 
   if (!backgroundImageUrl || !synergy) return null;
@@ -80,4 +80,4 @@ const Synergy = ({ trait, synergy }: SynergyProps) => {
   );
 };
 
-export default Synergy;
+export default Set12Synergy;

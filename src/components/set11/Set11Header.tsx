@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 
-export default function Header() {
+export default function Set11Header() {
   const [gameName, setgameName] = useState('');
   const [tagLine, setSearchTag] = useState('');
   const navigate = useNavigate();
@@ -89,9 +89,9 @@ export default function Header() {
   };
 
   return (
-    <Box p={10} mb={10}>
+    <Box p={10} mb={10} display={'flex'} justifyContent={'center'} alignItems={'center'}>
       <VStack gap={10}>
-        <Box>
+        <Box pt={10} mb={10}>
           <Link to={'/set11'}>
             <Image src="https://cdn.dak.gg/tft/images2/sets/set11/logo-title-ko.png" />
           </Link>
@@ -99,15 +99,45 @@ export default function Header() {
         <HStack>
           <FormControl>
             <HStack>
-              <Input placeholder="소환사 닉네임" color={'white'} value={gameName} onChange={handleNameChange} />
-              <Input placeholder="태그" color={'white'} value={tagLine} onChange={handleTagChange} />
+              <Input
+                placeholder="소환사 닉네임"
+                color={'white'}
+                value={gameName}
+                onChange={handleNameChange}
+                sx={{
+                  '::placeholder': {
+                    color: 'white',
+                  },
+                }}
+                fontSize={'13px'}
+              />
+              <Input
+                placeholder="태그"
+                color={'white'}
+                value={tagLine}
+                onChange={handleTagChange}
+                sx={{
+                  '::placeholder': {
+                    color: 'white',
+                  },
+                }}
+                fontSize={'13px'}
+              />
             </HStack>
           </FormControl>
-          <Button type="button" onClick={handleSearchtoAdapter}>
+          <Button
+            _hover={{
+              bgGradient: 'linear(#a95f24, #c37843, #ddb062)',
+            }}
+            bgGradient={'linear(#ddb062, #c38843, #a95f24)'}
+            type="button"
+            onClick={handleSearchtoAdapter}
+            color={'white'}
+          >
             <FaSearch />
           </Button>
         </HStack>
-        <HStack gap={5}>
+        <HStack display={'flex'} justifyContent={'center'} alignItems={'center'} w={'500px'} flexWrap={'wrap'} gap={5}>
           {/* 조우자 */}
           <Box
             _hover={{
@@ -122,7 +152,7 @@ export default function Header() {
           >
             <Link to={'/set11/encounters'}>
               <Text fontWeight={'600'} color={'white'}>
-                조우자
+                11시즌 조우자
               </Text>
             </Link>
           </Box>
@@ -140,7 +170,7 @@ export default function Header() {
           >
             <Link to={'/set11/champions/Aatrox'}>
               <Text fontWeight={'600'} color={'white'}>
-                챔피언
+                11시즌 챔피언
               </Text>
             </Link>
           </Box>
@@ -158,7 +188,7 @@ export default function Header() {
           >
             <Link to={'/set11/synergies'}>
               <Text fontWeight={'600'} color={'white'}>
-                시너지
+                11시즌 시너지
               </Text>
             </Link>
           </Box>
@@ -176,7 +206,7 @@ export default function Header() {
           >
             <Link to={'/set11/items'}>
               <Text fontWeight={'600'} color={'white'}>
-                아이템
+                11시즌 아이템
               </Text>
             </Link>
           </Box>
@@ -194,7 +224,7 @@ export default function Header() {
           >
             <Link to={'/set11/augments/silver'}>
               <Text fontWeight={'600'} color={'white'}>
-                증강체
+                11시즌 증강체
               </Text>
             </Link>
           </Box>
@@ -212,7 +242,7 @@ export default function Header() {
           >
             <Link to={'/set11/portals'}>
               <Text fontWeight={'600'} color={'white'}>
-                차원문
+                11시즌 차원문
               </Text>
             </Link>
           </Box>

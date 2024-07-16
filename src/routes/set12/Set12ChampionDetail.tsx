@@ -1,30 +1,30 @@
 import { useQuery } from '@tanstack/react-query';
-import { getChampion, getChampions, getSynergies } from '../../set11api';
+import { getSet12Champion, getSet12Champions, getSet12Synergies } from '../../set12api';
 import { useParams } from 'react-router-dom';
 import { FaFlask, FaCoins } from 'react-icons/fa';
 import { Box, Container, HStack, Image, Text, VStack, Grid, useMediaQuery } from '@chakra-ui/react';
 import IChampion from '../../components/types';
-import Champion from '../../components/set11/Champion';
+import Champion from '../../components/set12/Set12Champion';
 import React from 'react';
 
-export default function ChampionDetail() {
+export default function Set12ChampionDetail() {
   // 특정 챔피언 1개만 가져오기 (url)
   const { championPk } = useParams();
   const { data: championData, isLoading: isChampionDataLoading } = useQuery<IChampion>({
     queryKey: ['champion', championPk],
-    queryFn: getChampion,
+    queryFn: getSet12Champion,
   });
 
   // 모든 챔피언 가져오기
   const { data: allChampionsData, isLoading: isAllChampionDataLoading } = useQuery<IChampion[]>({
     queryKey: ['champions'],
-    queryFn: getChampions,
+    queryFn: getSet12Champions,
   });
 
   // 시너지 가져오기
   const { data: synergiesData, isLoading: isSynergiesLoading } = useQuery({
     queryKey: ['synergy'],
-    queryFn: getSynergies,
+    queryFn: getSet12Synergies,
   });
 
   const [mediaSize] = useMediaQuery('(min-width: 1200px)');

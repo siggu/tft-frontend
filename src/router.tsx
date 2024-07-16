@@ -1,64 +1,69 @@
 import { createBrowserRouter } from 'react-router-dom';
-import Root from './components/set11/Root';
+import Set11Root from './components/set11/Set11Root';
 import Set12Root from './components/set12/Set12Root';
-import ChampionDetail from './routes/set11/ChampionDetail';
-import Home from './routes/set11/Home';
-import Encounters from './routes/set11/Encounters';
-import Items from './routes/set11/Items';
-import Augments from './routes/set11/Augments';
-import Portals from './routes/set11/Portals';
-import Synergies from './routes/set11/Synergies';
-import ProfileBackendTest from './routes/set11/ProfileBackendTest';
-import Profile from './routes/set11/Profile';
-import ProfileSearchAdapter from './routes/set11/ProfileSearchAdapter';
-import MetaHome from './routes/set11/MetaHome';
-import Set12Home from './components/set12/Set12Home';
+import Set11ChampionDetail from './routes/set11/Set11ChampionDetail';
+import Set11Home from './routes/set11/Set11Home';
+import Set11Encounters from './routes/set11/Set11Encounters';
+import Set11Items from './routes/set11/Set11Items';
+import Set11Augments from './routes/set11/Set11Augments';
+import Set11Portals from './routes/set11/Set11Portals';
+import Set11Synergies from './routes/set11/Set11Synergies';
+import Set11ProfileBackendTest from './routes/set11/Set11ProfileBackendTest';
+import Set11Profile from './routes/set11/Set11Profile';
+import Set11ProfileSearchAdapter from './routes/set11/Set11ProfileSearchAdapter';
+import Set11MetaHome from './routes/set11/Set11MetaHome';
+import Set12Home from './routes/set12/Set12Home';
+import Set12Augments from './routes/set12/Set12Augments';
+import Set12Items from './routes/set12/Set12Items';
+import Set12ChampionDetail from './routes/set12/Set12ChampionDetail';
+import Set12Synergies from './routes/set12/Set12Synergies';
+import Set12Portals from './routes/set12/Set12Portals';
 
 const router = createBrowserRouter([
   {
     path: '/set11',
-    element: <Root />,
+    element: <Set11Root />,
     children: [
       {
         path: 'oldHome',
-        element: <Home />,
+        element: <Set11Home />,
       },
       {
         path: 'champions/:championPk',
-        element: <ChampionDetail />,
+        element: <Set11ChampionDetail />,
       },
       {
         path: 'encounters',
-        element: <Encounters />,
+        element: <Set11Encounters />,
       },
       {
         path: 'items',
-        element: <Items />,
+        element: <Set11Items />,
       },
       {
         path: 'augments/:tier',
-        element: <Augments />,
+        element: <Set11Augments />,
       },
       {
         path: 'portals',
-        element: <Portals />,
+        element: <Set11Portals />,
       },
       {
         path: 'synergies',
-        element: <Synergies />,
+        element: <Set11Synergies />,
       },
       {
         path: 'profile_backend_test/:summonerName',
-        element: <ProfileBackendTest />,
+        element: <Set11ProfileBackendTest />,
       },
       {
         path: 'search/:gameName/:tagLine',
-        element: <ProfileSearchAdapter />,
+        element: <Set11ProfileSearchAdapter />,
       },
-      { path: 'profile/:gameName/:tagLine', element: <Profile /> },
+      { path: 'profile/:gameName/:tagLine', element: <Set11Profile /> },
       {
         path: '',
-        element: <MetaHome />,
+        element: <Set11MetaHome />,
       },
     ],
   },
@@ -67,8 +72,28 @@ const router = createBrowserRouter([
     element: <Set12Root />,
     children: [
       {
-        path: 'home',
+        path: '',
         element: <Set12Home />,
+      },
+      {
+        path: 'champions/:championPk',
+        element: <Set12ChampionDetail />,
+      },
+      {
+        path: 'items',
+        element: <Set12Items />,
+      },
+      {
+        path: 'augments/:tier',
+        element: <Set12Augments />,
+      },
+      {
+        path: 'portals',
+        element: <Set12Portals />,
+      },
+      {
+        path: 'synergies',
+        element: <Set12Synergies />,
       },
     ],
   },

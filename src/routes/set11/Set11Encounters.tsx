@@ -12,12 +12,12 @@ export default function Set11Encounters() {
 
   return (
     <Container maxW={'container.xl'} minH={'500px'}>
-      <Box mb={5}>
+      <Box mx={20} mb={5}>
         <Text as={'b'} color={'#dca555'} fontSize={'20px'}>
           조우자
         </Text>
       </Box>
-      <VStack>
+      <VStack mx={20}>
         {isLoading ? (
           <Text>Loading...</Text>
         ) : (

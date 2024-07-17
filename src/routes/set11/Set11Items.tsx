@@ -41,10 +41,15 @@ export default function Set11Items() {
 
   return (
     <Container maxW={'container.xl'} minH={'500px'}>
+      <Box mx={20} mb={5}>
+        <Text as={'b'} color={'#dca555'} fontSize={'20px'}>
+          아이템
+        </Text>
+      </Box>
       {isItemLoading ? (
         <Text color={'white'}>로딩중!!!</Text>
       ) : (
-        <VStack color={'white'} fontSize={'30px'} alignItems={'left'}>
+        <VStack mx={20} color={'white'} fontSize={'30px'} alignItems={'left'}>
           <Text>재료 아이템</Text>
           <Wrap>
             {fromItemArr.map((item_ele) => (

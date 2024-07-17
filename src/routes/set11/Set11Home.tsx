@@ -189,7 +189,7 @@ export default function Set11Home() {
   });
 
   return (
-    <VStack gap={20}>
+    <VStack>
       <Container maxW={'container.xl'} minH={'500px'}>
         <Box mb={5}>
           <Text as={'b'} color={'#dca555'} fontSize={'20px'}>

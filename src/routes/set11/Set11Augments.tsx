@@ -20,9 +20,10 @@ export default function Set11Augments() {
   // 현재 선택된 탭에 따라 데이터 필터링
   const filteredAugments = data.filter(
     (augment) =>
-      (tier === 'silver' && augment.tier === 1) ||
-      (tier === 'gold' && augment.tier === 2) ||
-      (tier === 'prismatic' && augment.tier === 3)
+      !augment.isHidden &&
+      ((tier === 'silver' && augment.tier === 1) ||
+        (tier === 'gold' && augment.tier === 2) ||
+        (tier === 'prismatic' && augment.tier === 3))
   );
 
   return (

@@ -20,35 +20,36 @@ export default function Set12Augments() {
   // 현재 선택된 탭에 따라 데이터 필터링
   const filteredAugments = data.filter(
     (augment) =>
-      (tier === 'silver' && augment.tier === 1) ||
-      (tier === 'gold' && augment.tier === 2) ||
-      (tier === 'prismatic' && augment.tier === 3)
+      !augment.isHidden &&
+      ((tier === 'silver' && augment.tier === 1) ||
+        (tier === 'gold' && augment.tier === 2) ||
+        (tier === 'prismatic' && augment.tier === 3))
   );
 
   return (
     <Container p={5} maxW={'container.xl'}>
       <Box mx={20} mb={5}>
-        <Text as={'b'} color={'#dca555'} fontSize={'20px'}>
+        <Text as={'b'} color={'#8861e8'} fontSize={'20px'}>
           증강
         </Text>
       </Box>
       <Box bg={'#27282e'} mx={20} display="flex" justifyContent="space-between">
         {/* 3등분 레이아웃 및 스크롤 기능 적용 */}
-        <Box p={5} _hover={{ bg: '#d0a28a' }} width="33.33%" cursor={'pointer'} textAlign="center">
+        <Box p={5} _hover={{ bg: '#6e43d9' }} width="33.33%" cursor={'pointer'} textAlign="center">
           <Link to={'/set12/augments/silver'}>
             <Text fontWeight={'700'} fontSize={'13px'} color={'white'}>
               실버
             </Text>
           </Link>
         </Box>
-        <Box p={5} _hover={{ bg: '#d0a28a' }} width="33.33%" cursor={'pointer'} textAlign="center">
+        <Box p={5} _hover={{ bg: '#6e43d9' }} width="33.33%" cursor={'pointer'} textAlign="center">
           <Link to={'/set12/augments/gold'}>
             <Text fontWeight={'700'} fontSize={'13px'} color={'white'}>
               골드
             </Text>
           </Link>
         </Box>
-        <Box p={5} _hover={{ bg: '#d0a28a' }} width="33.33%" cursor={'pointer'} textAlign="center">
+        <Box p={5} _hover={{ bg: '#6e43d9' }} width="33.33%" cursor={'pointer'} textAlign="center">
           <Link to={'/set12/augments/prismatic'}>
             <Text fontWeight={'700'} fontSize={'13px'} color={'white'}>
               프리즘

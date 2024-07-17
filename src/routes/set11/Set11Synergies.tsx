@@ -23,7 +23,12 @@ export default function Set11Synergies() {
 
   return (
     <Container p={5} maxW={'container.xl'}>
-      <Box color={'white'}>
+      <Box mx={20} mb={5}>
+        <Text as={'b'} color={'#dca555'} fontSize={'20px'}>
+          시너지
+        </Text>
+      </Box>
+      <Box mx={20} color={'white'}>
         <Grid
           templateColumns={{
             sm: 'repeat(1, 1fr)',

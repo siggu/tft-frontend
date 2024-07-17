@@ -27,7 +27,7 @@ export default function Set12Portals() {
   return (
     <Container p={5} maxW={'container.xl'}>
       <Box mx={20} mb={5}>
-        <Text as={'b'} color={'#dca555'} fontSize={'20px'}>
+        <Text as={'b'} color={'#8861e8'} fontSize={'20px'}>
           차원문
         </Text>
       </Box>

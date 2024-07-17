@@ -1,4 +1,4 @@
-import { Box, Container, HStack, Text, VStack, Image } from '@chakra-ui/react';
+import { Box, Container, HStack, Text, VStack, Image, Grid } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { getSet11Comps, getSet11Synergies, getSet11Items, getSet11MetaDecks, getSet11Champions } from '../../set11api';
 import IComp from '../../components/types';
@@ -143,21 +143,21 @@ export default function Set11MetaHome() {
 
   return (
     <VStack gap={20}>
-      <Container maxW={'container.xl'} minH={'500px'}>
+      <Container maxW={'1000px'} minH={'500px'}>
         <Box mb={5}>
           <Text as={'b'} color={'#dca555'} fontSize={'20px'}>
             추천 메타
           </Text>
         </Box>
         {metaDecksData?.map((deck_ele, deck_idx) => (
-          <HStack key={deck_idx} position={'relative'} bg={'#27282e'} p={5} pb={9} m={2} gap={10}>
+          <HStack key={deck_idx} position={'relative'} bg={'#27282e'} p={8} m={2} gap={10}>
             {/* # 1. 추천메타 명 */}
-            <Box w={'150px'}>
+            <Box minW={'120px'}>
               <Text color={'white'} fontSize={'15px'}>
                 {deck_ele.name}
               </Text>
             </Box>
-            <HStack display={'flex'} minW={'150px'} maxW={'150px'} flexWrap={'wrap'} gap={'1'}>
+            <HStack display={'flex'} minW={'170px'} maxW={'150px'} flexWrap={'wrap'} gap={'1'}>
               {processedMetaDecks[deck_idx].Synergies.map((MDS_ele) => (
                 <>
                   <Synergy key={MDS_ele.trait.name} trait={MDS_ele.trait} synergy={MDS_ele.synergy} />
@@ -165,9 +165,9 @@ export default function Set11MetaHome() {
               ))}
             </HStack>
 
-            <VStack gap={3} alignItems={'flex-start'}>
+            <VStack alignItems={'flex-start'}>
               {/* 챔피언 이미지 표시 */}
-              <HStack>
+              <HStack mt={2}>
                 {processedMetaDecks[deck_idx].decks.map((MDC_ele, MDC_key) => {
                   const champion = MDC_ele.champion;
                   console.log('MDC_ele', MDC_ele);
@@ -219,7 +219,7 @@ export default function Set11MetaHome() {
                         skill_startingMana={champion.skill_startingMana}
                         skill_skillMana={champion.skill_skillMana}
                       />
-                      <HStack mt={-1} zIndex={1} gap={0.5}>
+                      <HStack mt={-1} zIndex={1} gap={0}>
                         {items && items.length > 0 ? (
                           <>
                             {items.map((item_ele) => (

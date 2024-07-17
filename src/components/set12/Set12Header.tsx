@@ -1,4 +1,16 @@
-import { HStack, Box, Text, Image, Container, VStack, Input, FormControl, Button } from '@chakra-ui/react';
+import {
+  HStack,
+  Box,
+  Text,
+  Image,
+  Container,
+  VStack,
+  Input,
+  FormControl,
+  Button,
+  Grid,
+  Tooltip,
+} from '@chakra-ui/react';
 import { useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
@@ -101,6 +113,31 @@ export default function Set12Header() {
         <HStack>
           <FormControl>
             <HStack>
+              <Link to={'/set11'}>
+                <Tooltip
+                  hasArrow
+                  placement="top"
+                  bg={'white'}
+                  rounded={'md'}
+                  p={3}
+                  label={
+                    <Text color={'black'} fontSize={'12px'}>
+                      11시즌으로 이동하기
+                    </Text>
+                  }
+                >
+                  <Button
+                    _hover={{
+                      bgGradient: 'linear(#a95f24, #c37843, #ddb062)',
+                    }}
+                    bgGradient={'linear(#ddb062, #c38843, #a95f24)'}
+                  >
+                    <Text color={'white'} fontSize={'12px'}>
+                      11시즌
+                    </Text>
+                  </Button>
+                </Tooltip>
+              </Link>
               <Input
                 placeholder="소환사 닉네임"
                 color={'white'}
@@ -139,7 +176,14 @@ export default function Set12Header() {
             <FaSearch />
           </Button>
         </HStack>
-        <HStack display={'flex'} justifyContent={'center'} alignItems={'center'} w={'500px'} flexWrap={'wrap'} gap={5}>
+        <Grid
+          templateColumns={{
+            lg: 'repeat(6, 2fr)',
+            md: 'repeat(3, 2fr)',
+            sm: 'repeat(3, 2fr)',
+          }}
+          gap={5}
+        >
           {/* 주술 */}
           <Box
             _hover={{
@@ -252,7 +296,7 @@ export default function Set12Header() {
               </Text>
             </Link>
           </Box>
-        </HStack>
+        </Grid>
       </VStack>
     </Box>
   );

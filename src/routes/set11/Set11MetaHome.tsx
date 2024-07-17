@@ -4,11 +4,12 @@ import { getSet11Comps, getSet11Synergies, getSet11Items, getSet11MetaDecks, get
 import IComp from '../../components/types';
 import ISynergy from '../../components/types';
 import IItems from '../../components/types';
-import ICompElement from '../../components/types';
+import IChampionDetail from '../../components/types';
 import { FaCoins } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import ProfileChampion from '../../components/set11/Set11ProfileChampion';
 import Item from '../../components/set11/Set11Item';
+import Synergy from '../../components/set11/Set11Synergy';
 import IChampion from '../../components/types';
 import Profile from './Set11Profile';
 
@@ -41,6 +42,23 @@ interface IMetaDeck {
   id: number;
   name: string;
   decks: IChampionDeck[];
+}
+interface SynergyProps {
+  trait: {
+    name: string;
+    num_units: number;
+  };
+  synergy: ISynergy | undefined;
+}
+interface IMetaDeckElement {
+  id: number;
+  champion: IChampionDetail;
+}
+interface IProcessedMetaDeck {
+  id: number;
+  name: string;
+  decks: IMetaDeckElement[];
+  Synergies: SynergyProps[];
 }
 
 export default function Set11MetaHome() {
@@ -77,59 +95,39 @@ export default function Set11MetaHome() {
   const findItemByIngameKey = (ingameKey: string) => {
     return allItemsData?.find((item) => item.ingameKey === ingameKey);
   };
-  compData?.forEach((comp) => {
-    const counts: { [key: string]: number } = {};
-
-    comp.elements?.forEach((elementByComp) => {
-      elementByComp.champion.origin?.forEach((originByChampion: { name: string }) => {
-        if (counts[originByChampion.name]) {
-          counts[originByChampion.name]++;
-        } else {
-          counts[originByChampion.name] = 1;
-        }
-      });
-      elementByComp.champion.job?.forEach((jobByChampion: { name: string }) => {
-        if (counts[jobByChampion.name]) {
-          counts[jobByChampion.name]++;
-        } else {
-          counts[jobByChampion.name] = 1;
-        }
-      });
-    });
-
-    const sortedEntries = Object.entries(counts).sort((a, b) => b[1] - a[1]);
-  });
-
-  const processedComps = compData?.map((comp) => {
-    const counts: { [key: string]: number } = {};
-
-    comp.elements?.forEach((elementByComp) => {
-      const traits = [
-        elementByComp.champion.traits1,
-        elementByComp.champion.traits2,
-        elementByComp.champion.traits3,
-        elementByComp.champion.traits4,
-      ].filter((trait) => trait); // Filter out null values
-
+  const processedMetaDecks: IProcessedMetaDeck[] = [];
+  metaDecksData?.map((MD_ele, MD_key) => {
+    let id = MD_key;
+    let name = MD_ele.name;
+    let decks: IMetaDeckElement[] = [];
+    let Synergies: SynergyProps[] = [];
+    console.log(MD_ele);
+    MD_ele.decks.map((D_ele, D_key) => {
+      const champion = allChampionsData?.find((champion) => champion.ingameKey === D_ele[0]);
+      const traits = [champion?.traits1, champion?.traits2, champion?.traits3, champion?.traits4];
       traits.forEach((trait) => {
-        if (counts[trait]) {
-          counts[trait]++;
-        } else {
-          counts[trait] = 1;
+        if (trait) {
+          const synergy = synergiesData?.find((synergy) => synergy.key === trait);
+          if (synergy) {
+            let existingSynergy = Synergies.find((prop_synergy) => prop_synergy.synergy === synergy);
+            if (existingSynergy) {
+              existingSynergy.trait.num_units++;
+            } else {
+              Synergies.push({ trait: { name: synergy.name, num_units: 1 }, synergy: synergy });
+            }
+          }
         }
       });
+
+      if (champion) {
+        decks.push({ id: D_key, champion: champion });
+      }
     });
-
-    const sortedTraits = Object.entries(counts).sort((a, b) => b[1] - a[1]);
-
-    return {
-      ...comp,
-      sortedTraits,
-    };
+    Synergies.sort((a, b) => b.trait.num_units - a.trait.num_units);
+    processedMetaDecks.push({ id, name, decks, Synergies });
   });
-  processedComps?.map((comp) => {
-    console.log('comp', comp.name);
-  });
+  console.log(processedMetaDecks);
+
   return (
     <VStack gap={20}>
       <Container maxW={'container.xl'} minH={'500px'}>
@@ -146,6 +144,17 @@ export default function Set11MetaHome() {
                 {deck_ele.name}
               </Text>
             </Box>
+            <HStack display={'flex'} minW={'150px'} maxW={'150px'} flexWrap={'wrap'} gap={'1'}>
+              {processedMetaDecks[deck_idx].Synergies.map((MDS_ele) => (
+                <>
+                  {/* <Text color={'white'}>{MDS_ele.trait.name}</Text>
+                  <Text color={'white'}>{MDS_ele.trait.num_units}</Text>
+                  <Text color={'white'}>{MDS_ele.synergy?.ingameKey}</Text> */}
+                  <Synergy key={MDS_ele.trait.name} trait={MDS_ele.trait} synergy={MDS_ele.synergy} />
+                </>
+              ))}
+            </HStack>
+
             <VStack gap={3} alignItems={'flex-start'}>
               {/* 챔피언 이미지 표시 */}
               <HStack>

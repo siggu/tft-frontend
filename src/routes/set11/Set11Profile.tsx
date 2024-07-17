@@ -456,7 +456,14 @@ export default function Set11Profile() {
                           .map((trait) => {
                             const synergy = synergiesData?.find((synergy) => synergy.ingameKey === trait.name);
 
-                            return <Synergy key={trait.name} trait={trait} synergy={synergy} />;
+                            return (
+                              <>
+                                {/* <Text color={'white'}>{trait.name}</Text>
+                                <Text color={'white'}>{trait.num_units}</Text>
+                                <Text color={'white'}>{synergy?.ingameKey}</Text> */}
+                                <Synergy key={trait.name} trait={trait} synergy={synergy} />
+                              </>
+                            );
                           })}
                       </HStack>
 

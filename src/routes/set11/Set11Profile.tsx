@@ -458,9 +458,6 @@ export default function Set11Profile() {
 
                             return (
                               <>
-                                {/* <Text color={'white'}>{trait.name}</Text>
-                                <Text color={'white'}>{trait.num_units}</Text>
-                                <Text color={'white'}>{synergy?.ingameKey}</Text> */}
                                 <Synergy key={trait.name} trait={trait} synergy={synergy} />
                               </>
                             );

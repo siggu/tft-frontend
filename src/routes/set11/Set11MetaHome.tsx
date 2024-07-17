@@ -53,6 +53,7 @@ interface SynergyProps {
 interface IMetaDeckElement {
   id: number;
   champion: IChampionDetail;
+  items: string[] | null;
 }
 interface IProcessedMetaDeck {
   id: number;
@@ -102,8 +103,22 @@ export default function Set11MetaHome() {
     let decks: IMetaDeckElement[] = [];
     let Synergies: SynergyProps[] = [];
     console.log(MD_ele);
+
+    let champions: { champion: any; D_key: number; items: string[] | null }[] = [];
+
     MD_ele.decks.map((D_ele, D_key) => {
-      const champion = allChampionsData?.find((champion) => champion.ingameKey === D_ele[0]);
+      const champion = findChampionByIngameKey(D_ele[0]);
+
+      let items: string[] | null = D_ele[1].length !== 0 ? [...D_ele[1]] : null;
+      if (champion) {
+        champions.push({ champion, D_key, items });
+      }
+    });
+
+    // cost 속성 기준으로 챔피언을 내림차순 정렬
+    champions.sort((a, b) => b.champion.cost1 - a.champion.cost1);
+
+    champions.forEach(({ champion, D_key, items }) => {
       const traits = [champion?.traits1, champion?.traits2, champion?.traits3, champion?.traits4];
       traits.forEach((trait) => {
         if (trait) {
@@ -113,20 +128,18 @@ export default function Set11MetaHome() {
             if (existingSynergy) {
               existingSynergy.trait.num_units++;
             } else {
-              Synergies.push({ trait: { name: synergy.name, num_units: 1 }, synergy: synergy });
+              Synergies.push({ trait: { name: synergy.ingameKey, num_units: 1 }, synergy: synergy });
             }
           }
         }
       });
 
-      if (champion) {
-        decks.push({ id: D_key, champion: champion });
-      }
+      decks.push({ id: D_key, champion, items });
     });
+
     Synergies.sort((a, b) => b.trait.num_units - a.trait.num_units);
     processedMetaDecks.push({ id, name, decks, Synergies });
   });
-  console.log(processedMetaDecks);
 
   return (
     <VStack gap={20}>
@@ -147,9 +160,6 @@ export default function Set11MetaHome() {
             <HStack display={'flex'} minW={'150px'} maxW={'150px'} flexWrap={'wrap'} gap={'1'}>
               {processedMetaDecks[deck_idx].Synergies.map((MDS_ele) => (
                 <>
-                  {/* <Text color={'white'}>{MDS_ele.trait.name}</Text>
-                  <Text color={'white'}>{MDS_ele.trait.num_units}</Text>
-                  <Text color={'white'}>{MDS_ele.synergy?.ingameKey}</Text> */}
                   <Synergy key={MDS_ele.trait.name} trait={MDS_ele.trait} synergy={MDS_ele.synergy} />
                 </>
               ))}
@@ -158,101 +168,95 @@ export default function Set11MetaHome() {
             <VStack gap={3} alignItems={'flex-start'}>
               {/* 챔피언 이미지 표시 */}
               <HStack>
-                {deck_ele.decks.map((unit_ele, unit_idx) => {
-                  const champion = findChampionByIngameKey(unit_ele[0]);
-                  let items = unit_ele[1].map((each_item_ele) => findItemByIngameKey(each_item_ele));
-
+                {processedMetaDecks[deck_idx].decks.map((MDC_ele, MDC_key) => {
+                  const champion = MDC_ele.champion;
+                  console.log('MDC_ele', MDC_ele);
+                  let items = MDC_ele.items?.map((each_item_ele) => findItemByIngameKey(each_item_ele));
                   return (
-                    <>
-                      <VStack>
-                        {champion ? (
-                          <Box key={unit_idx} zIndex={0}>
-                            <ProfileChampion
-                              championKey={champion.key}
-                              name={champion.name}
-                              cost1={champion.cost1}
-                              imageUrl={champion.imageUrl}
-                              attackRange={champion.attackRange}
-                              ingameKey={champion.ingameKey}
-                              splashUrl={champion.splashUrl}
-                              traits1={champion.traits1}
-                              traits2={champion.traits2}
-                              traits3={champion.traits3}
-                              traits4={champion.traits4}
-                              isHiddenGuide={false}
-                              isHiddenLanding={false}
-                              isHiddenTeamBuiler={false}
-                              cost2={champion.cost2}
-                              cost3={champion.cost3}
-                              health1={champion.health1}
-                              health2={champion.health2}
-                              health3={champion.health3}
-                              attackDamage1={champion.attackDamage1}
-                              attackDamage2={champion.attackDamage2}
-                              attackDamage3={champion.attackDamage3}
-                              damagePerSecond1={champion.damagePerSecond1}
-                              damagePerSecond2={champion.damagePerSecond2}
-                              damagePerSecond3={champion.damagePerSecond3}
-                              attackSpeed={champion.attackSpeed}
-                              armor={champion.armor}
-                              magicalResistance={champion.magicalResistance}
-                              recommendItems1={champion.recommendItems1}
-                              recommendItems2={champion.recommendItems2}
-                              recommendItems3={champion.recommendItems3}
-                              recommendItems4={champion.recommendItems4}
-                              recommendItems5={champion.recommendItems5}
-                              skill_stats1={champion.skill_stats1}
-                              skill_stats2={champion.skill_stats2}
-                              skill_stats3={champion.skill_stats3}
-                              skill_stats4={champion.skill_stats4}
-                              skill_stats5={champion.skill_stats5}
-                              skill_name={champion.skill_name}
-                              skill_imageUrl={champion.skill_imageUrl}
-                              skill_desc={champion.skill_desc}
-                              skill_startingMana={champion.skill_startingMana}
-                              skill_skillMana={champion.skill_skillMana}
-                            />
-                          </Box>
-                        ) : null}
-                        <HStack mt={-1} zIndex={1} gap={0.5}>
-                          {items.length > 0 ? (
-                            <>
-                              {items.map((item_ele) => (
-                                <HStack key={unit_idx}>
-                                  {item_ele ? (
-                                    <Box w="17px" h="17px">
-                                      <Item
-                                        imageUrl={item_ele.imageUrl}
-                                        key={item_ele.key}
-                                        ingameKey={item_ele.ingameKey}
-                                        name={item_ele.name}
-                                        description={item_ele.description}
-                                        shortDesc={item_ele.shortDesc}
-                                        composition1={item_ele.composition1}
-                                        composition2={item_ele.composition2}
-                                        isFromItem={item_ele.isFromItem}
-                                        isNormal={item_ele.isNormal}
-                                        isEmblem={item_ele.isEmblem}
-                                        isSupport={item_ele.isSupport}
-                                        isArtifact={item_ele.isArtifact}
-                                        isRadiant={item_ele.isRadiant}
-                                        isUnique={item_ele.isUnique}
-                                        isNew={item_ele.isNew}
-                                        tag1={item_ele.tag1}
-                                        tag2={item_ele.tag2}
-                                        tag3={item_ele.tag3}
-                                      />
-                                    </Box>
-                                  ) : null}
-                                </HStack>
-                              ))}
-                            </>
-                          ) : (
-                            <Box w={'17px'} h={'17px'}></Box>
-                          )}
-                        </HStack>
-                      </VStack>
-                    </>
+                    <VStack>
+                      <ProfileChampion
+                        championKey={champion.key}
+                        name={champion.name}
+                        cost1={champion.cost1}
+                        imageUrl={champion.imageUrl}
+                        attackRange={champion.attackRange}
+                        ingameKey={champion.ingameKey}
+                        splashUrl={champion.splashUrl}
+                        traits1={champion.traits1}
+                        traits2={champion.traits2}
+                        traits3={champion.traits3}
+                        traits4={champion.traits4}
+                        isHiddenGuide={false}
+                        isHiddenLanding={false}
+                        isHiddenTeamBuiler={false}
+                        cost2={champion.cost2}
+                        cost3={champion.cost3}
+                        health1={champion.health1}
+                        health2={champion.health2}
+                        health3={champion.health3}
+                        attackDamage1={champion.attackDamage1}
+                        attackDamage2={champion.attackDamage2}
+                        attackDamage3={champion.attackDamage3}
+                        damagePerSecond1={champion.damagePerSecond1}
+                        damagePerSecond2={champion.damagePerSecond2}
+                        damagePerSecond3={champion.damagePerSecond3}
+                        attackSpeed={champion.attackSpeed}
+                        armor={champion.armor}
+                        magicalResistance={champion.magicalResistance}
+                        recommendItems1={champion.recommendItems1}
+                        recommendItems2={champion.recommendItems2}
+                        recommendItems3={champion.recommendItems3}
+                        recommendItems4={champion.recommendItems4}
+                        recommendItems5={champion.recommendItems5}
+                        skill_stats1={champion.skill_stats1}
+                        skill_stats2={champion.skill_stats2}
+                        skill_stats3={champion.skill_stats3}
+                        skill_stats4={champion.skill_stats4}
+                        skill_stats5={champion.skill_stats5}
+                        skill_name={champion.skill_name}
+                        skill_imageUrl={champion.skill_imageUrl}
+                        skill_desc={champion.skill_desc}
+                        skill_startingMana={champion.skill_startingMana}
+                        skill_skillMana={champion.skill_skillMana}
+                      />
+                      <HStack mt={-1} zIndex={1} gap={0.5}>
+                        {items && items.length > 0 ? (
+                          <>
+                            {items.map((item_ele) => (
+                              <HStack key={MDC_key}>
+                                {item_ele ? (
+                                  <Box w="15px" h="15px">
+                                    <Item
+                                      imageUrl={item_ele.imageUrl}
+                                      key={item_ele.key}
+                                      ingameKey={item_ele.ingameKey}
+                                      name={item_ele.name}
+                                      description={item_ele.description}
+                                      shortDesc={item_ele.shortDesc}
+                                      composition1={item_ele.composition1}
+                                      composition2={item_ele.composition2}
+                                      isFromItem={item_ele.isFromItem}
+                                      isNormal={item_ele.isNormal}
+                                      isEmblem={item_ele.isEmblem}
+                                      isSupport={item_ele.isSupport}
+                                      isArtifact={item_ele.isArtifact}
+                                      isRadiant={item_ele.isRadiant}
+                                      isUnique={item_ele.isUnique}
+                                      isNew={item_ele.isNew}
+                                      tag1={item_ele.tag1}
+                                      tag2={item_ele.tag2}
+                                      tag3={item_ele.tag3}
+                                    />
+                                  </Box>
+                                ) : null}
+                              </HStack>
+                            ))}
+                          </>
+                        ) : (
+                          <Box w="15px" h="15px"></Box>
+                        )}
+                      </HStack>
+                    </VStack>
                   );
                 })}
               </HStack>

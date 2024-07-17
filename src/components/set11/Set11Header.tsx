@@ -1,4 +1,16 @@
-import { HStack, Box, Text, Image, Container, VStack, Input, FormControl, Button } from '@chakra-ui/react';
+import {
+  HStack,
+  Box,
+  Text,
+  Image,
+  Container,
+  VStack,
+  Input,
+  FormControl,
+  Button,
+  Grid,
+  Tooltip,
+} from '@chakra-ui/react';
 import { useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
@@ -99,6 +111,27 @@ export default function Set11Header() {
         <HStack>
           <FormControl>
             <HStack>
+              <Link to={'/set12'}>
+                <Tooltip
+                  hasArrow
+                  placement="top"
+                  bg={'black'}
+                  rounded={'md'}
+                  p={3}
+                  label={<Text fontSize={'12px'}>12시즌으로 이동하기</Text>}
+                >
+                  <Button
+                    _hover={{
+                      bgGradient: 'linear(#5120c7, #6e43d9, #8861e8)',
+                    }}
+                    bgGradient={'linear(#8861e8, #6e43d9, #5120c7)'}
+                  >
+                    <Text color={'white'} fontSize={'12px'}>
+                      12시즌
+                    </Text>
+                  </Button>
+                </Tooltip>
+              </Link>
               <Input
                 placeholder="소환사 닉네임"
                 color={'white'}
@@ -137,7 +170,14 @@ export default function Set11Header() {
             <FaSearch />
           </Button>
         </HStack>
-        <HStack display={'flex'} justifyContent={'center'} alignItems={'center'} w={'500px'} flexWrap={'wrap'} gap={5}>
+        <Grid
+          templateColumns={{
+            lg: 'repeat(6, 2fr)',
+            md: 'repeat(3, 2fr)',
+            sm: 'repeat(3, 2fr)',
+          }}
+          gap={5}
+        >
           {/* 조우자 */}
           <Box
             _hover={{
@@ -246,7 +286,7 @@ export default function Set11Header() {
               </Text>
             </Link>
           </Box>
-        </HStack>
+        </Grid>
       </VStack>
     </Box>
   );

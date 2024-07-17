@@ -31,91 +31,93 @@ export default function Set11Synergies() {
           }}
           gap={10}
         >
-          {synergiesData?.map((synergy: any) => (
-            <Box key={synergy.name} p={5} border={'1px solid gray'} borderRadius={5}>
-              <HStack justifyContent={'center'} mb={3} borderBottom={'1px solid gray'}>
-                <HStack mb={3}>
-                  <Image w={'40px'} src={synergy?.whiteImageUrl} />
-                  <Text as={'b'}>{synergy.name}</Text>
+          {synergiesData
+            ?.filter((synergy) => !synergy.ingameKey.includes('TFTEvent5YR'))
+            .map((synergy: any) => (
+              <Box key={synergy.name} p={5} border={'1px solid gray'} borderRadius={5}>
+                <HStack justifyContent={'center'} mb={3} borderBottom={'1px solid gray'}>
+                  <HStack mb={3}>
+                    <Image w={'40px'} src={synergy?.whiteImageUrl} />
+                    <Text as={'b'}>{synergy.name}</Text>
+                  </HStack>
                 </HStack>
-              </HStack>
-              <Text
-                mb={5}
-                dangerouslySetInnerHTML={{
-                  __html: synergy.desc.replace(/<br>/g, '<br />'),
-                }}
-              />
-              <Box mb={10}>
-                {Array.from({ length: 6 }).map((_, index) => {
-                  const statKey = `stats${index + 1}`;
-                  if (synergy?.[statKey]) {
-                    return (
-                      <Text
-                        key={index}
-                        color={'gray'}
-                        dangerouslySetInnerHTML={{ __html: synergy[statKey].replace(/<br>/g, '<br />') }}
+                <Text
+                  mb={5}
+                  dangerouslySetInnerHTML={{
+                    __html: synergy.desc.replace(/<br>/g, '<br />'),
+                  }}
+                />
+                <Box mb={10}>
+                  {Array.from({ length: 6 }).map((_, index) => {
+                    const statKey = `stats${index + 1}`;
+                    if (synergy?.[statKey]) {
+                      return (
+                        <Text
+                          key={index}
+                          color={'gray'}
+                          dangerouslySetInnerHTML={{ __html: synergy[statKey].replace(/<br>/g, '<br />') }}
+                        />
+                      );
+                    }
+                    return null;
+                  })}
+                </Box>
+                <HStack justifyContent={'center'}>
+                  {championsData
+                    .filter((champion) =>
+                      [champion.traits1, champion.traits2, champion.traits3, champion.traits4].includes(synergy.key)
+                    )
+                    .map((champion) => (
+                      <Champion
+                        key={champion.key}
+                        championKey={champion.key}
+                        name={champion.name}
+                        cost1={champion.cost1}
+                        imageUrl={champion.imageUrl}
+                        attackRange={champion.attackRange}
+                        ingameKey={champion.ingameKey}
+                        splashUrl={champion.splashUrl}
+                        traits1={champion.traits1}
+                        traits2={champion.traits2}
+                        traits3={champion.traits3}
+                        traits4={champion.traits4}
+                        isHiddenGuide={champion.isHiddenGuide}
+                        isHiddenLanding={champion.isHiddenLanding}
+                        isHiddenTeamBuiler={champion.isHiddenTeamBuiler}
+                        cost2={champion.cost2}
+                        cost3={champion.cost3}
+                        health1={champion.health1}
+                        health2={champion.health2}
+                        health3={champion.health3}
+                        attackDamage1={champion.attackDamage1}
+                        attackDamage2={champion.attackDamage2}
+                        attackDamage3={champion.attackDamage3}
+                        damagePerSecond1={champion.damagePerSecond1}
+                        damagePerSecond2={champion.damagePerSecond2}
+                        damagePerSecond3={champion.damagePerSecond3}
+                        attackSpeed={champion.attackSpeed}
+                        armor={champion.armor}
+                        magicalResistance={0}
+                        recommendItems1={champion.recommendItems1}
+                        recommendItems2={champion.recommendItems2}
+                        recommendItems3={champion.recommendItems3}
+                        recommendItems4={champion.recommendItems4}
+                        recommendItems5={champion.recommendItems5}
+                        skill_stats1={champion.skill_stats1}
+                        skill_stats2={champion.skill_stats2}
+                        skill_stats3={champion.skill_stats3}
+                        skill_stats4={champion.skill_stats4}
+                        skill_stats5={champion.skill_stats5}
+                        skill_name={champion.skill_name}
+                        skill_imageUrl={champion.skill_imageUrl}
+                        skill_desc={champion.skill_desc}
+                        skill_startingMana={champion.skill_startingMana}
+                        skill_skillMana={champion.skill_skillMana}
                       />
-                    );
-                  }
-                  return null;
-                })}
+                    ))}
+                </HStack>
               </Box>
-              <HStack justifyContent={'center'}>
-                {championsData
-                  .filter((champion) =>
-                    [champion.traits1, champion.traits2, champion.traits3, champion.traits4].includes(synergy.key)
-                  )
-                  .map((champion) => (
-                    <Champion
-                      key={champion.key}
-                      championKey={champion.key}
-                      name={champion.name}
-                      cost1={champion.cost1}
-                      imageUrl={champion.imageUrl}
-                      attackRange={champion.attackRange}
-                      ingameKey={champion.ingameKey}
-                      splashUrl={champion.splashUrl}
-                      traits1={champion.traits1}
-                      traits2={champion.traits2}
-                      traits3={champion.traits3}
-                      traits4={champion.traits4}
-                      isHiddenGuide={champion.isHiddenGuide}
-                      isHiddenLanding={champion.isHiddenLanding}
-                      isHiddenTeamBuiler={champion.isHiddenTeamBuiler}
-                      cost2={champion.cost2}
-                      cost3={champion.cost3}
-                      health1={champion.health1}
-                      health2={champion.health2}
-                      health3={champion.health3}
-                      attackDamage1={champion.attackDamage1}
-                      attackDamage2={champion.attackDamage2}
-                      attackDamage3={champion.attackDamage3}
-                      damagePerSecond1={champion.damagePerSecond1}
-                      damagePerSecond2={champion.damagePerSecond2}
-                      damagePerSecond3={champion.damagePerSecond3}
-                      attackSpeed={champion.attackSpeed}
-                      armor={champion.armor}
-                      magicalResistance={0}
-                      recommendItems1={champion.recommendItems1}
-                      recommendItems2={champion.recommendItems2}
-                      recommendItems3={champion.recommendItems3}
-                      recommendItems4={champion.recommendItems4}
-                      recommendItems5={champion.recommendItems5}
-                      skill_stats1={champion.skill_stats1}
-                      skill_stats2={champion.skill_stats2}
-                      skill_stats3={champion.skill_stats3}
-                      skill_stats4={champion.skill_stats4}
-                      skill_stats5={champion.skill_stats5}
-                      skill_name={champion.skill_name}
-                      skill_imageUrl={champion.skill_imageUrl}
-                      skill_desc={champion.skill_desc}
-                      skill_startingMana={champion.skill_startingMana}
-                      skill_skillMana={champion.skill_skillMana}
-                    />
-                  ))}
-              </HStack>
-            </Box>
-          ))}
+            ))}
         </Grid>
       </Box>
     </Container>

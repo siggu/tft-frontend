@@ -156,10 +156,13 @@ export default function Set11MetaHome() {
               <Text color={'white'} fontSize={'15px'}>
                 {deck_ele.name}
               </Text>
+              <>{console.log(deck_ele.name)}</>
             </Box>
             <HStack display={'flex'} minW={'170px'} maxW={'150px'} flexWrap={'wrap'} gap={'1'}>
-              {processedMetaDecks[deck_idx].Synergies.map((MDS_ele) => (
+              {processedMetaDecks[deck_idx].Synergies.map((MDS_ele, MDS_key) => (
                 <>
+                  {console.log('MDS_ele.trait.name : ', MDS_ele.trait.name)}
+                  {console.log('MDS_ele.trait : ', MDS_ele.trait)}
                   <Synergy key={MDS_ele.trait.name} trait={MDS_ele.trait} synergy={MDS_ele.synergy} />
                 </>
               ))}
@@ -170,7 +173,6 @@ export default function Set11MetaHome() {
               <HStack mt={2}>
                 {processedMetaDecks[deck_idx].decks.map((MDC_ele, MDC_key) => {
                   const champion = MDC_ele.champion;
-                  console.log('MDC_ele', MDC_ele);
                   let items = MDC_ele.items?.map((each_item_ele) => findItemByIngameKey(each_item_ele));
                   return (
                     <VStack>

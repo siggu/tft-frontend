@@ -461,16 +461,28 @@ export const getTraitBackgroundImageUrl = (traitName: string, numUnits: number):
   const condition = traitColorConditions[traitName];
   if (!condition) return undefined; // 조건이 없으면 undefined 반환
 
+  // if (numUnits < condition.thresholds[0]) {
+  //   return undefined; // 첫 번째 threshold보다 작으면 undefined 반환
+  // } else if (numUnits <= condition.thresholds[0]) {
+  //   return condition.urls[0]; // 첫 번째 threshold 이내일 때 첫 번째 URL 반환
+  // } else if (numUnits <= condition.thresholds[1]) {
+  //   return condition.urls[1]; // 두 번째 threshold 이내일 때 두 번째 URL 반환
+  // } else if (numUnits <= condition.thresholds[2]) {
+  //   return condition.urls[2]; // 세 번째 threshold 이내일 때 세 번째 URL 반환
+  // } else if (numUnits <= condition.thresholds[3]) {
+  //   return condition.urls[2]; // 네 번째 threshold 이상일 때 마지막 URL 반환
+  // } else {
+  //   return condition.urls[3];
+  // }
+
   if (numUnits < condition.thresholds[0]) {
-    return undefined; // 첫 번째 threshold보다 작으면 undefined 반환
-  } else if (numUnits <= condition.thresholds[0]) {
-    return condition.urls[0]; // 첫 번째 threshold 이내일 때 첫 번째 URL 반환
-  } else if (numUnits <= condition.thresholds[1]) {
-    return condition.urls[1]; // 두 번째 threshold 이내일 때 두 번째 URL 반환
-  } else if (numUnits <= condition.thresholds[2]) {
-    return condition.urls[2]; // 세 번째 threshold 이내일 때 세 번째 URL 반환
-  } else if (numUnits <= condition.thresholds[3]) {
-    return condition.urls[2]; // 네 번째 threshold 이상일 때 마지막 URL 반환
+    return undefined;
+  } else if (numUnits < condition.thresholds[1]) {
+    return condition.urls[0];
+  } else if (numUnits < condition.thresholds[2]) {
+    return condition.urls[1];
+  } else if (numUnits < condition.thresholds[3]) {
+    return condition.urls[2];
   } else {
     return condition.urls[3];
   }

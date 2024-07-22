@@ -458,6 +458,8 @@ export default function Set11Profile() {
 
                             return (
                               <>
+                                {console.log('trait.name', trait.name)}
+                                {console.log('trait', trait)}
                                 <Synergy key={trait.name} trait={trait} synergy={synergy} />
                               </>
                             );

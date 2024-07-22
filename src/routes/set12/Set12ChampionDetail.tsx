@@ -302,7 +302,7 @@ export default function Set12ChampionDetail() {
               as="b"
               fontSize="lg"
               h="60px"
-              bgColor="#ca9372"
+              bgColor="#8861e8"
               color={'white'}
               textAlign={'center'}
               w="100%"
@@ -316,7 +316,7 @@ export default function Set12ChampionDetail() {
                   {synergiesData?.map((synergy: any) => (
                     <>
                       {trait === synergy.key ? (
-                        <Box key={synergy.name} p={5} border={'1px solid gray'} borderRadius={5}>
+                        <Box bgColor={'#27282e'} key={synergy.name} p={5} border={'1px solid gray'}>
                           <HStack justifyContent={'center'} mb={3} borderBottom={'1px solid gray'}>
                             <HStack mb={3}>
                               <Image w={'40px'} src={synergy?.whiteImageUrl} />

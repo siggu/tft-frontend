@@ -2,7 +2,7 @@ import { Box, Container, Text, VStack } from '@chakra-ui/react';
 
 export default function Set12Home() {
   return (
-    <VStack gap={20}>
+    <VStack>
       <Container maxW={'container.xl'} minH={'500px'}>
         <Box mb={5}>
           <Text as={'b'} color={'#6e43d9'} fontSize={'20px'}>

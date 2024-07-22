@@ -18,6 +18,7 @@ import { Link, useNavigate } from 'react-router-dom';
 export default function Set11Header() {
   const [gameName, setgameName] = useState('');
   const [tagLine, setSearchTag] = useState('');
+  const [error, setError] = useState(''); // Error state
   const navigate = useNavigate();
 
   const handleSearch = async () => {
@@ -97,6 +98,11 @@ export default function Set11Header() {
     setSearchTag(event.target.value);
   };
   const handleSearchtoAdapter = () => {
+    if (gameName.trim() === '' || tagLine.trim() === '') {
+      setError('소환사 닉네임과 태그를 입력해주세요.');
+      return;
+    }
+    setError(''); // Clear error message if any
     navigate(`/set11/search/${gameName}/${tagLine}`);
   };
 

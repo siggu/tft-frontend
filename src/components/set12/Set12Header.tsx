@@ -117,11 +117,11 @@ export default function Set12Header() {
                 <Tooltip
                   hasArrow
                   placement="top"
-                  bg={'white'}
+                  bg={'black'}
                   rounded={'md'}
                   p={3}
                   label={
-                    <Text color={'black'} fontSize={'12px'}>
+                    <Text color={'white'} fontSize={'12px'}>
                       11시즌으로 이동하기
                     </Text>
                   }

@@ -37,7 +37,7 @@ export default function Set12Synergies() {
           gap={10}
         >
           {synergiesData?.map((synergy: any) => (
-            <Box key={synergy.name} p={5} border={'1px solid gray'} borderRadius={5}>
+            <Box bgColor={'#27282e'} key={synergy.name} p={5} border={'1px solid gray'} borderRadius={5}>
               <HStack justifyContent={'center'} mb={3} borderBottom={'1px solid gray'}>
                 <HStack mb={3}>
                   <Image w={'40px'} src={synergy?.whiteImageUrl} />

@@ -380,7 +380,15 @@ export default function Set11Profile() {
 
               if (!participant) return null;
               return (
-                <Box key={match.match_id} p={4} borderWidth={1} borderRadius={8} borderColor="gray.700" mb={4}>
+                <Box
+                  bgColor={'#27282e'}
+                  key={match.match_id}
+                  p={4}
+                  borderWidth={1}
+                  borderRadius={8}
+                  borderColor="gray.700"
+                  mb={4}
+                >
                   <VStack alignItems="flex-start">
                     {/* 등수 */}
                     <HStack display={'flex'} justifyContent={'center'} alignItems={'center'}>

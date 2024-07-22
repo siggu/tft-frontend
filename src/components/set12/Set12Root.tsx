@@ -6,7 +6,7 @@ import Header from './Set12Header';
 
 export default function Set12Root() {
   return (
-    <Box bg={'black'}>
+    <Box bg={'#161618'}>
       <Header />
       <Outlet />
       <ReactQueryDevtools />

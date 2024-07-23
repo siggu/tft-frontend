@@ -178,8 +178,8 @@ export default function Set12Header() {
         </HStack>
         <Grid
           templateColumns={{
-            lg: 'repeat(6, 2fr)',
-            md: 'repeat(3, 2fr)',
+            lg: 'repeat(7, 2fr)',
+            md: 'repeat(4, 2fr)',
             sm: 'repeat(3, 2fr)',
           }}
           gap={5}
@@ -203,6 +203,28 @@ export default function Set12Header() {
             <Link to={'/set12/charms'}>
               <Text fontWeight={'600'} color={'white'}>
                 12시즌 주술
+              </Text>
+            </Link>
+          </Box>
+          {/* 보상표 */}
+          <Box
+            _hover={{
+              bgGradient: 'linear(#5120c7, #6e43d9, #8861e8)',
+            }}
+            bgGradient={'linear(#8861e8, #6e43d9, #5120c7)'}
+            rounded={'5px'}
+            paddingX={5}
+            paddingY={3}
+            fontSize={'14px'}
+            border={'1px solid black'}
+            w={'130px'}
+            display={'flex'}
+            justifyContent={'center'}
+            alignItems={'center'}
+          >
+            <Link to={'/set12/rewards/sugarcraft'}>
+              <Text fontWeight={'600'} color={'white'}>
+                12시즌 보상표
               </Text>
             </Link>
           </Box>

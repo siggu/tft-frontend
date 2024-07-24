@@ -19,6 +19,7 @@ import Set12ChampionDetail from './routes/set12/Set12ChampionDetail';
 import Set12Synergies from './routes/set12/Set12Synergies';
 import Set12Portals from './routes/set12/Set12Portals';
 import Set12Rewards from './routes/set12/Set12Rewards';
+import Set12Charms from './routes/set12/Set12Charms';
 
 const router = createBrowserRouter([
   {
@@ -103,6 +104,16 @@ const router = createBrowserRouter([
           {
             path: ':rewardType',
             element: <Set12Rewards />,
+          },
+        ],
+      },
+      {
+        path: 'charms',
+        element: <Set12Charms />,
+        children: [
+          {
+            path: ':tier',
+            element: <Set12Charms />,
           },
         ],
       },

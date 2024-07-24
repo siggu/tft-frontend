@@ -1,0 +1,336 @@
+[
+  {
+    "lose": 0,
+    "probabilities": [
+      {
+        "probability": "100%",
+        "rewards": [{ "itemCount": 1, "itemName": "골드" }]
+      }
+    ]
+  },
+  {
+    "lose": 1,
+    "probabilities": [
+      {
+        "probability": "50%",
+        "rewards": [{ "itemCount": 1, "itemName": "2단계 챔피언" }]
+      },
+      {
+        "probability": "50%",
+        "rewards": [{ "itemCount": 2, "itemName": "골드" }]
+      }
+    ]
+  },
+  {
+    "lose": 2,
+    "probabilities": [
+      {
+        "probability": "50%",
+        "rewards": [{ "itemCount": 4, "itemName": "골드" }]
+      },
+      {
+        "probability": "25%",
+        "rewards": [{ "itemCount": 2, "itemName": "2단계 챔피언" }]
+      },
+      {
+        "probability": "25%",
+        "rewards": [
+          { "itemCount": 1, "itemName": "골드" },
+          { "itemCount": 1, "itemName": "3단계 챔피언" }
+        ]
+      }
+    ]
+  },
+  {
+    "lose": 3,
+    "probabilities": [
+      {
+        "probability": "50%",
+        "rewards": [{ "itemCount": 1, "itemName": "무작위 조합 아이템" }]
+      },
+      {
+        "probability": "25%",
+        "rewards": [{ "itemCount": 8, "itemName": "골드" }]
+      },
+      {
+        "probability": "25%",
+        "rewards": [
+          { "itemCount": 2, "itemName": "골드" },
+          { "itemCount": 2, "itemName": "3단계 챔피언" }
+        ]
+      }
+    ]
+  },
+  {
+    "lose": 4,
+    "probabilities": [
+      {
+        "probability": "40%",
+        "rewards": [
+          { "itemCount": 5, "itemName": "골드" },
+          { "itemCount": 1, "itemName": "무작위 조합 아이템" }
+        ]
+      },
+      {
+        "probability": "30%",
+        "rewards": [{ "itemCount": 1, "itemName": "도적의 장갑" }]
+      },
+      {
+        "probability": "30%",
+        "rewards": [
+          { "itemCount": 4, "itemName": "골드" },
+          { "itemCount": 3, "itemName": "3단계 챔피언" }
+        ]
+      }
+    ]
+  },
+  {
+    "lose": 5,
+    "probabilities": [
+      {
+        "probability": "40%",
+        "rewards": [
+          { "itemCount": 2, "itemName": "골드" },
+          { "itemCount": 2, "itemName": "무작위 조합 아이템" }
+        ]
+      },
+      {
+        "probability": "30%",
+        "rewards": [
+          { "itemCount": 1, "itemName": "조합 아이템 모루" },
+          { "itemCount": 1, "itemName": "뒤집개" }
+        ]
+      },
+      {
+        "probability": "30%",
+        "rewards": [
+          { "itemCount": 9, "itemName": "골드" },
+          { "itemCount": 1, "itemName": "도적의 장갑" }
+        ]
+      }
+    ]
+  },
+  {
+    "lose": 6,
+    "probabilities": [
+      {
+        "probability": "30%",
+        "rewards": [
+          { "itemCount": 10, "itemName": "골드" },
+          { "itemCount": 1, "itemName": "완성 아이템 모루" }
+        ]
+      },
+      {
+        "probability": "25%",
+        "rewards": [
+          { "itemCount": 5, "itemName": "골드" },
+          { "itemCount": 1, "itemName": "유물 모루" },
+          { "itemCount": 2, "itemName": "골드" },
+          { "itemCount": 3, "itemName": "무작위 조합 아이템" }
+        ]
+      },
+      {
+        "probability": "20%",
+        "rewards": [
+          { "itemCount": 3, "itemName": "골드" },
+          { "itemCount": 1, "itemName": "대장장이의 장갑" }
+        ]
+      }
+    ]
+  },
+  {
+    "lose": 7,
+    "probabilities": [
+      {
+        "probability": "35%",
+        "rewards": [
+          { "itemCount": 5, "itemName": "골드" },
+          { "itemCount": 2, "itemName": "완성 아이템 모루" }
+        ]
+      },
+      {
+        "probability": "25%",
+        "rewards": [{ "itemCount": 5, "itemName": "무작위 조합 아이템" }]
+      },
+      {
+        "probability": "20%",
+        "rewards": [
+          { "itemCount": 5, "itemName": "골드" },
+          { "itemCount": 2, "itemName": "재조합기" },
+          { "itemCount": 1, "itemName": "무작위 찬란한 아이템" }
+        ]
+      },
+      {
+        "probability": "20%",
+        "rewards": [
+          { "itemCount": 10, "itemName": "골드" },
+          { "itemCount": 2, "itemName": "챔피언 복제기" }
+        ]
+      }
+    ]
+  },
+  {
+    "lose": 8,
+    "probabilities": [
+      {
+        "probability": "30%",
+        "rewards": [
+          { "itemCount": 5, "itemName": "골드" },
+          { "itemCount": 2, "itemName": "유물 모루" }
+        ]
+      },
+      {
+        "probability": "25%",
+        "rewards": [
+          { "itemCount": 1, "itemName": "전략가의 왕관" },
+          { "itemCount": 1, "itemName": "완성 아이템 모루" }
+        ]
+      },
+      {
+        "probability": "25%",
+        "rewards": [
+          { "itemCount": 1, "itemName": "무작위 찬란한 아이템" },
+          { "itemCount": 1, "itemName": "재조합기" },
+          { "itemCount": 1, "itemName": "지원 아이템 모루" }
+        ]
+      },
+      {
+        "probability": "20%",
+        "rewards": [
+          { "itemCount": 5, "itemName": "골드" },
+          { "itemCount": 2, "itemName": "5단계 챔피언" },
+          { "itemCount": 2, "itemName": "완성 아이템 모루" }
+        ]
+      }
+    ]
+  },
+  {
+    "lose": 9,
+    "probabilities": [
+      {
+        "probability": "40%",
+        "rewards": [
+          { "itemCount": 2, "itemName": "무작위 찬란한 아이템" },
+          { "itemCount": 1, "itemName": "자석 제거기" }
+        ]
+      },
+      {
+        "probability": "30%",
+        "rewards": [
+          { "itemCount": 1, "itemName": "완성 아이템 모루" },
+          { "itemCount": 1, "itemName": "유물 모루" },
+          { "itemCount": 1, "itemName": "지원 아이템 모루" }
+        ]
+      },
+      {
+        "probability": "30%",
+        "rewards": [
+          { "itemCount": 10, "itemName": "골드" },
+          { "itemCount": 3, "itemName": "무작위 조합 아이템" },
+          { "itemCount": 2, "itemName": "뒤집개" }
+        ]
+      }
+    ]
+  },
+  {
+    "lose": 10,
+    "probabilities": [
+      {
+        "probability": "40%",
+        "rewards": [
+          { "itemCount": 15, "itemName": "골드" },
+          { "itemCount": 5, "itemName": "무작위 조합 아이템" },
+          { "itemCount": 1, "itemName": "걸작 업그레이드" }
+        ]
+      },
+      {
+        "probability": "30%",
+        "rewards": [
+          { "itemCount": 1, "itemName": "전략가의 왕관" },
+          { "itemCount": 1, "itemName": "완성 아이템 모루" },
+          { "itemCount": 1, "itemName": "유물 모루" },
+          { "itemCount": 1, "itemName": "지원 아이템 모루" }
+        ]
+      }
+    ]
+  },
+  {
+    "lose": 11,
+    "probabilities": [
+      {
+        "probability": "40%",
+        "rewards": [
+          { "itemCount": 65, "itemName": "골드" },
+          { "itemCount": 1, "itemName": "무작위 찬란한 아이템" },
+          { "itemCount": 1, "itemName": "재조합기" },
+          { "itemCount": 1, "itemName": "자석 제거기" }
+        ]
+      },
+      {
+        "probability": "30%",
+        "rewards": [
+          { "itemCount": 3, "itemName": "장난꾸러기의 장갑" },
+          { "itemCount": 1, "itemName": "황금 자석 제거기" },
+          { "itemCount": 10, "itemName": "골드" },
+          { "itemCount": 5, "itemName": "5단계 챔피언" },
+          { "itemCount": 2, "itemName": "챔피언 복제기" },
+          { "itemCount": 1, "itemName": "자석 제거기" },
+          { "itemCount": 1, "itemName": "무작위 찬란한 아이템" }
+        ]
+      }
+    ]
+  },
+  {
+    "lose": 12,
+    "probabilities": [
+      {
+        "probability": "100%",
+        "rewards": [
+          { "itemCount": 4, "itemName": "5단계 챔피언" },
+          { "itemCount": 1, "itemName": "모든 시너지 +1 버프" }
+        ]
+      }
+    ]
+  },
+  {
+    "lose": 13,
+    "probabilities": [
+      {
+        "probability": "40%",
+        "rewards": [
+          { "itemCount": 10, "itemName": "골드" },
+          { "itemCount": 1, "itemName": "전략가의 왕관" },
+          { "itemCount": 2, "itemName": "챔피언 복제기" },
+          { "itemCount": 1, "itemName": "찬란한 아이템 변환기" }
+        ]
+      },
+      {
+        "probability": "30%",
+        "rewards": [
+          { "itemCount": 110, "itemName": "골드" },
+          { "itemCount": 2, "itemName": "전략가의 왕관" },
+          { "itemCount": 1, "itemName": "브라이어" },
+          { "itemCount": 1, "itemName": "스몰더" },
+          { "itemCount": 3, "itemName": "수상한 외투" },
+          { "itemCount": 3, "itemName": "방한 장갑" },
+          { "itemCount": 1, "itemName": "전략가의 왕관" },
+          { "itemCount": 1, "itemName": "자석 제거기" }
+        ]
+      }
+    ]
+  },
+  {
+    "lose": 14,
+    "probabilities": [
+      {
+        "probability": "50%",
+        "rewards": [
+          { "itemCount": 50, "itemName": "골드" },
+          { "itemCount": 1, "itemName": "감시자 무리" },
+          { "itemCount": 1, "itemName": "5단계 챔피언" },
+          { "itemCount": 1, "itemName": "자석 제거기" }
+        ]
+      }
+    ]
+  }
+]

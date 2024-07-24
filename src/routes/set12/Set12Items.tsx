@@ -1,12 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
-import { getSet11Items } from '../../set11api';
 import { useParams } from 'react-router-dom';
 import { Box, Container, HStack, Image, Text, Tooltip, VStack, Wrap } from '@chakra-ui/react';
 import IItems from '../../components/types';
 import Set12Item from '../../components/set12/Set12Item';
 import { getSet12Items } from '../../set12api';
 
-export default function Set11Items() {
+export default function Set12Items() {
   // 아이템 가져오기
   const { data: itemsData, isLoading: isItemLoading } = useQuery<IItems[]>({
     queryKey: ['item'],

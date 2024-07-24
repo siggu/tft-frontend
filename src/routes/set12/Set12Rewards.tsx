@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, Link, useLocation } from 'react-router-dom';
 import {
   Box,
@@ -16,11 +16,55 @@ import {
   Tr,
   VStack,
 } from '@chakra-ui/react';
+import IChampion from '../../components/types';
+import Champion from '../../components/set12/Set12Champion';
+import { getSet12Champions } from '../../set12api';
+import GQ_rewardsData from '../../components/set12/Set12RewardsDatas_GQ.json';
+import FFB_rewardsData from '../../components/set12/Set12RewardsDatas_FFB.json';
+import { useQuery } from '@tanstack/react-query';
+import IItems from '../../components/types';
+import Set12Item from '../../components/set12/Set12Item';
+import { getSet12Items } from '../../set12api';
+import Set12ProfileChampion from '../../components/set12/Set12ProfileChampion';
+
+interface IGQ {
+  champion_IngameKey: string;
+  item1_IngameKey: string;
+  item2_IngameKey: string;
+  item3_IngameKey: string;
+}
+interface IReward {
+  itemCount: number;
+  itemName: string;
+}
+interface IProbability {
+  probability: string;
+  rewards: IReward[];
+}
+interface IFFB {
+  lose: number;
+  probabilities: IProbability[];
+}
 
 export default function Set12Rewards() {
   const { rewardType } = useParams<{ rewardType: string }>();
   const location = useLocation();
-
+  const [GQData, setGQData] = useState<IGQ[]>([]);
+  const [FFBData, setFFBData] = useState<IFFB[]>([]);
+  // JSON 데이터를 상태로 설정
+  useEffect(() => {
+    setGQData(GQ_rewardsData);
+    setFFBData(FFB_rewardsData);
+  }, []);
+  // 모든 챔피언 가져오기
+  const { data: allChampionsData, isLoading: isAllChampionDataLoading } = useQuery<IChampion[]>({
+    queryKey: ['champions'],
+    queryFn: getSet12Champions,
+  });
+  const { data: allItemsData, isLoading: isItemLoading } = useQuery<IItems[]>({
+    queryKey: ['item'],
+    queryFn: getSet12Items,
+  });
   const getBoxStyle = (path: string) => ({
     p: 5,
     width: '25%',
@@ -29,6 +73,18 @@ export default function Set12Rewards() {
     bg: location.pathname.includes(path) ? '#6e43d9' : 'transparent',
     _hover: { bg: '#6e43d9' },
   });
+  const findChampionByIngameKey = (ingameKey: string) => {
+    return allChampionsData?.find((champion) => champion.ingameKey === ingameKey);
+  };
+  const findItemByIngameKey = (ingameKey: string) => {
+    return allItemsData?.find((item) => item.ingameKey === ingameKey);
+  };
+  // const AGoldQuest = () =>{
+  //   const[GQ,setGQ] = useState([])
+  //   useEffect(()=>{
+  //     setGQ(rewardsData[0])
+  //   })
+  // }
 
   const renderRewardDetails = () => {
     switch (rewardType) {
@@ -1115,13 +1171,198 @@ export default function Set12Rewards() {
       // 황금빛 퀘스트 보상
       case 'aGoldenQuest':
         return (
-          <VStack p={5} mx={20} mb={5} alignItems={'flex-start'}>
-            <Text as={'b'} color={'#8861e8'} fontSize={'20px'}>
-              황금빛 퀘스트
-            </Text>
-            <Text mt={5} color={'white'}>
-              A Golden Quest rewards details go here.
-            </Text>
+          <VStack mt={20} color={'white'}>
+            <Image mb={3} src="https://cdn.dak.gg/tft/images2/rewards/icons/ico-rewards-aug-gold.png" />
+            <VStack gap={0}>
+              <VStack mb={5} display={'flex'} justifyContent={'center'} alignItems={'center'}>
+                <Text mb={3} fontWeight={'700'} fontSize={'23px'}>
+                  황금빛 퀘스트
+                </Text>
+                <Text fontWeight={'600'} fontSize={'12px'} color={'gray'}>
+                  처음으로 161.8골드 이상 보유 시, 5단계 2성 챔피언 1명과 이 챔피언에 어울리는 아이템 3개를 획득합니다.
+                </Text>
+              </VStack>
+              <VStack p={5} mx={20} alignItems={'flex-start'}>
+                <Table minW={'620px'} size={'lg'} bgColor={'#27282e'}>
+                  <Thead>
+                    <Tr bgColor={'#363944'}>
+                      <Th color={'#a5a8b4'}>확률</Th>
+                      <Th color={'#a5a8b4'}>보상</Th>
+                    </Tr>
+                  </Thead>
+                  <Tbody>
+                    {GQData.map((GQ_ele) => {
+                      let champion = findChampionByIngameKey(GQ_ele.champion_IngameKey);
+                      let item1 = findItemByIngameKey(GQ_ele.item1_IngameKey);
+                      let item2 = findItemByIngameKey(GQ_ele.item2_IngameKey);
+                      let item3 = findItemByIngameKey(GQ_ele.item3_IngameKey);
+                      if (champion && item1 && item2 && item3) {
+                        return (
+                          <Tr>
+                            <Td padding={'5px'} textAlign={'center'}>
+                              12.5%
+                            </Td>
+                            <Td
+                              alignItems="flex-start"
+                              padding={'5px'}
+                              display={'flex'}
+                              justifyContent={'space-evenly'}
+                              flexWrap="wrap"
+                            >
+                              <HStack w={'25%'}>
+                                <VStack alignItems={'flex-start'}>
+                                  <Box w={'35px'} h={'35px'}>
+                                    <Set12ProfileChampion
+                                      key={champion.key}
+                                      championKey={champion.key}
+                                      name={champion.name}
+                                      cost1={champion.cost1}
+                                      imageUrl={champion.imageUrl}
+                                      attackRange={champion.attackRange}
+                                      ingameKey={champion.ingameKey}
+                                      splashUrl={champion.splashUrl}
+                                      traits1={champion.traits1}
+                                      traits2={champion.traits2}
+                                      traits3={champion.traits3}
+                                      traits4={champion.traits4}
+                                      isHiddenGuide={champion.isHiddenGuide}
+                                      isHiddenLanding={champion.isHiddenLanding}
+                                      isHiddenTeamBuiler={champion.isHiddenTeamBuiler}
+                                      cost2={champion.cost2}
+                                      cost3={champion.cost3}
+                                      health1={champion.health1}
+                                      health2={champion.health2}
+                                      health3={champion.health3}
+                                      attackDamage1={champion.attackDamage1}
+                                      attackDamage2={champion.attackDamage2}
+                                      attackDamage3={champion.attackDamage3}
+                                      damagePerSecond1={champion.damagePerSecond1}
+                                      damagePerSecond2={champion.damagePerSecond2}
+                                      damagePerSecond3={champion.damagePerSecond3}
+                                      attackSpeed={champion.attackSpeed}
+                                      armor={champion.armor}
+                                      magicalResistance={0}
+                                      recommendItems1={champion.recommendItems1}
+                                      recommendItems2={champion.recommendItems2}
+                                      recommendItems3={champion.recommendItems3}
+                                      recommendItems4={champion.recommendItems4}
+                                      recommendItems5={champion.recommendItems5}
+                                      skill_stats1={champion.skill_stats1}
+                                      skill_stats2={champion.skill_stats2}
+                                      skill_stats3={champion.skill_stats3}
+                                      skill_stats4={champion.skill_stats4}
+                                      skill_stats5={champion.skill_stats5}
+                                      skill_name={champion.skill_name}
+                                      skill_imageUrl={champion.skill_imageUrl}
+                                      skill_desc={champion.skill_desc}
+                                      skill_startingMana={champion.skill_startingMana}
+                                      skill_skillMana={champion.skill_skillMana}
+                                    />
+                                  </Box>
+                                  <Text fontSize={'12px'} color={'gray'}>
+                                    {champion.name}
+                                  </Text>
+                                </VStack>
+                              </HStack>
+                              <HStack w={'25%'}>
+                                <VStack alignItems={'flex-start'}>
+                                  <Box w={'35px'} h={'35px'}>
+                                    <Set12Item
+                                      key={item1.key}
+                                      ingameKey={item1.ingameKey}
+                                      name={item1.name}
+                                      description={item1.description}
+                                      shortDesc={item1.shortDesc}
+                                      imageUrl={item1.imageUrl}
+                                      composition1={item1.composition1}
+                                      composition2={item1.composition2}
+                                      isFromItem={item1.isFromItem}
+                                      isNormal={item1.isNormal}
+                                      isEmblem={item1.isEmblem}
+                                      isSupport={item1.isSupport}
+                                      isArtifact={item1.isArtifact}
+                                      isRadiant={item1.isRadiant}
+                                      isUnique={item1.isUnique}
+                                      isNew={item1.isNew}
+                                      tag1={item1.tag1}
+                                      tag2={item1.tag2}
+                                      tag3={item1.tag3}
+                                    />
+                                  </Box>
+                                  <Text fontSize={'12px'} color={'gray'}>
+                                    {item1.name}
+                                  </Text>
+                                </VStack>
+                              </HStack>
+                              <HStack w={'25%'}>
+                                <VStack alignItems={'flex-start'}>
+                                  <Box w={'35px'} h={'35px'}>
+                                    <Set12Item
+                                      key={item2.key}
+                                      ingameKey={item2.ingameKey}
+                                      name={item2.name}
+                                      description={item2.description}
+                                      shortDesc={item2.shortDesc}
+                                      imageUrl={item2.imageUrl}
+                                      composition1={item2.composition1}
+                                      composition2={item2.composition2}
+                                      isFromItem={item2.isFromItem}
+                                      isNormal={item2.isNormal}
+                                      isEmblem={item2.isEmblem}
+                                      isSupport={item2.isSupport}
+                                      isArtifact={item2.isArtifact}
+                                      isRadiant={item2.isRadiant}
+                                      isUnique={item2.isUnique}
+                                      isNew={item2.isNew}
+                                      tag1={item2.tag1}
+                                      tag2={item2.tag2}
+                                      tag3={item2.tag3}
+                                    />
+                                  </Box>
+                                  <Text fontSize={'12px'} color={'gray'}>
+                                    {item2.name}
+                                  </Text>
+                                </VStack>
+                              </HStack>
+                              <HStack w={'25%'}>
+                                <VStack alignItems={'flex-start'}>
+                                  <Box w={'35px'} h={'35px'}>
+                                    <Set12Item
+                                      key={item3.key}
+                                      ingameKey={item3.ingameKey}
+                                      name={item3.name}
+                                      description={item3.description}
+                                      shortDesc={item3.shortDesc}
+                                      imageUrl={item3.imageUrl}
+                                      composition1={item3.composition1}
+                                      composition2={item3.composition2}
+                                      isFromItem={item3.isFromItem}
+                                      isNormal={item3.isNormal}
+                                      isEmblem={item3.isEmblem}
+                                      isSupport={item3.isSupport}
+                                      isArtifact={item3.isArtifact}
+                                      isRadiant={item3.isRadiant}
+                                      isUnique={item3.isUnique}
+                                      isNew={item3.isNew}
+                                      tag1={item3.tag1}
+                                      tag2={item3.tag2}
+                                      tag3={item3.tag3}
+                                    />
+                                  </Box>
+                                  <Text fontSize={'12px'} color={'gray'}>
+                                    {item3.name}
+                                  </Text>
+                                </VStack>
+                              </HStack>
+                            </Td>
+                          </Tr>
+                        );
+                      }
+                    })}
+                  </Tbody>
+                </Table>
+              </VStack>
+            </VStack>
           </VStack>
         );
       // 행운은 용감한 자의 편 보상

@@ -1,0 +1,50 @@
+[
+  {
+    "champion_IngameKey": "TFT12_NorraYuumi",
+    "item1_IngameKey": "TFT_Item_RabadonsDeathcap",
+    "item2_IngameKey": "TFT_Item_SpearOfShojin",
+    "item3_IngameKey": "TFT_Item_Leviathan"
+  },
+  {
+    "champion_IngameKey": "TFT12_Diana",
+    "item1_IngameKey": "TFT_Item_RabadonsDeathcap",
+    "item2_IngameKey": "TFT_Item_Bloodthirster",
+    "item3_IngameKey": "TFT_Item_FrozenHeart"
+  },
+  {
+    "champion_IngameKey": "TFT12_Morgana",
+    "item1_IngameKey": "TFT_Item_Crownguard",
+    "item2_IngameKey": "TFT_Item_Bloodthirster",
+    "item3_IngameKey": "TFT_Item_Redemption"
+  },
+  {
+    "champion_IngameKey": "TFT12_Milio",
+    "item1_IngameKey": "TFT_Item_RabadonsDeathcap",
+    "item2_IngameKey": "TFT_Item_AdaptiveHelm",
+    "item3_IngameKey": "TFT_Item_PowerGauntlet"
+  },
+  {
+    "champion_IngameKey": "TFT12_Briar",
+    "item1_IngameKey": "TFT_Item_InfinityEdge",
+    "item2_IngameKey": "TFT_Item_TitansResolve",
+    "item3_IngameKey": "TFT_Item_SteraksGage"
+  },
+  {
+    "champion_IngameKey": "TFT12_Smolder",
+    "item1_IngameKey": "TFT_Item_GuinsoosRageblade",
+    "item2_IngameKey": "TFT_Item_RunaansHurricane",
+    "item3_IngameKey": "TFT_Item_MadredsBloodrazor"
+  },
+  {
+    "champion_IngameKey": "TFT12_Xerath",
+    "item1_IngameKey": "TFT_Item_ArchangelsStaff",
+    "item2_IngameKey": "TFT_Item_SpearOfShojin",
+    "item3_IngameKey": "TFT_Item_HextechGunblade"
+  },
+  {
+    "champion_IngameKey": "TFT12_Camille",
+    "item1_IngameKey": "TFT_Item_InfinityEdge",
+    "item2_IngameKey": "TFT_Item_GuardianAngel",
+    "item3_IngameKey": "TFT_Item_UnstableConcoction"
+  }
+]

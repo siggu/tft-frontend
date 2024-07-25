@@ -1,6 +1,6 @@
 import React from 'react';
 
-const MyIcon = (props: any) => (
+const CharmsIcon = (props: any) => (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <g clipPath="url(#clip0_1590_29175)">
       <path d="M0.0768154 15.5C0.0496099 15.399 0 15.2979 0 15.1954L0.0768154 15.5Z" fill="#999999" />
@@ -29,4 +29,4 @@ const MyIcon = (props: any) => (
   </svg>
 );
 
-export default MyIcon;
+export default CharmsIcon;

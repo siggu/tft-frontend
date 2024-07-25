@@ -200,7 +200,7 @@ export default function Set12Header() {
             justifyContent={'center'}
             alignItems={'center'}
           >
-            <Link to={'/set12/charms'}>
+            <Link to={'/set12/charms/tier1'}>
               <Text fontWeight={'600'} color={'white'}>
                 12시즌 주술
               </Text>

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useParams, Link, useLocation } from 'react-router-dom';
 import {
   Box,
-  ChakraProvider,
   Container,
   HStack,
   Image,
@@ -22,6 +21,7 @@ import { FaCoins } from 'react-icons/fa';
 import AttackSpeedIcon from '../../Attackspeed';
 import HealthScaling from '../../healthscaling';
 import AttackDamageIcon from '../../Attackdamage';
+import ManaIcon from '../../Mana';
 
 export default function Set12Charms() {
   const { tier } = useParams<{ tier: string }>();
@@ -2532,7 +2532,7 @@ export default function Set12Charms() {
                   <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
                     <FaCoins color={'gold'} />
                     {/* 돈 */}
-                    <Text color={'#C4C4C4'}>10</Text>
+                    <Text color={'#C4C4C4'}>1</Text>
                   </HStack>
                   {/* 티어 */}
                   <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
@@ -2542,68 +2542,12 @@ export default function Set12Charms() {
                 <Box>
                   {/* 설명 */}
                   <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
-                    챔피언 복제기 1개를 획득합니다.
+                    다음 전투: 처음 처치된 적 챔피언의 1성 복사본을 획득합니다.
                   </Text>
                 </Box>
               </VStack>
             </HStack>
-            {/* 5단계 집결 */}
-            <HStack mb={3}>
-              <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
-                {/* 주술 이미지 */}
-                <Image w={'45px'} p={1.5} src="https://cdn.dak.gg/tft/images2/charms/set12/charm-1.png" />
-              </Box>
-              <VStack gap={0} alignItems={'flex-start'}>
-                <HStack fontWeight={'700'} fontSize={'13px'}>
-                  {/* 타이틀 */}
-                  <Text>5단계 집결</Text>
-                  <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
-                    <FaCoins color={'gold'} />
-                    {/* 돈 */}
-                    <Text color={'#C4C4C4'}>5</Text>
-                  </HStack>
-                  {/* 티어 */}
-                  <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
-                    티어 ?
-                  </Text>
-                </HStack>
-                <Box>
-                  {/* 설명 */}
-                  <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
-                    상점을 새로고침해 모두 5단계 챔피언으로 채웁니다.
-                  </Text>
-                </Box>
-              </VStack>
-            </HStack>
-            {/* 진보 */}
-            <HStack mb={3}>
-              <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
-                {/* 주술 이미지 */}
-                <Image w={'45px'} p={1.5} src="https://cdn.dak.gg/tft/images2/charms/set12/charm-1.png" />
-              </Box>
-              <VStack gap={0} alignItems={'flex-start'}>
-                <HStack fontWeight={'700'} fontSize={'13px'}>
-                  {/* 타이틀 */}
-                  <Text>진보</Text>
-                  <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
-                    <FaCoins color={'gold'} />
-                    {/* 돈 */}
-                    <Text color={'#C4C4C4'}>2</Text>
-                  </HStack>
-                  {/* 티어 */}
-                  <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
-                    티어 ?
-                  </Text>
-                </HStack>
-                <Box>
-                  {/* 설명 */}
-                  <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
-                    상점을 새로고침해 모두 지금보다 1단계 높은 챔피언으로 채웁니다.
-                  </Text>
-                </Box>
-              </VStack>
-            </HStack>
-            {/* 유물 연성 */}
+            {/* 추억의 음식 */}
             <HStack mb={3}>
               <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
                 {/* 주술 이미지 */}
@@ -2612,91 +2556,7 @@ export default function Set12Charms() {
               <VStack gap={0} alignItems={'flex-start'}>
                 <HStack fontWeight={'700'} fontSize={'13px'}>
                   {/* 타이틀 */}
-                  <Text>유물 연성</Text>
-                  <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
-                    <FaCoins color={'gold'} />
-                    {/* 돈 */}
-                    <Text color={'#C4C4C4'}>18</Text>
-                  </HStack>
-                  {/* 티어 */}
-                  <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
-                    티어 ?
-                  </Text>
-                </HStack>
-                <Box>
-                  {/* 설명 */}
-                  <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
-                    유물 모루 1개를 획득합니다.
-                  </Text>
-                </Box>
-              </VStack>
-            </HStack>
-            {/* 찬란함 */}
-            <HStack mb={3}>
-              <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
-                {/* 주술 이미지 */}
-                <Image w={'45px'} p={1.5} src="https://cdn.dak.gg/tft/images2/charms/set12/charm-2.png" />
-              </Box>
-              <VStack gap={0} alignItems={'flex-start'}>
-                <HStack fontWeight={'700'} fontSize={'13px'}>
-                  {/* 타이틀 */}
-                  <Text>찬란함</Text>
-                  <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
-                    <FaCoins color={'gold'} />
-                    {/* 돈 */}
-                    <Text color={'#C4C4C4'}>10</Text>
-                  </HStack>
-                  {/* 티어 */}
-                  <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
-                    티어 ?
-                  </Text>
-                </HStack>
-                <Box>
-                  {/* 설명 */}
-                  <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
-                    1라운드 동안 챔피언 1명에게 장착한 완성 아이템 1개가 찬란한 아이템이 됩니다.
-                  </Text>
-                </Box>
-              </VStack>
-            </HStack>
-            {/* 불길한 상점 */}
-            <HStack mb={3}>
-              <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
-                {/* 주술 이미지 */}
-                <Image w={'45px'} p={1.5} src="https://cdn.dak.gg/tft/images2/charms/set12/charm-1.png" />
-              </Box>
-              <VStack gap={0} alignItems={'flex-start'}>
-                <HStack fontWeight={'700'} fontSize={'13px'}>
-                  {/* 타이틀 */}
-                  <Text>불길한 상점</Text>
-                  <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
-                    <FaCoins color={'gold'} />
-                    {/* 돈 */}
-                    <Text color={'#C4C4C4'}>0</Text>
-                  </HStack>
-                  {/* 티어 */}
-                  <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
-                    티어 ?
-                  </Text>
-                </HStack>
-                <Box>
-                  {/* 설명 */}
-                  <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
-                    상점 새로고침을 6회 얻습니다. 이 주술은 플레이어 체력을 4 소모합니다.
-                  </Text>
-                </Box>
-              </VStack>
-            </HStack>
-            {/* 땜질 */}
-            <HStack mb={3}>
-              <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
-                {/* 주술 이미지 */}
-                <Image w={'45px'} p={1.5} src="https://cdn.dak.gg/tft/images2/charms/set12/charm-3.png" />
-              </Box>
-              <VStack gap={0} alignItems={'flex-start'}>
-                <HStack fontWeight={'700'} fontSize={'13px'}>
-                  {/* 타이틀 */}
-                  <Text>땜질</Text>
+                  <Text>추억의 음식</Text>
                   <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
                     <FaCoins color={'gold'} />
                     {/* 돈 */}
@@ -2710,12 +2570,12 @@ export default function Set12Charms() {
                 <Box>
                   {/* 설명 */}
                   <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
-                    재조합기와 자석 제거기를 1개씩 획득합니다.
+                    플레이어 체력을 1 얻습니다. 다음 플레이어 대상 전투 패배 시 2 더 얻습니다.
                   </Text>
                 </Box>
               </VStack>
             </HStack>
-            {/* 상급 변이 */}
+            {/* 고된 훈련 */}
             <HStack mb={3}>
               <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
                 {/* 주술 이미지 */}
@@ -2724,11 +2584,11 @@ export default function Set12Charms() {
               <VStack gap={0} alignItems={'flex-start'}>
                 <HStack fontWeight={'700'} fontSize={'13px'}>
                   {/* 타이틀 */}
-                  <Text>상급 변이</Text>
+                  <Text>고된 훈련</Text>
                   <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
                     <FaCoins color={'gold'} />
                     {/* 돈 */}
-                    <Text color={'#C4C4C4'}>0</Text>
+                    <Text color={'#C4C4C4'}>2</Text>
                   </HStack>
                   {/* 티어 */}
                   <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
@@ -2738,12 +2598,12 @@ export default function Set12Charms() {
                 <Box>
                   {/* 설명 */}
                   <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
-                    비전투 시: 보유한 4단계 챔피언 1명이 5단계 챔피언으로 바뀝니다.
+                    이번 게임에서 구매한 고된 훈련당 체력을 1 얻습니다.
                   </Text>
                 </Box>
               </VStack>
             </HStack>
-            {/* 후방의 핵심 */}
+            {/* 빛바랜 별 방패 */}
             <HStack mb={3}>
               <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
                 {/* 주술 이미지 */}
@@ -2752,11 +2612,11 @@ export default function Set12Charms() {
               <VStack gap={0} alignItems={'flex-start'}>
                 <HStack fontWeight={'700'} fontSize={'13px'}>
                   {/* 타이틀 */}
-                  <Text>후방의 핵심</Text>
+                  <Text>빛바랜 별 방패</Text>
                   <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
                     <FaCoins color={'gold'} />
                     {/* 돈 */}
-                    <Text color={'#C4C4C4'}>5</Text>
+                    <Text color={'#C4C4C4'}>1</Text>
                   </HStack>
                   {/* 티어 */}
                   <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
@@ -2765,25 +2625,13 @@ export default function Set12Charms() {
                 </HStack>
                 <Box>
                   {/* 설명 */}
-                  <HStack>
-                    <Box>
-                      <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
-                        다음 전투: 후방의 무작위 챔피언 1명이 7초 동안
-                      </Text>
-                    </Box>
-                    <Tooltip hasArrow bg={'black'} rounded={'md'} p={3} placement="top" label={<Text>공격 속도</Text>}>
-                      <Box>
-                        <AttackSpeedIcon />
-                      </Box>
-                    </Tooltip>
-                    <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
-                      를 40% 얻습니다.
-                    </Text>
-                  </HStack>
+                  <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
+                    다음 전투: 모든 아군 1성 챔피언에게 300의 보호막을 부여합니다.
+                  </Text>
                 </Box>
               </VStack>
             </HStack>
-            {/* 절박한 간청 */}
+            {/* 학문 정진 */}
             <HStack mb={3}>
               <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
                 {/* 주술 이미지 */}
@@ -2792,11 +2640,11 @@ export default function Set12Charms() {
               <VStack gap={0} alignItems={'flex-start'}>
                 <HStack fontWeight={'700'} fontSize={'13px'}>
                   {/* 타이틀 */}
-                  <Text>절박한 간청</Text>
+                  <Text>학문 정진</Text>
                   <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
                     <FaCoins color={'gold'} />
                     {/* 돈 */}
-                    <Text color={'#C4C4C4'}>5</Text>
+                    <Text color={'#C4C4C4'}>10</Text>
                   </HStack>
                   {/* 티어 */}
                   <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
@@ -2806,12 +2654,12 @@ export default function Set12Charms() {
                 <Box>
                   {/* 설명 */}
                   <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
-                    다음 전투: 10초 후, 이번 라운드에서 탈락이 방지됩니다.
+                    이번 게임에서 구매한 학문 정진 하나당 경험치를 2 얻습니다.
                   </Text>
                 </Box>
               </VStack>
             </HStack>
-            {/* 대기만성 */}
+            {/* 마법 거울 */}
             <HStack mb={3}>
               <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
                 {/* 주술 이미지 */}
@@ -2820,11 +2668,11 @@ export default function Set12Charms() {
               <VStack gap={0} alignItems={'flex-start'}>
                 <HStack fontWeight={'700'} fontSize={'13px'}>
                   {/* 타이틀 */}
-                  <Text>대기만성</Text>
+                  <Text>마법 거울</Text>
                   <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
                     <FaCoins color={'gold'} />
                     {/* 돈 */}
-                    <Text color={'#C4C4C4'}>6</Text>
+                    <Text color={'#C4C4C4'}>2</Text>
                   </HStack>
                   {/* 티어 */}
                   <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
@@ -2834,25 +2682,25 @@ export default function Set12Charms() {
                 <Box>
                   {/* 설명 */}
                   <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
-                    3성 1단계 챔피언과 자석 제거기 1개를 영구히 획득합니다.
+                    지난 전투에서 전장에 배치한 무작위 챔피언의 1성 복사본을 획득합니다.
                   </Text>
                 </Box>
               </VStack>
             </HStack>
-            {/* 용 소환 */}
+            {/* 휴전 */}
             <HStack mb={3}>
               <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
                 {/* 주술 이미지 */}
-                <Image w={'45px'} p={1.5} src="https://cdn.dak.gg/tft/images2/charms/set12/charm-2.png" />
+                <Image w={'45px'} p={1.5} src="https://cdn.dak.gg/tft/images2/charms/set12/charm-1.png" />
               </Box>
               <VStack gap={0} alignItems={'flex-start'}>
                 <HStack fontWeight={'700'} fontSize={'13px'}>
                   {/* 타이틀 */}
-                  <Text>용 소환</Text>
+                  <Text>휴전</Text>
                   <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
                     <FaCoins color={'gold'} />
                     {/* 돈 */}
-                    <Text color={'#C4C4C4'}>12</Text>
+                    <Text color={'#C4C4C4'}>2</Text>
                   </HStack>
                   {/* 티어 */}
                   <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
@@ -2862,12 +2710,12 @@ export default function Set12Charms() {
                 <Box>
                   {/* 설명 */}
                   <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
-                    1라운드 동안 체력이 4000인 용을 소환합니다.
+                    자신과 다음 상대가 1골드를 획득합니다.
                   </Text>
                 </Box>
               </VStack>
             </HStack>
-            {/* 큰 깜짝선물! */}
+            {/* 방패 벽 */}
             <HStack mb={3}>
               <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
                 {/* 주술 이미지 */}
@@ -2876,11 +2724,11 @@ export default function Set12Charms() {
               <VStack gap={0} alignItems={'flex-start'}>
                 <HStack fontWeight={'700'} fontSize={'13px'}>
                   {/* 타이틀 */}
-                  <Text>큰 깜짝선물!</Text>
+                  <Text>방패 벽</Text>
                   <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
                     <FaCoins color={'gold'} />
                     {/* 돈 */}
-                    <Text color={'#C4C4C4'}>6</Text>
+                    <Text color={'#C4C4C4'}>1</Text>
                   </HStack>
                   {/* 티어 */}
                   <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
@@ -2890,12 +2738,12 @@ export default function Set12Charms() {
                 <Box>
                   {/* 설명 */}
                   <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
-                    1라운드 동안 아이템을 장착하지 않은 챔피언 2명이 수상한 외투 1개를 획득합니다.
+                    다음 전투: 아군이 방어력을 10 얻습니다.
                   </Text>
                 </Box>
               </VStack>
             </HStack>
-            {/* 보물 파티 */}
+            {/* 은밀함 */}
             <HStack mb={3}>
               <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
                 {/* 주술 이미지 */}
@@ -2904,7 +2752,35 @@ export default function Set12Charms() {
               <VStack gap={0} alignItems={'flex-start'}>
                 <HStack fontWeight={'700'} fontSize={'13px'}>
                   {/* 타이틀 */}
-                  <Text>보물 파티</Text>
+                  <Text>은밀함</Text>
+                  <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    <FaCoins color={'gold'} />
+                    {/* 돈 */}
+                    <Text color={'#C4C4C4'}>2</Text>
+                  </HStack>
+                  {/* 티어 */}
+                  <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    티어 ?
+                  </Text>
+                </HStack>
+                <Box>
+                  {/* 설명 */}
+                  <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
+                    다음 전투: 8초 동안 후방에 있는 아군 유닛 3명이 대상으로 지정할 수 없는 상태가 됩니다.
+                  </Text>
+                </Box>
+              </VStack>
+            </HStack>
+            {/* 감시자 소환 */}
+            <HStack mb={3}>
+              <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
+                {/* 주술 이미지 */}
+                <Image w={'45px'} p={1.5} src="https://cdn.dak.gg/tft/images2/charms/set12/charm-2.png" />
+              </Box>
+              <VStack gap={0} alignItems={'flex-start'}>
+                <HStack fontWeight={'700'} fontSize={'13px'}>
+                  {/* 타이틀 */}
+                  <Text>감시자 소환</Text>
                   <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
                     <FaCoins color={'gold'} />
                     {/* 돈 */}
@@ -2918,49 +2794,21 @@ export default function Set12Charms() {
                 <Box>
                   {/* 설명 */}
                   <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
-                    1라운드 동안 아이템이 없는 챔피언 1명이 불안정한 보물 상자 2개를 획득합니다.
+                    1라운드 동안 가장 많이 활성화된 아군 특성의 상징을 장착한 감시자 골렘을 소환합니다.
                   </Text>
                 </Box>
               </VStack>
             </HStack>
-            {/* 일생 일대의 걸작 */}
+            {/* 무리 생성 */}
             <HStack mb={3}>
               <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
                 {/* 주술 이미지 */}
-                <Image w={'45px'} p={1.5} src="https://cdn.dak.gg/tft/images2/charms/set12/charm-3.png" />
+                <Image w={'45px'} p={1.5} src="https://cdn.dak.gg/tft/images2/charms/set12/charm-2.png" />
               </Box>
               <VStack gap={0} alignItems={'flex-start'}>
                 <HStack fontWeight={'700'} fontSize={'13px'}>
                   {/* 타이틀 */}
-                  <Text>일생 일대의 걸작</Text>
-                  <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
-                    <FaCoins color={'gold'} />
-                    {/* 돈 */}
-                    <Text color={'#C4C4C4'}>99</Text>
-                  </HStack>
-                  {/* 티어 */}
-                  <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
-                    티어 ?
-                  </Text>
-                </HStack>
-                <Box>
-                  {/* 설명 */}
-                  <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
-                    플레이어 체력을 66 잃습니다. 3성 5단계 챔피언을 영구히 획득합니다.
-                  </Text>
-                </Box>
-              </VStack>
-            </HStack>
-            {/* 움직이는 대기석 */}
-            <HStack mb={3}>
-              <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
-                {/* 주술 이미지 */}
-                <Image w={'45px'} p={1.5} src="https://cdn.dak.gg/tft/images2/charms/set12/charm-3.png" />
-              </Box>
-              <VStack gap={0} alignItems={'flex-start'}>
-                <HStack fontWeight={'700'} fontSize={'13px'}>
-                  {/* 타이틀 */}
-                  <Text>움직이는 대기석</Text>
+                  <Text>무리 생성</Text>
                   <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
                     <FaCoins color={'gold'} />
                     {/* 돈 */}
@@ -2974,7 +2822,611 @@ export default function Set12Charms() {
                 <Box>
                   {/* 설명 */}
                   <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
-                    다음 전투: 6초마다 아군 대기석에 있는 챔피언 1명이 전투에 합류합니다.
+                    다음 전투: 가장 먼저 처치된 전방 유닛 2명이 공허충을 1마리 생성합니다.
+                  </Text>
+                </Box>
+              </VStack>
+            </HStack>
+            {/* 고물 모으기 */}
+            <HStack mb={3}>
+              <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
+                {/* 주술 이미지 */}
+                <Image w={'45px'} p={1.5} src="https://cdn.dak.gg/tft/images2/charms/set12/charm-2.png" />
+              </Box>
+              <VStack gap={0} alignItems={'flex-start'}>
+                <HStack fontWeight={'700'} fontSize={'13px'}>
+                  {/* 타이틀 */}
+                  <Text>고물 모으기</Text>
+                  <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    <FaCoins color={'gold'} />
+                    {/* 돈 */}
+                    <Text color={'#C4C4C4'}>2</Text>
+                  </HStack>
+                  {/* 티어 */}
+                  <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    티어 ?
+                  </Text>
+                </HStack>
+                <Box>
+                  {/* 설명 */}
+                  <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
+                    아이템을 장착하지 않은 챔피언 2명이 임시 완성 아이템 1개를 획득합니다.
+                  </Text>
+                </Box>
+              </VStack>
+            </HStack>
+            {/* 지원 연성 */}
+            <HStack mb={3}>
+              <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
+                {/* 주술 이미지 */}
+                <Image w={'45px'} p={1.5} src="https://cdn.dak.gg/tft/images2/charms/set12/charm-3.png" />
+              </Box>
+              <VStack gap={0} alignItems={'flex-start'}>
+                <HStack fontWeight={'700'} fontSize={'13px'}>
+                  {/* 타이틀 */}
+                  <Text>지원 연성</Text>
+                  <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    <FaCoins color={'gold'} />
+                    {/* 돈 */}
+                    <Text color={'#C4C4C4'}>25</Text>
+                  </HStack>
+                  {/* 티어 */}
+                  <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    티어 ?
+                  </Text>
+                </HStack>
+                <Box>
+                  {/* 설명 */}
+                  <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
+                    지원 아이템 모루 1개를 획득합니다.
+                  </Text>
+                </Box>
+              </VStack>
+            </HStack>
+            {/* 순수 보조 */}
+            <HStack mb={3}>
+              <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
+                {/* 주술 이미지 */}
+                <Image w={'45px'} p={1.5} src="https://cdn.dak.gg/tft/images2/charms/set12/charm-2.png" />
+              </Box>
+              <VStack gap={0} alignItems={'flex-start'}>
+                <HStack fontWeight={'700'} fontSize={'13px'}>
+                  {/* 타이틀 */}
+                  <Text>순수 보조</Text>
+                  <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    <FaCoins color={'gold'} />
+                    {/* 돈 */}
+                    <Text color={'#C4C4C4'}>7</Text>
+                  </HStack>
+                  {/* 티어 */}
+                  <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    티어 ?
+                  </Text>
+                </HStack>
+                <Box>
+                  {/* 설명 */}
+                  <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
+                    다음 전투: 15초 동안 모든 적에게 파쇄, 파열, 상처, 불태우기를 적용합니다.
+                  </Text>
+                </Box>
+              </VStack>
+            </HStack>
+            {/* 전투 숙련 */}
+            <HStack mb={3}>
+              <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
+                {/* 주술 이미지 */}
+                <Image w={'45px'} p={1.5} src="https://cdn.dak.gg/tft/images2/charms/set12/charm-3.png" />
+              </Box>
+              <VStack gap={0} alignItems={'flex-start'}>
+                <HStack fontWeight={'700'} fontSize={'13px'}>
+                  {/* 타이틀 */}
+                  <Text>전투 숙련</Text>
+                  <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    <FaCoins color={'gold'} />
+                    {/* 돈 */}
+                    <Text color={'#C4C4C4'}>2</Text>
+                  </HStack>
+                  {/* 티어 */}
+                  <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    티어 ?
+                  </Text>
+                </HStack>
+                <Box>
+                  {/* 설명 */}
+                  <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
+                    다음 전투: 아군이 처치한 적 1명당 경험치를 1 얻습니다.
+                  </Text>
+                </Box>
+              </VStack>
+            </HStack>
+            {/* 마술사 */}
+            <HStack mb={3}>
+              <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
+                {/* 주술 이미지 */}
+                <Image w={'50px'} p={1.5} src="https://cdn.dak.gg/tft/images2/charms/set12/charm-5.png" />
+              </Box>
+              <VStack gap={0} alignItems={'flex-start'}>
+                <HStack fontWeight={'700'} fontSize={'13px'}>
+                  {/* 타이틀 */}
+                  <Text>마술사</Text>
+                  <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    <FaCoins color={'gold'} />
+                    {/* 돈 */}
+                    <Text color={'#C4C4C4'}>2</Text>
+                  </HStack>
+                  {/* 티어 */}
+                  <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    티어 ?
+                  </Text>
+                </HStack>
+                <Box>
+                  {/* 설명 */}
+                  <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
+                    상점을 새로고침해 모두 주술로 채웁니다. 이번 라운드에 1개만 구매할 수 있으며, 2회 발동합니다.
+                  </Text>
+                </Box>
+              </VStack>
+            </HStack>
+            {/* 연승연패 */}
+            <HStack mb={3}>
+              <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
+                {/* 주술 이미지 */}
+                <Image w={'45px'} p={1.5} src="https://cdn.dak.gg/tft/images2/charms/set12/charm-1.png" />
+              </Box>
+              <VStack gap={0} alignItems={'flex-start'}>
+                <HStack fontWeight={'700'} fontSize={'13px'}>
+                  {/* 타이틀 */}
+                  <Text>연승연패</Text>
+                  <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    <FaCoins color={'gold'} />
+                    {/* 돈 */}
+                    <Text color={'#C4C4C4'}>1</Text>
+                  </HStack>
+                  {/* 티어 */}
+                  <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    티어 ?
+                  </Text>
+                </HStack>
+                <Box>
+                  {/* 설명 */}
+                  <Text fontSize={'13px'} fontWeight={'450'} color={'#C4C4C4'}>
+                    비전투 시: 연승 또는 연패에 수치를 2만큼 추가합니다.
+                  </Text>
+                </Box>
+              </VStack>
+            </HStack>
+            {/* 탐욕의 딜레마 */}
+            <HStack mb={3}>
+              <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
+                {/* 주술 이미지 */}
+                <Image w={'45px'} p={1.5} src="https://cdn.dak.gg/tft/images2/charms/set12/charm-1.png" />
+              </Box>
+              <VStack gap={0} alignItems={'flex-start'}>
+                <HStack fontWeight={'700'} fontSize={'13px'}>
+                  {/* 타이틀 */}
+                  <Text>탐욕의 딜레마</Text>
+                  <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    <FaCoins color={'gold'} />
+                    {/* 돈 */}
+                    <Text color={'#C4C4C4'}>0</Text>
+                  </HStack>
+                  {/* 티어 */}
+                  <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    티어 ?
+                  </Text>
+                </HStack>
+                <Box>
+                  {/* 설명 */}
+                  <Text fontSize={'13px'} fontWeight={'450'} color={'#C4C4C4'}>
+                    다음 전투: 1골드 획득, 상대도 이 주술을 구매한 경우 대신 플레이어 체력을 2 잃습니다.
+                  </Text>
+                </Box>
+              </VStack>
+            </HStack>
+            {/* 걸작 */}
+            <HStack mb={3}>
+              <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
+                {/* 주술 이미지 */}
+                <Image w={'45px'} p={1.5} src="https://cdn.dak.gg/tft/images2/charms/set12/charm-1.png" />
+              </Box>
+              <VStack gap={0} alignItems={'flex-start'}>
+                <HStack fontWeight={'700'} fontSize={'13px'}>
+                  {/* 타이틀 */}
+                  <Text>걸작</Text>
+                  <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    <FaCoins color={'gold'} />
+                    {/* 돈 */}
+                    <Text color={'#C4C4C4'}>1</Text>
+                  </HStack>
+                  {/* 티어 */}
+                  <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    티어 ?
+                  </Text>
+                </HStack>
+                <Box>
+                  {/* 설명 */}
+                  <Text fontSize={'13px'} fontWeight={'450'} color={'#C4C4C4'}>
+                    걸작 업그레이드를 얻습니다.
+                  </Text>
+                </Box>
+              </VStack>
+            </HStack>
+            {/* 맹공격 */}
+            <HStack mb={3}>
+              <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
+                {/* 주술 이미지 */}
+                <Image w={'45px'} p={1.5} src="https://cdn.dak.gg/tft/images2/charms/set12/charm-2.png" />
+              </Box>
+              <VStack gap={0} alignItems={'flex-start'}>
+                <HStack fontWeight={'700'} fontSize={'13px'}>
+                  {/* 타이틀 */}
+                  <Text>맹공격</Text>
+                  <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    <FaCoins color={'gold'} />
+                    {/* 돈 */}
+                    <Text color={'#C4C4C4'}>2</Text>
+                  </HStack>
+                  {/* 티어 */}
+                  <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    티어 ?
+                  </Text>
+                </HStack>
+                <Box>
+                  {/* 설명 */}
+                  <HStack>
+                    <Box>
+                      <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
+                        1라운드 동안 가장
+                      </Text>
+                    </Box>
+                    <Tooltip hasArrow bg={'black'} rounded={'md'} p={3} placement="top" label={<Text>공격 속도</Text>}>
+                      <Box>
+                        <AttackSpeedIcon />
+                      </Box>
+                    </Tooltip>
+                    <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
+                      가 높은 아군이 5초에 걸쳐 감소하는
+                    </Text>
+                    <Tooltip hasArrow bg={'black'} rounded={'md'} p={3} placement="top" label={<Text>공격 속도</Text>}>
+                      <Box>
+                        <AttackSpeedIcon />
+                      </Box>
+                    </Tooltip>
+                    <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
+                      를 120% 얻습니다.
+                    </Text>
+                  </HStack>
+                </Box>
+              </VStack>
+            </HStack>
+            {/* 조준경 확장 */}
+            <HStack mb={3}>
+              <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
+                {/* 주술 이미지 */}
+                <Image w={'45px'} p={1.5} src="https://cdn.dak.gg/tft/images2/charms/set12/charm-2.png" />
+              </Box>
+              <VStack gap={0} alignItems={'flex-start'}>
+                <HStack fontWeight={'700'} fontSize={'13px'}>
+                  {/* 타이틀 */}
+                  <Text>조준경 확장</Text>
+                  <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    <FaCoins color={'gold'} />
+                    {/* 돈 */}
+                    <Text color={'#C4C4C4'}>1</Text>
+                  </HStack>
+                  {/* 티어 */}
+                  <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    티어 ?
+                  </Text>
+                </HStack>
+                <Box>
+                  {/* 설명 */}
+                  <Text fontSize={'13px'} fontWeight={'450'} color={'#C4C4C4'}>
+                    1라운드 동안 후방 가로 2열에 배치된 아군 챔피언의 공격 사거리가 2 증가합니다.
+                  </Text>
+                </Box>
+              </VStack>
+            </HStack>
+            {/* 철갑 영혼 */}
+            <HStack mb={3}>
+              <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
+                {/* 주술 이미지 */}
+                <Image w={'45px'} p={1.5} src="https://cdn.dak.gg/tft/images2/charms/set12/charm-2.png" />
+              </Box>
+              <VStack gap={0} alignItems={'flex-start'}>
+                <HStack fontWeight={'700'} fontSize={'13px'}>
+                  {/* 타이틀 */}
+                  <Text>철갑 영혼</Text>
+                  <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    <FaCoins color={'gold'} />
+                    {/* 돈 */}
+                    <Text color={'#C4C4C4'}>1</Text>
+                  </HStack>
+                  {/* 티어 */}
+                  <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    티어 ?
+                  </Text>
+                </HStack>
+                <Box>
+                  {/* 설명 */}
+                  <Text fontSize={'13px'} fontWeight={'450'} color={'#C4C4C4'}>
+                    1라운드 동안 아군이 방어력을 30 얻습니다.
+                  </Text>
+                </Box>
+              </VStack>
+            </HStack>
+            {/* 신비한 영혼 */}
+            <HStack mb={3}>
+              <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
+                {/* 주술 이미지 */}
+                <Image w={'45px'} p={1.5} src="https://cdn.dak.gg/tft/images2/charms/set12/charm-2.png" />
+              </Box>
+              <VStack gap={0} alignItems={'flex-start'}>
+                <HStack fontWeight={'700'} fontSize={'13px'}>
+                  {/* 타이틀 */}
+                  <Text>신비한 영혼</Text>
+                  <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    <FaCoins color={'gold'} />
+                    {/* 돈 */}
+                    <Text color={'#C4C4C4'}>1</Text>
+                  </HStack>
+                  {/* 티어 */}
+                  <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    티어 ?
+                  </Text>
+                </HStack>
+                <Box>
+                  {/* 설명 */}
+                  <Text fontSize={'13px'} fontWeight={'450'} color={'#C4C4C4'}>
+                    1라운드 동안 아군이 마법 저항력을 30 얻습니다.
+                  </Text>
+                </Box>
+              </VStack>
+            </HStack>
+            {/* 도적단 */}
+            <HStack mb={3}>
+              <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
+                {/* 주술 이미지 */}
+                <Image w={'45px'} p={1.5} src="https://cdn.dak.gg/tft/images2/charms/set12/charm-2.png" />
+              </Box>
+              <VStack gap={0} alignItems={'flex-start'}>
+                <HStack fontWeight={'700'} fontSize={'13px'}>
+                  {/* 타이틀 */}
+                  <Text>도적단</Text>
+                  <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    <FaCoins color={'gold'} />
+                    {/* 돈 */}
+                    <Text color={'#C4C4C4'}>8</Text>
+                  </HStack>
+                  {/* 티어 */}
+                  <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    티어 ?
+                  </Text>
+                </HStack>
+                <Box>
+                  {/* 설명 */}
+                  <Text fontSize={'13px'} fontWeight={'450'} color={'#C4C4C4'}>
+                    1라운드 동안 임시 도적의 장갑 3개를 획득합니다.
+                  </Text>
+                </Box>
+              </VStack>
+            </HStack>
+            {/* 빠른 현상금 */}
+            <HStack mb={3}>
+              <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
+                {/* 주술 이미지 */}
+                <Image w={'45px'} p={1.5} src="https://cdn.dak.gg/tft/images2/charms/set12/charm-1.png" />
+              </Box>
+              <VStack gap={0} alignItems={'flex-start'}>
+                <HStack fontWeight={'700'} fontSize={'13px'}>
+                  {/* 타이틀 */}
+                  <Text>빠른 현상금</Text>
+                  <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    <FaCoins color={'gold'} />
+                    {/* 돈 */}
+                    <Text color={'#C4C4C4'}>1</Text>
+                  </HStack>
+                  {/* 티어 */}
+                  <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    티어 ?
+                  </Text>
+                </HStack>
+                <Box>
+                  {/* 설명 */}
+                  <Text fontSize={'13px'} fontWeight={'450'} color={'#C4C4C4'}>
+                    다음 전투: 15초 내에 승리하면 조합 아이템 1개를 획득합니다.
+                  </Text>
+                </Box>
+              </VStack>
+            </HStack>
+            {/* 감쇠화 */}
+            <HStack mb={3}>
+              <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
+                {/* 주술 이미지 */}
+                <Image w={'45px'} p={1.5} src="https://cdn.dak.gg/tft/images2/charms/set12/charm-5.png" />
+              </Box>
+              <VStack gap={0} alignItems={'flex-start'}>
+                <HStack fontWeight={'700'} fontSize={'13px'}>
+                  {/* 타이틀 */}
+                  <Text>감쇠화</Text>
+                  <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    <FaCoins color={'gold'} />
+                    {/* 돈 */}
+                    <Text color={'#C4C4C4'}>2</Text>
+                  </HStack>
+                  {/* 티어 */}
+                  <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    티어 ?
+                  </Text>
+                </HStack>
+                <Box>
+                  {/* 설명 */}
+                  <HStack>
+                    <Box>
+                      <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
+                        1라운드 동안 가장
+                      </Text>
+                    </Box>
+                    <Tooltip hasArrow bg={'black'} rounded={'md'} p={3} placement="top" label={<Text>공격 속도</Text>}>
+                      <Box>
+                        <AttackSpeedIcon />
+                      </Box>
+                    </Tooltip>
+                    <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
+                      가 높은 아군 챔피언이 작아지고
+                    </Text>
+                    <Tooltip hasArrow bg={'black'} rounded={'md'} p={3} placement="top" label={<Text>공격 속도</Text>}>
+                      <Box>
+                        <AttackSpeedIcon />
+                      </Box>
+                    </Tooltip>
+                    <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
+                      를 25% 얻습니다.
+                    </Text>
+                  </HStack>
+                </Box>
+              </VStack>
+            </HStack>
+            {/* 마나순환 */}
+            <HStack mb={3}>
+              <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
+                {/* 주술 이미지 */}
+                <Image w={'45px'} p={1.5} src="https://cdn.dak.gg/tft/images2/charms/set12/charm-5.png" />
+              </Box>
+              <VStack gap={0} alignItems={'flex-start'}>
+                <HStack fontWeight={'700'} fontSize={'13px'}>
+                  {/* 타이틀 */}
+                  <Text>마나순환</Text>
+                  <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    <FaCoins color={'gold'} />
+                    {/* 돈 */}
+                    <Text color={'#C4C4C4'}>2</Text>
+                  </HStack>
+                  {/* 티어 */}
+                  <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    티어 ?
+                  </Text>
+                </HStack>
+                <Box>
+                  {/* 설명 */}
+                  <HStack>
+                    <Box>
+                      <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
+                        1라운드 동안 가장
+                      </Text>
+                    </Box>
+                    <Tooltip hasArrow bg={'black'} rounded={'md'} p={3} placement="top" label={<Text>마나</Text>}>
+                      <Box>
+                        <ManaIcon />
+                      </Box>
+                    </Tooltip>
+                    <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
+                      가 많은 아군 챔피언의 마나 소모량이 20
+                    </Text>
+                    <Tooltip hasArrow bg={'black'} rounded={'md'} p={3} placement="top" label={<Text>마나</Text>}>
+                      <Box>
+                        <ManaIcon />
+                      </Box>
+                    </Tooltip>
+                    <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
+                      감소합니다.
+                    </Text>
+                  </HStack>
+                </Box>
+              </VStack>
+            </HStack>
+            {/* 인도자 */}
+            <HStack mb={3}>
+              <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
+                {/* 주술 이미지 */}
+                <Image w={'45px'} p={1.5} src="https://cdn.dak.gg/tft/images2/charms/set12/charm-2.png" />
+              </Box>
+              <VStack gap={0} alignItems={'flex-start'}>
+                <HStack fontWeight={'700'} fontSize={'13px'}>
+                  {/* 타이틀 */}
+                  <Text>인도자</Text>
+                  <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    <FaCoins color={'gold'} />
+                    {/* 돈 */}
+                    <Text color={'#C4C4C4'}>0</Text>
+                  </HStack>
+                  {/* 티어 */}
+                  <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    티어 ?
+                  </Text>
+                </HStack>
+                <Box>
+                  {/* 설명 */}
+                  <Text fontSize={'13px'} fontWeight={'450'} color={'#C4C4C4'}>
+                    다음 전투: 아군이 입히는 물리 피해가 마법 피해가 됩니다.
+                  </Text>
+                </Box>
+              </VStack>
+            </HStack>
+            {/* 황금빛 갑옷 */}
+            <HStack mb={3}>
+              <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
+                {/* 주술 이미지 */}
+                <Image w={'45px'} p={1.5} src="https://cdn.dak.gg/tft/images2/charms/set12/charm-2.png" />
+              </Box>
+              <VStack gap={0} alignItems={'flex-start'}>
+                <HStack fontWeight={'700'} fontSize={'13px'}>
+                  {/* 타이틀 */}
+                  <Text>황금빛 갑옷</Text>
+                  <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    <FaCoins color={'gold'} />
+                    {/* 돈 */}
+                    <Text color={'#C4C4C4'}>0</Text>
+                  </HStack>
+                  {/* 티어 */}
+                  <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    티어 ?
+                  </Text>
+                </HStack>
+                <Box>
+                  {/* 설명 */}
+                  <HStack>
+                    <Box>
+                      <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
+                        1라운드 동안 보유한 골드 10당 아군이
+                      </Text>
+                    </Box>
+                    <Tooltip hasArrow bg={'black'} rounded={'md'} p={3} placement="top" label={<Text>체력</Text>}>
+                      <Box>
+                        <HealthScaling />
+                      </Box>
+                    </Tooltip>
+                    <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
+                      을 50 얻습니다.
+                    </Text>
+                  </HStack>
+                </Box>
+              </VStack>
+            </HStack>
+            {/* 죽음 */}
+            <HStack mb={3}>
+              <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
+                {/* 주술 이미지 */}
+                <Image w={'45px'} p={1.5} src="https://cdn.dak.gg/tft/images2/charms/set12/charm-5.png" />
+              </Box>
+              <VStack gap={0} alignItems={'flex-start'}>
+                <HStack fontWeight={'700'} fontSize={'13px'}>
+                  {/* 타이틀 */}
+                  <Text>죽음</Text>
+                  <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    <FaCoins color={'gold'} />
+                    {/* 돈 */}
+                    <Text color={'#C4C4C4'}>0</Text>
+                  </HStack>
+                  {/* 티어 */}
+                  <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    티어 ?
+                  </Text>
+                </HStack>
+                <Box>
+                  {/* 설명 */}
+                  <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
+                    전부 처치합니다. 죽음 그 자체입니다.
                   </Text>
                 </Box>
               </VStack>
@@ -3364,15 +3816,6 @@ export default function Set12Charms() {
           )}
         </Box>
         <Box bg={'#27282e'} display="flex" justifyContent="space-between">
-          <Box p={5} _hover={{ bg: '#6e43d9' }} width="25%" cursor={'pointer'} textAlign="center">
-            <Link to={'/set12/charms/all'}>
-              <VStack display={'flex'} justifyContent={'center'} alignItems={'center'}>
-                <Text fontWeight={'700'} fontSize={'12px'} color={'white'}>
-                  전체
-                </Text>
-              </VStack>
-            </Link>
-          </Box>
           <Box p={5} _hover={{ bg: '#6e43d9' }} width="25%" cursor={'pointer'} textAlign="center">
             <Link to={'/set12/charms/tier1'}>
               <VStack display={'flex'} justifyContent={'center'} alignItems={'center'}>

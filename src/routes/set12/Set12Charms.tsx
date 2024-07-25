@@ -21,6 +21,7 @@ import { FaCoins } from 'react-icons/fa';
 import AttackSpeedIcon from '../../Attackspeed';
 import HealthScaling from '../../healthscaling';
 import AttackDamageIcon from '../../Attackdamage';
+import MagicDamageIcon from '../../Magicdamage';
 import ManaIcon from '../../Mana';
 
 export default function Set12Charms() {
@@ -3427,6 +3428,273 @@ export default function Set12Charms() {
                   {/* 설명 */}
                   <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
                     전부 처치합니다. 죽음 그 자체입니다.
+                  </Text>
+                </Box>
+              </VStack>
+            </HStack>
+          </VStack>
+        );
+      case 'tier5':
+        return (
+          <VStack gap={5} color={'white'} alignItems={'flex-start'} p={5} mt={10} bgColor={'#27282e'}>
+            {/* 황제 */}
+            <HStack mb={3}>
+              <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
+                {/* 주술 이미지 */}
+                <Image w={'45px'} p={1.5} src="https://cdn.dak.gg/tft/images2/charms/set12/charm-5.png" />
+              </Box>
+              <VStack gap={0} alignItems={'flex-start'}>
+                <HStack fontWeight={'700'} fontSize={'13px'}>
+                  {/* 타이틀 */}
+                  <Text>황제</Text>
+                  <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    <FaCoins color={'gold'} />
+                    {/* 돈 */}
+                    <Text color={'#C4C4C4'}>5</Text>
+                  </HStack>
+                  {/* 티어 */}
+                  <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    제라스
+                  </Text>
+                </HStack>
+                <Box>
+                  {/* 설명 */}
+                  <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
+                    다음 전투: 제라스가 피해 증폭을 20% 얻고 제라스의 아군이 피해 증폭을 10% 얻습니다.
+                  </Text>
+                </Box>
+              </VStack>
+            </HStack>
+            {/* 태양 */}
+            <HStack mb={3}>
+              <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
+                {/* 주술 이미지 */}
+                <Image w={'45px'} p={1.5} src="https://cdn.dak.gg/tft/images2/charms/set12/charm-5.png" />
+              </Box>
+              <VStack gap={0} alignItems={'flex-start'}>
+                <HStack fontWeight={'700'} fontSize={'13px'}>
+                  {/* 타이틀 */}
+                  <Text>태양</Text>
+                  <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    <FaCoins color={'gold'} />
+                    {/* 돈 */}
+                    <Text color={'#C4C4C4'}>40</Text>
+                  </HStack>
+                  {/* 티어 */}
+                  <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    제라스
+                  </Text>
+                </HStack>
+                <Box>
+                  {/* 설명 */}
+                  <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
+                    지원 모루와 유물 모루를 1개씩 획득합니다.
+                  </Text>
+                </Box>
+              </VStack>
+            </HStack>
+            {/* 심판 */}
+            <HStack mb={3}>
+              <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
+                {/* 주술 이미지 */}
+                <Image w={'45px'} p={1.5} src="https://cdn.dak.gg/tft/images2/charms/set12/charm-5.png" />
+              </Box>
+              <VStack gap={0} alignItems={'flex-start'}>
+                <HStack fontWeight={'700'} fontSize={'13px'}>
+                  {/* 타이틀 */}
+                  <Text>심판</Text>
+                  <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    <FaCoins color={'gold'} />
+                    {/* 돈 */}
+                    <Text color={'#C4C4C4'}>2</Text>
+                  </HStack>
+                  {/* 티어 */}
+                  <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    제라스
+                  </Text>
+                </HStack>
+                <Box>
+                  {/* 설명 */}
+                  <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
+                    다음 전투: 승리하면 8골드를 획득하고 패배하면 경험치를 12 얻습니다.
+                  </Text>
+                </Box>
+              </VStack>
+            </HStack>
+            {/* 별 */}
+            <HStack mb={3}>
+              <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
+                {/* 주술 이미지 */}
+                <Image w={'45px'} p={1.5} src="https://cdn.dak.gg/tft/images2/charms/set12/charm-5.png" />
+              </Box>
+              <VStack gap={0} alignItems={'flex-start'}>
+                <HStack fontWeight={'700'} fontSize={'13px'}>
+                  {/* 타이틀 */}
+                  <Text>별</Text>
+                  <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    <FaCoins color={'gold'} />
+                    {/* 돈 */}
+                    <Text color={'#C4C4C4'}>5</Text>
+                  </HStack>
+                  {/* 티어 */}
+                  <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    제라스
+                  </Text>
+                </HStack>
+                <Box>
+                  {/* 설명 */}
+                  <HStack>
+                    <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
+                      다음 전투: 1성 유닛 별 레벨 상승 및 다른 아군은 보호막을 200,
+                    </Text>
+                    <Tooltip hasArrow bg={'black'} rounded={'md'} p={3} placement="top" label={<Text>주문력</Text>}>
+                      <Box>
+                        <MagicDamageIcon />
+                      </Box>
+                    </Tooltip>
+                    <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
+                      을 20 얻습니다.
+                    </Text>
+                  </HStack>{' '}
+                </Box>
+              </VStack>
+            </HStack>
+            {/* 탑 */}
+            <HStack mb={3}>
+              <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
+                {/* 주술 이미지 */}
+                <Image w={'45px'} p={1.5} src="https://cdn.dak.gg/tft/images2/charms/set12/charm-5.png" />
+              </Box>
+              <VStack gap={0} alignItems={'flex-start'}>
+                <HStack fontWeight={'700'} fontSize={'13px'}>
+                  {/* 타이틀 */}
+                  <Text>탑</Text>
+                  <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    <FaCoins color={'gold'} />
+                    {/* 돈 */}
+                    <Text color={'#C4C4C4'}>5</Text>
+                  </HStack>
+                  {/* 티어 */}
+                  <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    제라스
+                  </Text>
+                </HStack>
+                <Box>
+                  {/* 설명 */}
+                  <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
+                    1라운드 동안 주변 적에게 번개를 떨어뜨리는 번개 훈련 봇 1개를 획득합니다.
+                  </Text>
+                </Box>
+              </VStack>
+            </HStack>
+            {/* 세계 */}
+            <HStack mb={3}>
+              <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
+                {/* 주술 이미지 */}
+                <Image w={'45px'} p={1.5} src="https://cdn.dak.gg/tft/images2/charms/set12/charm-5.png" />
+              </Box>
+              <VStack gap={0} alignItems={'flex-start'}>
+                <HStack fontWeight={'700'} fontSize={'13px'}>
+                  {/* 타이틀 */}
+                  <Text>세계</Text>
+                  <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    <FaCoins color={'gold'} />
+                    {/* 돈 */}
+                    <Text color={'#C4C4C4'}>36</Text>
+                  </HStack>
+                  {/* 티어 */}
+                  <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    제라스
+                  </Text>
+                </HStack>
+                <Box>
+                  {/* 설명 */}
+                  <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
+                    모든 4단계 챔피언의 복사본을 1명씩 획득합니다.
+                  </Text>
+                </Box>
+              </VStack>
+            </HStack>
+            {/* 연인 */}
+            <HStack mb={3}>
+              <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
+                {/* 주술 이미지 */}
+                <Image w={'45px'} p={1.5} src="https://cdn.dak.gg/tft/images2/charms/set12/charm-5.png" />
+              </Box>
+              <VStack gap={0} alignItems={'flex-start'}>
+                <HStack fontWeight={'700'} fontSize={'13px'}>
+                  {/* 타이틀 */}
+                  <Text>연인</Text>
+                  <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    <FaCoins color={'gold'} />
+                    {/* 돈 */}
+                    <Text color={'#C4C4C4'}>4</Text>
+                  </HStack>
+                  {/* 티어 */}
+                  <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    제라스
+                  </Text>
+                </HStack>
+                <Box>
+                  {/* 설명 */}
+                  <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
+                    5단계 챔피언 1명 및 해당 챔피언과 특성을 공유하는 2단계 챔피언 2명을 획득합니다.
+                  </Text>
+                </Box>
+              </VStack>
+            </HStack>
+            {/* 전차 */}
+            <HStack mb={3}>
+              <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
+                {/* 주술 이미지 */}
+                <Image w={'45px'} p={1.5} src="https://cdn.dak.gg/tft/images2/charms/set12/charm-5.png" />
+              </Box>
+              <VStack gap={0} alignItems={'flex-start'}>
+                <HStack fontWeight={'700'} fontSize={'13px'}>
+                  {/* 타이틀 */}
+                  <Text>전차</Text>
+                  <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    <FaCoins color={'gold'} />
+                    {/* 돈 */}
+                    <Text color={'#C4C4C4'}>5</Text>
+                  </HStack>
+                  {/* 티어 */}
+                  <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    제라스
+                  </Text>
+                </HStack>
+                <Box>
+                  {/* 설명 */}
+                  <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
+                    이번 라운드에 새로고침 비용이 1골드가 되고 경험치 구매 비용이 3골드가 됩니다.
+                  </Text>
+                </Box>
+              </VStack>
+            </HStack>
+            {/* 달 */}
+            <HStack mb={3}>
+              <Box rounded={'7px'} bgGradient={'linear(#6a6d7b, #53555f, #393a42)'}>
+                {/* 주술 이미지 */}
+                <Image w={'45px'} p={1.5} src="https://cdn.dak.gg/tft/images2/charms/set12/charm-5.png" />
+              </Box>
+              <VStack gap={0} alignItems={'flex-start'}>
+                <HStack fontWeight={'700'} fontSize={'13px'}>
+                  {/* 타이틀 */}
+                  <Text>달</Text>
+                  <HStack rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    <FaCoins color={'gold'} />
+                    {/* 돈 */}
+                    <Text color={'#C4C4C4'}>2</Text>
+                  </HStack>
+                  {/* 티어 */}
+                  <Text color={'#C4C4C4'} rounded={'3px'} paddingX={1} bgColor={'#2d2f37'}>
+                    제라스
+                  </Text>
+                </HStack>
+                <Box>
+                  {/* 설명 */}
+                  <Text fontSize={'13px'} fontWeight={'500'} color={'#C4C4C4'}>
+                    5단계 상점 확률이 영구히 4% 증가합니다.
                   </Text>
                 </Box>
               </VStack>

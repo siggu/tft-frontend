@@ -124,7 +124,12 @@
         "probability": "25%",
         "rewards": [
           { "itemCount": 5, "itemName": "골드" },
-          { "itemCount": 1, "itemName": "유물 모루" },
+          { "itemCount": 1, "itemName": "유물 모루" }
+        ]
+      },
+      {
+        "probability": "25%",
+        "rewards": [
           { "itemCount": 2, "itemName": "골드" },
           { "itemCount": 3, "itemName": "무작위 조합 아이템" }
         ]
@@ -251,6 +256,15 @@
           { "itemCount": 1, "itemName": "유물 모루" },
           { "itemCount": 1, "itemName": "지원 아이템 모루" }
         ]
+      },
+      {
+        "probability": "30%",
+        "rewards": [
+          { "itemCount": 15, "itemName": "골드" },
+          { "itemCount": 2, "itemName": "무작위 찬란한 아이템" },
+          { "itemCount": 2, "itemName": "재조합기" },
+          { "itemCount": 2, "itemName": "자석 제거기" }
+        ]
       }
     ]
   },
@@ -270,7 +284,12 @@
         "probability": "30%",
         "rewards": [
           { "itemCount": 3, "itemName": "장난꾸러기의 장갑" },
-          { "itemCount": 1, "itemName": "황금 자석 제거기" },
+          { "itemCount": 1, "itemName": "황금 자석 제거기" }
+        ]
+      },
+      {
+        "probability": "30%",
+        "rewards": [
           { "itemCount": 10, "itemName": "골드" },
           { "itemCount": 5, "itemName": "5단계 챔피언" },
           { "itemCount": 2, "itemName": "챔피언 복제기" },
@@ -308,7 +327,12 @@
         "probability": "30%",
         "rewards": [
           { "itemCount": 110, "itemName": "골드" },
-          { "itemCount": 2, "itemName": "전략가의 왕관" },
+          { "itemCount": 2, "itemName": "전략가의 왕관" }
+        ]
+      },
+      {
+        "probability": "30%",
+        "rewards": [
           { "itemCount": 1, "itemName": "브라이어" },
           { "itemCount": 1, "itemName": "스몰더" },
           { "itemCount": 3, "itemName": "수상한 외투" },
@@ -326,7 +350,12 @@
         "probability": "50%",
         "rewards": [
           { "itemCount": 50, "itemName": "골드" },
-          { "itemCount": 1, "itemName": "감시자 무리" },
+          { "itemCount": 1, "itemName": "감시자 무리" }
+        ]
+      },
+      {
+        "probability": "50%",
+        "rewards": [
           { "itemCount": 1, "itemName": "5단계 챔피언" },
           { "itemCount": 1, "itemName": "자석 제거기" }
         ]

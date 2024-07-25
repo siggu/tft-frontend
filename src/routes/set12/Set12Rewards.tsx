@@ -26,6 +26,7 @@ import IItems from '../../components/types';
 import Set12Item from '../../components/set12/Set12Item';
 import { getSet12Items } from '../../set12api';
 import Set12ProfileChampion from '../../components/set12/Set12ProfileChampion';
+import Set12RewardComponent from '../../components/set12/set12RewardComponent';
 
 interface IGQ {
   champion_IngameKey: string;
@@ -1368,13 +1369,93 @@ export default function Set12Rewards() {
       // 행운은 용감한 자의 편 보상
       case 'fortuneFavorstheBold':
         return (
-          <VStack p={5} mx={20} mb={5} alignItems={'flex-start'}>
-            <Text as={'b'} color={'#8861e8'} fontSize={'20px'}>
-              행운은 용감한 자의 편
-            </Text>
-            <Text mt={5} color={'white'}>
-              Fortune Favors the Bold rewards details go here.
-            </Text>
+          <VStack mt={20} color={'white'}>
+            <Image mb={3} src="https://cdn.dak.gg/tft/images2/rewards/icons/ico-rewards-aug-fortune.png" />
+            <VStack gap={0}>
+              <VStack mb={5} display={'flex'} justifyContent={'center'} alignItems={'center'}>
+                <Text mb={3} fontWeight={'700'} fontSize={'23px'}>
+                  행운은 용감한 자의 편
+                </Text>
+                <Text fontWeight={'600'} fontSize={'12px'} color={'gray'}>
+                  플레이어 대상 전투에서 승리하면 추가 구를 획득합니다. 연속으로 패배할수록 더 큰 보상을 획득합니다.
+                </Text>
+              </VStack>
+              <VStack p={5} mx={20} mb={5} alignItems={'flex-start'}>
+                <HStack wrap={'wrap'}>
+                  {FFB_rewardsData.map((FFB_ele) => {
+                    let lose = FFB_ele.lose;
+                    console.log(lose);
+                    return (
+                      <VStack color={'white'} w={'340px'} display={'flex'} gap={0}>
+                        <Box
+                          display={'flex'}
+                          backgroundColor={'#363844'}
+                          w={'100%'}
+                          padding={'10px'}
+                          h={'45px'}
+                          pl={'16px'}
+                        >
+                          <Text as={'b'} fontSize={'16px'}>
+                            {lose}패
+                          </Text>
+                        </Box>
+                        <Box display={'flex'} backgroundColor={'#2c2f36'} w={'100%'} h={'32px'}>
+                          <Text
+                            display={'flex'}
+                            w={'70px'}
+                            color={'#a5a8b4'}
+                            justifyContent={'center'}
+                            alignItems={'center'}
+                          >
+                            확률
+                          </Text>
+                          <Text
+                            display={'flex'}
+                            w={'70px'}
+                            color={'#a5a8b4'}
+                            justifyContent={'center'}
+                            alignItems={'center'}
+                          >
+                            보상
+                          </Text>
+                        </Box>
+                        <Box backgroundColor={'#27282d'} w={'100%'} h={'272px'} gap={0}>
+                          {FFB_ele.probabilities.map((reward_ele) => {
+                            return (
+                              <HStack
+                                display={'flex'}
+                                backgroundColor={'#27282d'}
+                                w={'100%'}
+                                h={reward_ele.rewards.length < 5 ? '68px' : '136px'}
+                                borderTop={' solid 1px #2c2f36'}
+                              >
+                                <Box
+                                  display={'flex'}
+                                  w={'70px'}
+                                  mr={'-10px'}
+                                  justifyContent={'center'}
+                                  alignItems={'center'}
+                                >
+                                  <Text>{reward_ele.probability}</Text>
+                                </Box>
+                                <Box display={'flex'} flexWrap={'wrap'}>
+                                  {reward_ele.rewards.map((RDetails_ele) => (
+                                    <Set12RewardComponent
+                                      itemCount={RDetails_ele.itemCount}
+                                      itemName={RDetails_ele.itemName}
+                                    ></Set12RewardComponent>
+                                  ))}
+                                </Box>
+                              </HStack>
+                            );
+                          })}
+                        </Box>
+                      </VStack>
+                    );
+                  })}
+                </HStack>
+              </VStack>
+            </VStack>
           </VStack>
         );
       default:

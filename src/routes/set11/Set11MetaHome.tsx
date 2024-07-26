@@ -170,7 +170,7 @@ export default function Set11MetaHome() {
 
             <VStack alignItems={'flex-start'}>
               {/* 챔피언 이미지 표시 */}
-              <HStack mt={2}>
+              <HStack mt={2} wrap={'wrap'}>
                 {processedMetaDecks[deck_idx].decks.map((MDC_ele, MDC_key) => {
                   const champion = MDC_ele.champion;
                   let items = MDC_ele.items?.map((each_item_ele) => findItemByIngameKey(each_item_ele));

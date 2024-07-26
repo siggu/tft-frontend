@@ -60,6 +60,7 @@ export default function Set12Item({
   return (
     <VStack>
       <Tooltip
+        hasArrow
         bgColor={'black'}
         label={
           <VStack p={1.5} alignItems={'flex-start'} as={'b'} gap={3}>

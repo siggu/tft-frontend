@@ -16,13 +16,13 @@ import {
   Tr,
   VStack,
 } from '@chakra-ui/react';
-import CharmsIcon from '../../CharmsIcon';
+import CharmsIcon from '../../svg/CharmsIcon';
 import { FaCoins } from 'react-icons/fa';
-import AttackSpeedIcon from '../../Attackspeed';
-import HealthScaling from '../../healthscaling';
-import AttackDamageIcon from '../../Attackdamage';
-import MagicDamageIcon from '../../Magicdamage';
-import ManaIcon from '../../Mana';
+import AttackSpeedIcon from '../../svg/Attackspeed';
+import HealthScaling from '../../svg/healthscaling';
+import AttackDamageIcon from '../../svg/Attackdamage';
+import MagicDamageIcon from '../../svg/Magicdamage';
+import ManaIcon from '../../svg/Mana';
 
 export default function Set12Charms() {
   const { tier } = useParams<{ tier: string }>();

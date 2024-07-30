@@ -457,7 +457,7 @@ const traitColorConditions: { [key: string]: TraitColorCondition } = {
   },
 };
 
-export const getTraitBackgroundImageUrl = (traitName: string, numUnits: number): string | undefined => {
+export const getSet11TraitBackgroundImageUrl = (traitName: string, numUnits: number): string | undefined => {
   const condition = traitColorConditions[traitName];
   if (!condition) return undefined; // 조건이 없으면 undefined 반환
 

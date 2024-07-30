@@ -1,6 +1,6 @@
 import { Tooltip, Image, Text, VStack, HStack } from '@chakra-ui/react';
 import ISynergy from '../types';
-import { getTraitBackgroundImageUrl } from '../../traitColors';
+import { getSet11TraitBackgroundImageUrl } from '../../traitColors/set11/Set11TraitColors';
 
 interface SynergyProps {
   trait: {
@@ -11,7 +11,7 @@ interface SynergyProps {
 }
 
 const Set11Synergy = ({ trait, synergy }: SynergyProps) => {
-  const backgroundImageUrl = getTraitBackgroundImageUrl(trait.name, trait.num_units);
+  const backgroundImageUrl = getSet11TraitBackgroundImageUrl(trait.name, trait.num_units);
 
   if (!backgroundImageUrl || !synergy) return null;
 

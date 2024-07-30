@@ -20,6 +20,8 @@ import Set12Synergies from './routes/set12/Set12Synergies';
 import Set12Portals from './routes/set12/Set12Portals';
 import Set12Rewards from './routes/set12/Set12Rewards';
 import Set12Charms from './routes/set12/Set12Charms';
+import Set12Profile from './routes/set12/Set12Profile';
+import Set12ProfileSearchAdapter from './routes/set12/Set12ProfileSearchAdapter';
 
 const router = createBrowserRouter([
   {
@@ -117,6 +119,11 @@ const router = createBrowserRouter([
           },
         ],
       },
+      {
+        path: 'search/:gameName/:tagLine',
+        element: <Set12ProfileSearchAdapter />,
+      },
+      { path: 'profile/:gameName/:tagLine', element: <Set12Profile /> },
     ],
   },
 ]);

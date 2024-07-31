@@ -62,6 +62,7 @@ export default function Set11Item({
       <Tooltip
         hasArrow
         bgColor={'black'}
+        rounded={'md'}
         label={
           <VStack p={1.5} alignItems={'flex-start'} as={'b'} gap={3}>
             <Text color={'#e09400'} fontSize={'lg'}>

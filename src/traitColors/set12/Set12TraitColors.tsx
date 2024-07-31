@@ -85,7 +85,7 @@ const traitColorConditions: { [key: string]: TraitColorCondition } = {
       'https://cdn.dak.gg/tft/images2/tft/traits/background/bronze.svg',
       'https://cdn.dak.gg/tft/images2/tft/traits/background/silver.svg',
       'https://cdn.dak.gg/tft/images2/tft/traits/background/gold.svg',
-      'https://cdn.dak.gg/tft/images2/tft/traits/background/gold.svg',
+      'https://cdn.dak.gg/tft/images2/tft/traits/background/chromatic.svg',
     ],
   },
 

@@ -24,3 +24,16 @@ export const getSet12Portals = () => instance.get('portals/set12').then((respons
 
 // 시너지
 export const getSet12Synergies = () => instance.get('synergies/set12').then((response) => response.data);
+export const getSet12LeagueEntries = ({ queryKey }: QueryFunctionContext) => {
+  const [_, summonerId] = queryKey;
+  return instance.get(`profiles/entry/${summonerId}`).then((response) => response.data);
+};
+export const getSet12MatchesByPuuid = ({ queryKey }: QueryFunctionContext) => {
+  const [_, puuid] = queryKey;
+  return instance.get(`profiles/matches-by-puuid/${puuid}`).then((response) => response.data);
+};
+
+export const getSet12SummonerData = ({ queryKey }: QueryFunctionContext) => {
+  const [_, gameName, tagLine] = queryKey;
+  return instance.get(`profiles/fetch-puuid/${gameName}/${tagLine}`).then((response) => response.data);
+};

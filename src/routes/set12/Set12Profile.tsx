@@ -332,10 +332,10 @@ export default function Set12Profile() {
             <HStack gap={3}>
               <VStack gap={1}>
                 <Text fontSize={'17px'} color={'white'}>
-                  평균 등수
+                  평균 순위
                 </Text>
                 <Text fontSize="15px" color="white">
-                  {averagePlacement.toFixed(2)}등
+                  {averagePlacement.toFixed(2)}위
                 </Text>
               </VStack>
               <VStack gap={1}>
@@ -407,12 +407,13 @@ export default function Set12Profile() {
                               : 'gray.600'
                           }
                         >
-                          <Text>#</Text>
+                          {/* <Text>#</Text> */}
                           <Text>
                             {match.match_detail.info.queueId === 1160
                               ? Math.trunc((participant.placement + 1) / 2)
                               : participant.placement}
                           </Text>
+                          <Text>위</Text>
                         </HStack>
                         <Text>
                           {match.match_detail.info.queueId === 6120

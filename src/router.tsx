@@ -22,6 +22,7 @@ import Set12Rewards from './routes/set12/Set12Rewards';
 import Set12Charms from './routes/set12/Set12Charms';
 import Set12Profile from './routes/set12/Set12Profile';
 import Set12ProfileSearchAdapter from './routes/set12/Set12ProfileSearchAdapter';
+import Set12MetaHome from './routes/set12/Set12MetaHome';
 
 const router = createBrowserRouter([
   {
@@ -64,7 +65,10 @@ const router = createBrowserRouter([
         path: 'search/:gameName/:tagLine',
         element: <Set11ProfileSearchAdapter />,
       },
-      { path: 'profile/:gameName/:tagLine', element: <Set11Profile /> },
+      {
+        path: 'profile/:gameName/:tagLine',
+        element: <Set11Profile />,
+      },
       {
         path: '',
         element: <Set11MetaHome />,
@@ -76,8 +80,12 @@ const router = createBrowserRouter([
     element: <Set12Root />,
     children: [
       {
-        path: '',
+        path: 'oldHome',
         element: <Set12Home />,
+      },
+      {
+        path: '',
+        element: <Set12MetaHome />,
       },
       {
         path: 'champions/:championPk',

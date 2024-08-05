@@ -37,3 +37,5 @@ export const getSet12SummonerData = ({ queryKey }: QueryFunctionContext) => {
   const [_, gameName, tagLine] = queryKey;
   return instance.get(`profiles/fetch-puuid/${gameName}/${tagLine}`).then((response) => response.data);
 };
+
+export const getSet12MetaDecks = () => instance.get('comps/set12/meta/decks').then((response) => response.data);

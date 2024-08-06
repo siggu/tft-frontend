@@ -22,7 +22,7 @@ import ProfileChampion from '../../components/set12/Set12ProfileChampion';
 import Item from '../../components/set12/Set12Item';
 import Augment from '../../components/set12/Set12Augment';
 import Synergy from '../../components/set12/Set12Synergy';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 const calculateAveragePlacement = (matches: any[] | undefined, puuid: string | undefined) => {
   if (!matches || matches.length === 0) return 0;
@@ -165,25 +165,34 @@ export default function Set12Profile() {
         alert('전적 데이터 업데이트 중 오류가 발생했습니다.');
       }
     } catch (error) {
+      // 에러를 처리하는 부분
       console.error('전적 데이터 업데이트 중 오류 발생:', error);
+
+      // deleteResponse 객체가 없는 경우를 처리
+      if (axios.isAxiosError(error)) {
+        console.error('전적 데이터 업로드 중 발생한 오류:', error.response?.data);
+      }
+
       alert('전적 데이터 업데이트 중 오류가 발생했습니다.');
     }
 
     // 새로운 데이터를 가져오는 로직
     try {
-      await axios.post(`http://127.0.0.1:8000/api/v1/profiles/matches-by-matchid/${puuid}`);
+      await axios.post(`http://127.0.0.1:8000/api/v1/profiles/matches-by-puuid/${puuid}`);
     } catch (error) {
       console.error('새로운 데이터 가져오는 중 오류 발생:', error);
+
+      if (axios.isAxiosError(error)) {
+        console.error('새로운 데이터 가져오는 중 발생한 오류 :', error.response?.data);
+      }
     }
   };
 
   const formatTimestampKST = (timestamp: number): string => {
     const date = new Date(timestamp);
-    console.log('date', date);
     const kstOffset = 0 * 60 * 60 * 1000; // 한국 시간대는 UTC+9
     const kstDate = new Date(date.getTime() + kstOffset);
 
-    console.log('kstDate', kstDate);
     const months = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
     const month = months[kstDate.getMonth()];
     const day = kstDate.getDate();
@@ -469,8 +478,6 @@ export default function Set12Profile() {
 
                               return (
                                 <>
-                                  {console.log('trait.name', trait.name)}
-                                  {console.log('trait', trait)}
                                   <Synergy key={trait.name} trait={trait} synergy={synergy} />
                                 </>
                               );

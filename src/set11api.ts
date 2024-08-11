@@ -2,7 +2,10 @@ import { QueryFunctionContext } from '@tanstack/react-query';
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'http://127.0.0.1:8000/api/v1/',
+  baseURL:
+    process.env.NODE_ENV === 'development'
+      ? 'http://127.0.0.1:8000/api/v1/'
+      : 'https://tft-backend-h1wi.onrender.com/api/v1/',
 });
 // 증강
 export const getSet11Augments = () => instance.get('augments/set11').then((response) => response.data);

@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { Navigate, createBrowserRouter } from 'react-router-dom';
 import Set11Root from './components/set11/Set11Root';
 import Set12Root from './components/set12/Set12Root';
 import Set11ChampionDetail from './routes/set11/Set11ChampionDetail';
@@ -25,6 +25,10 @@ import Set12ProfileSearchAdapter from './routes/set12/Set12ProfileSearchAdapter'
 import Set12MetaHome from './routes/set12/Set12MetaHome';
 
 const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Navigate to="/set12" replace />,
+  },
   {
     path: '/set11',
     element: <Set11Root />,

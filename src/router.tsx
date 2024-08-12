@@ -1,4 +1,4 @@
-import { Navigate, createBrowserRouter } from 'react-router-dom';
+import { Navigate, createHashRouter } from 'react-router-dom';
 import Set11Root from './components/set11/Set11Root';
 import Set12Root from './components/set12/Set12Root';
 import Set11ChampionDetail from './routes/set11/Set11ChampionDetail';
@@ -24,7 +24,7 @@ import Set12Profile from './routes/set12/Set12Profile';
 import Set12ProfileSearchAdapter from './routes/set12/Set12ProfileSearchAdapter';
 import Set12MetaHome from './routes/set12/Set12MetaHome';
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: '/',
     element: <Navigate to="/set12" replace />,

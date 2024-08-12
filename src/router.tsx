@@ -26,10 +26,6 @@ import Set12MetaHome from './routes/set12/Set12MetaHome';
 
 const router = createHashRouter([
   {
-    path: '/',
-    element: <Navigate to="/set12" replace />,
-  },
-  {
     path: '/set11',
     element: <Set11Root />,
     children: [
@@ -137,6 +133,10 @@ const router = createHashRouter([
       },
       { path: 'profile/:gameName/:tagLine', element: <Set12Profile /> },
     ],
+  },
+  {
+    path: '/',
+    element: <Navigate to="/set12" replace />,
   },
 ]);
 

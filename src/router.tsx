@@ -24,6 +24,7 @@ import Set12Profile from './routes/set12/Set12Profile';
 import Set12ProfileSearchAdapter from './routes/set12/Set12ProfileSearchAdapter';
 import Set12MetaHome from './routes/set12/Set12MetaHome';
 import RiotTxt from './routes/set12/RiotTxt';
+import RiotTxtRedirect from './routes/set12/RiotTxt';
 
 const router = createHashRouter([
   {
@@ -86,8 +87,9 @@ const router = createHashRouter([
       },
       {
         path: 'riot.txt',
-        element: <RiotTxt />,
+        element: <RiotTxtRedirect />,
       },
+
       {
         path: '',
         element: <Set12MetaHome />,

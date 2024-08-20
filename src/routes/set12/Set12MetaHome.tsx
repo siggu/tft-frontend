@@ -6,9 +6,9 @@ import IItems from '../../components/types';
 import IChampionDetail from '../../components/types';
 import { FaCoins } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import ProfileChampion from '../../components/set11/Set11ProfileChampion';
-import Item from '../../components/set11/Set11Item';
-import Synergy from '../../components/set11/Set11Synergy';
+import Set12ProfileChampion from '../../components/set12/Set12ProfileChampion';
+import Set12Item from '../../components/set12/Set12Item';
+import Set12Synergy from '../../components/set12/Set12Synergy';
 import IChampion from '../../components/types';
 import { getSet12Champions, getSet12Items, getSet12MetaDecks, getSet12Synergies } from '../../set12api';
 
@@ -158,7 +158,7 @@ export default function Set12MetaHome() {
                 <>
                   {console.log('MDS_ele.trait.name : ', MDS_ele.trait.name)}
                   {console.log('MDS_ele.trait : ', MDS_ele.trait)}
-                  <Synergy key={MDS_ele.trait.name} trait={MDS_ele.trait} synergy={MDS_ele.synergy} />
+                  <Set12Synergy key={MDS_ele.trait.name} trait={MDS_ele.trait} synergy={MDS_ele.synergy} />
                 </>
               ))}
             </HStack>
@@ -171,7 +171,7 @@ export default function Set12MetaHome() {
                   let items = MDC_ele.items?.map((each_item_ele) => findItemByIngameKey(each_item_ele));
                   return (
                     <VStack>
-                      <ProfileChampion
+                      <Set12ProfileChampion
                         championKey={champion.key}
                         name={champion.name}
                         cost1={champion.cost1}
@@ -223,7 +223,7 @@ export default function Set12MetaHome() {
                               <HStack key={MDC_key}>
                                 {item_ele ? (
                                   <Box w="15px" h="15px">
-                                    <Item
+                                    <Set12Item
                                       imageUrl={item_ele.imageUrl}
                                       key={item_ele.key}
                                       ingameKey={item_ele.ingameKey}

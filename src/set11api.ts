@@ -6,6 +6,7 @@ const instance = axios.create({
     process.env.NODE_ENV === 'development'
       ? 'http://127.0.0.1:8000/api/v1/'
       : 'https://tft-backend-h1wi.onrender.com/api/v1/',
+  withCredentials: true, // 백엔드 서버로부터 쿠키를 허용
 });
 // 증강
 export const getSet11Augments = () => instance.get('augments/set11').then((response) => response.data);

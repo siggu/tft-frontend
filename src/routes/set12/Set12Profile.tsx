@@ -166,11 +166,11 @@ export default function Set12Profile() {
       }
     } catch (error) {
       // 에러를 처리하는 부분
-      console.error('전적 데이터 업데이트 중 오류 발생:', error);
+      // console.error('전적 데이터 업데이트 중 오류 발생:', error);
 
       // deleteResponse 객체가 없는 경우를 처리
       if (axios.isAxiosError(error)) {
-        console.error('전적 데이터 업로드 중 발생한 오류:', error.response?.data);
+        // console.error('전적 데이터 업로드 중 발생한 오류:', error.response?.data);
       }
 
       alert('전적 데이터 업데이트 중 오류가 발생했습니다.');
@@ -180,10 +180,10 @@ export default function Set12Profile() {
     try {
       await axios.post(`http://127.0.0.1:8000/api/v1/profiles/matches-by-puuid/${puuid}`);
     } catch (error) {
-      console.error('새로운 데이터 가져오는 중 오류 발생:', error);
+      // console.error('새로운 데이터 가져오는 중 오류 발생:', error);
 
       if (axios.isAxiosError(error)) {
-        console.error('새로운 데이터 가져오는 중 발생한 오류 :', error.response?.data);
+        // console.error('새로운 데이터 가져오는 중 발생한 오류 :', error.response?.data);
       }
     }
   };

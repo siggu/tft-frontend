@@ -1384,7 +1384,7 @@ export default function Set12Rewards() {
                 <HStack wrap={'wrap'}>
                   {FFB_rewardsData.map((FFB_ele) => {
                     let lose = FFB_ele.lose;
-                    console.log(lose);
+                    // console.log(lose);
                     return (
                       <VStack color={'white'} w={'340px'} display={'flex'} gap={0}>
                         <Box

@@ -97,7 +97,6 @@ export default function Set12MetaHome() {
     let name = MD_ele.name;
     let decks: IMetaDeckElement[] = [];
     let Synergies: SynergyProps[] = [];
-    console.log(MD_ele);
 
     let champions: { champion: any; D_key: number; items: string[] | null }[] = [];
 
@@ -151,13 +150,10 @@ export default function Set12MetaHome() {
               <Text color={'white'} fontSize={'15px'}>
                 {deck_ele.name}
               </Text>
-              <>{console.log(deck_ele.name)}</>
             </Box>
             <HStack display={'flex'} minW={'170px'} maxW={'150px'} flexWrap={'wrap'} gap={'1'}>
               {processedMetaDecks[deck_idx].Synergies.map((MDS_ele, MDS_key) => (
                 <>
-                  {console.log('MDS_ele.trait.name : ', MDS_ele.trait.name)}
-                  {console.log('MDS_ele.trait : ', MDS_ele.trait)}
                   <Set12Synergy key={MDS_ele.trait.name} trait={MDS_ele.trait} synergy={MDS_ele.synergy} />
                 </>
               ))}

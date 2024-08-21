@@ -234,18 +234,18 @@ export default function Set11ProfileBackendTest() {
     const fetchMatchDataForAllIds = async () => {
       try {
         if (summonerMatchData) {
-          console.log('summonerMatchData!', summonerMatchData);
+          // console.log('summonerMatchData!', summonerMatchData);
           const responses = await Promise.all(
             summonerMatchData.map(async (matchData) => {
               const response = await fetchMatchData(summonerName, matchData.match_id);
               return response;
             })
           );
-          console.log('responses', responses); // 각 매치에 대한 데이터를 확인하기 위해 콘솔에 출력
+          // console.log('responses', responses); // 각 매치에 대한 데이터를 확인하기 위해 콘솔에 출력
           setMatchData(responses);
         }
       } catch (error) {
-        console.error('Error fetching match data:', error);
+        // console.error('Error fetching match data:', error);
       }
     };
 
@@ -254,7 +254,7 @@ export default function Set11ProfileBackendTest() {
     }
   }, [summonerMatchData, summonerName]); // summonerMatchData와 summonerName이 변경될 때마다 호출
 
-  console.log('matchData!!!', matchData);
+  // console.log('matchData!!!', matchData);
   return (
     <VStack>
       <Container maxW={'container.xl'}>

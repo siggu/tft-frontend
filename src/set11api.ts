@@ -56,7 +56,7 @@ export async function fetchMatchData(summonerName: string | undefined, matchId: 
     }
     return response.json(); // JSON 형식의 응답 반환
   } catch (error) {
-    console.error('Error fetching match data:', error);
+    // console.error('Error fetching match data:', error);
     throw error; // 오류를 다시 throw하여 상위 컴포넌트에서 처리할 수 있도록 함
   }
 }

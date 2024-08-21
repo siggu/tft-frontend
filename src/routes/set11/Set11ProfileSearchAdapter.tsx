@@ -13,8 +13,8 @@ export default function Set11ProfileSearchAdapter() {
     queryFn: getSet11SummonerData,
   });
 
-  console.log('summonerData', summonerData);
-  console.log('isSummonerDataLoading', isSummonerDataLoading);
+  // console.log('summonerData', summonerData);
+  // console.log('isSummonerDataLoading', isSummonerDataLoading);
 
   return (
     <VStack>

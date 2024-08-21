@@ -165,7 +165,7 @@ export default function Set11Profile() {
         alert('전적 데이터 업데이트 중 오류가 발생했습니다.');
       }
     } catch (error) {
-      console.error('전적 데이터 업데이트 중 오류 발생:', error);
+      // console.error('전적 데이터 업데이트 중 오류 발생:', error);
       alert('전적 데이터 업데이트 중 오류가 발생했습니다.');
     }
 
@@ -173,17 +173,17 @@ export default function Set11Profile() {
     try {
       await axios.post(`http://127.0.0.1:8000/api/v1/profiles/matches-by-matchid/${puuid}`);
     } catch (error) {
-      console.error('새로운 데이터 가져오는 중 오류 발생:', error);
+      // console.error('새로운 데이터 가져오는 중 오류 발생:', error);
     }
   };
 
   const formatTimestampKST = (timestamp: number): string => {
     const date = new Date(timestamp);
-    console.log('date', date);
+    // console.log('date', date);
     const kstOffset = 0 * 60 * 60 * 1000; // 한국 시간대는 UTC+9
     const kstDate = new Date(date.getTime() + kstOffset);
 
-    console.log('kstDate', kstDate);
+    // console.log('kstDate', kstDate);
     const months = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
     const month = months[kstDate.getMonth()];
     const day = kstDate.getDate();
@@ -468,8 +468,8 @@ export default function Set11Profile() {
 
                               return (
                                 <>
-                                  {console.log('trait.name', trait.name)}
-                                  {console.log('trait', trait)}
+                                  {/* {console.log('trait.name', trait.name)}
+                                  {console.log('trait', trait)} */}
                                   <Synergy key={trait.name} trait={trait} synergy={synergy} />
                                 </>
                               );

@@ -86,7 +86,7 @@ export default function Set11Header() {
         }
       }
     } catch (error) {
-      console.error('handleSearch Error:', error);
+      // console.error('handleSearch Error:', error);
     }
   };
 

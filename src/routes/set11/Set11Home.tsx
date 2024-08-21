@@ -59,7 +59,7 @@ export default function Set11Home() {
     queryKey: ['metaDecks'],
     queryFn: getSet11MetaDecks,
   });
-  console.log('metaDecksData', metaDecksData);
+  // console.log('metaDecksData', metaDecksData);
   // 아이템 가져오기
   const { data: itemsDate } = useQuery<IItems>({
     queryKey: ['item'],

@@ -1,16 +1,4 @@
-import {
-  Box,
-  Container,
-  HStack,
-  Image,
-  Text,
-  VStack,
-  SkeletonText,
-  Button,
-  Tooltip,
-  useToast,
-  ToastId,
-} from '@chakra-ui/react';
+import { Box, Container, HStack, Image, Text, VStack, SkeletonText, Button, Tooltip, useToast } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useLocation, useParams } from 'react-router-dom';
@@ -91,7 +79,6 @@ export default function Set12Profile() {
   });
   const summonerId = summonerData?.summonerId;
   const puuid = summonerData?.puuid;
-  // console.log('puuid: ', puuid);
   const {
     data: leagueEntryData,
     isLoading: isLeagueEntryDataLoading,
@@ -279,7 +266,7 @@ export default function Set12Profile() {
 
   return (
     <VStack>
-      <Container maxW="container.xl">
+      <Container maxW="1000px">
         <HStack display={'flex'} justifyContent={'center'} alignItems={'center'} flexWrap={'wrap'} textColor={'white'}>
           <Box
             mt={20}
@@ -342,19 +329,6 @@ export default function Set12Profile() {
             )}
           </VStack>
         </HStack>
-
-        <Box mb={3}>
-          <Text fontSize="20px" as="b" color="#dca555">
-            유저 전적
-          </Text>
-        </Box>
-
-        <Box>
-          <Button colorScheme="green" onClick={handleUpdateClick}>
-            전적 업데이트
-          </Button>
-        </Box>
-
         <VStack gap={0} p={3} m={5} display={'flex'} justifyContent={'center'} alignItems={'center'}>
           <Text fontWeight={'700'} fontSize={'20px'} color={'white'}>
             최근 게임 전적
@@ -368,40 +342,38 @@ export default function Set12Profile() {
                 ?.filter((match) => match.match_detail.metadata.participants)
                 .sort((a, b) => b.match_detail.info.game_datetime - a.match_detail.info.game_datetime)
                 .map((match: IMatch) => {
-                  {
-                    const participant = match.match_detail.info.participants.find(
-                      (participant) => participant.puuid === puuid
-                    );
-                    if (!participant) return null;
-                    return (
-                      <Box
-                        display={'flex'}
-                        justifyContent={'center'}
-                        alignItems={'center'}
-                        w={'20px'}
-                        h={'30px'}
-                        fontSize={'20px'}
-                        gap={0}
-                        color={'black'}
-                        borderRadius={3}
-                        bgColor={
-                          match.match_detail.info.queueId === 1160 && Math.trunc((participant.placement + 1) / 2) <= 1
-                            ? 'gold'
-                            : participant.placement <= 1
-                            ? 'gold'
-                            : participant.placement <= 4
-                            ? 'white'
-                            : 'gray.600'
-                        }
-                      >
-                        <Text fontSize={'15px'} fontWeight={700}>
-                          {match.match_detail.info.queueId === 1160
-                            ? Math.trunc((participant.placement + 1) / 2)
-                            : participant.placement}
-                        </Text>
-                      </Box>
-                    );
-                  }
+                  const participant = match.match_detail.info.participants.find(
+                    (participant) => participant.puuid === puuid
+                  );
+                  if (!participant) return null;
+                  return (
+                    <Box
+                      display={'flex'}
+                      justifyContent={'center'}
+                      alignItems={'center'}
+                      w={'20px'}
+                      h={'30px'}
+                      fontSize={'20px'}
+                      gap={0}
+                      color={'black'}
+                      borderRadius={3}
+                      bgColor={
+                        match.match_detail.info.queueId === 1160 && Math.trunc((participant.placement + 1) / 2) <= 1
+                          ? 'gold'
+                          : participant.placement <= 1
+                          ? 'gold'
+                          : participant.placement <= 4
+                          ? 'white'
+                          : 'gray.600'
+                      }
+                    >
+                      <Text fontSize={'15px'} fontWeight={700}>
+                        {match.match_detail.info.queueId === 1160
+                          ? Math.trunc((participant.placement + 1) / 2)
+                          : participant.placement}
+                      </Text>
+                    </Box>
+                  );
                 })}
             </HStack>
             <HStack gap={3}>
@@ -445,6 +417,11 @@ export default function Set12Profile() {
             </HStack>
           </HStack>
         </VStack>
+        <Box mb={5}>
+          <Button colorScheme="green" onClick={handleUpdateClick}>
+            전적 업데이트
+          </Button>
+        </Box>
         <Box textColor={'white'}>
           {matchesByPuuidData
             ?.filter((match) => match.match_detail.metadata.participants)
@@ -507,7 +484,7 @@ export default function Set12Profile() {
                       </HStack>
                       {/* 전설이 */}
                       <HStack>
-                        <Box width={'70px'} display={'flex'} position={'relative'} mr={3}>
+                        <Box width={'70px'} display={'flex'} position={'relative'} mr={5}>
                           <Image
                             border="5px gray solid"
                             borderRadius="full"
@@ -536,7 +513,7 @@ export default function Set12Profile() {
                         </Box>
 
                         {/* 시너지 */}
-                        <HStack display={'flex'} minW={'150px'} maxW={'150px'} flexWrap={'wrap'} gap={'1'}>
+                        <HStack display={'flex'} minW={'150px'} maxW={'150px'} flexWrap={'wrap'} gap={'1'} mr={3}>
                           {participant.traits
                             .sort((a, b) => b.num_units - a.num_units)
                             .map((trait) => {
@@ -551,7 +528,7 @@ export default function Set12Profile() {
                         </HStack>
 
                         {/* 증강 */}
-                        <Box minW={'30px'} ml={3} mr={5}>
+                        <Box minW={'30px'} ml={3} mr={7}>
                           {participant.augments.map((augment) => {
                             const findAugment = augmentsData?.find(
                               (findAugment: { ingameKey: string }) => findAugment.ingameKey === augment

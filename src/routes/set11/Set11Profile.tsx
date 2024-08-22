@@ -243,11 +243,9 @@ export default function Set11Profile() {
 
   const formatTimestampKST = (timestamp: number): string => {
     const date = new Date(timestamp);
-    // console.log('date', date);
     const kstOffset = 0 * 60 * 60 * 1000; // 한국 시간대는 UTC+9
     const kstDate = new Date(date.getTime() + kstOffset);
 
-    // console.log('kstDate', kstDate);
     const months = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
     const month = months[kstDate.getMonth()];
     const day = kstDate.getDate();
@@ -268,7 +266,7 @@ export default function Set11Profile() {
 
   return (
     <VStack>
-      <Container maxW="container.xl">
+      <Container maxW="1000px">
         <HStack display={'flex'} justifyContent={'center'} alignItems={'center'} flexWrap={'wrap'} textColor={'white'}>
           <Box
             mt={20}
@@ -331,19 +329,6 @@ export default function Set11Profile() {
             )}
           </VStack>
         </HStack>
-
-        <Box mb={3}>
-          <Text fontSize="20px" as="b" color="#dca555">
-            유저 전적
-          </Text>
-        </Box>
-
-        <Box>
-          <Button colorScheme="green" onClick={handleUpdateClick}>
-            전적 업데이트
-          </Button>
-        </Box>
-
         <VStack gap={0} p={3} m={5} display={'flex'} justifyContent={'center'} alignItems={'center'}>
           <Text fontWeight={'700'} fontSize={'20px'} color={'white'}>
             최근 게임 전적
@@ -361,7 +346,6 @@ export default function Set11Profile() {
                     (participant) => participant.puuid === puuid
                   );
                   if (!participant) return null;
-
                   return (
                     <Box
                       display={'flex'}
@@ -433,6 +417,11 @@ export default function Set11Profile() {
             </HStack>
           </HStack>
         </VStack>
+        <Box mb={5}>
+          <Button colorScheme="green" onClick={handleUpdateClick}>
+            전적 업데이트
+          </Button>
+        </Box>
         <Box textColor={'white'}>
           {matchesByPuuidData
             ?.filter((match) => match.match_detail.metadata.participants)
@@ -495,7 +484,7 @@ export default function Set11Profile() {
                       </HStack>
                       {/* 전설이 */}
                       <HStack>
-                        <Box width={'70px'} display={'flex'} position={'relative'} mr={3}>
+                        <Box width={'70px'} display={'flex'} position={'relative'} mr={5}>
                           <Image
                             border="5px gray solid"
                             borderRadius="full"
@@ -524,7 +513,7 @@ export default function Set11Profile() {
                         </Box>
 
                         {/* 시너지 */}
-                        <HStack display={'flex'} minW={'150px'} maxW={'150px'} flexWrap={'wrap'} gap={'1'}>
+                        <HStack display={'flex'} minW={'150px'} maxW={'150px'} flexWrap={'wrap'} gap={'1'} mr={3}>
                           {participant.traits
                             .sort((a, b) => b.num_units - a.num_units)
                             .map((trait) => {
@@ -541,7 +530,7 @@ export default function Set11Profile() {
                         </HStack>
 
                         {/* 증강 */}
-                        <Box minW={'30px'} ml={3} mr={5}>
+                        <Box minW={'30px'} ml={3} mr={7}>
                           {participant.augments.map((augment) => {
                             const findAugment = augmentsData?.find(
                               (findAugment: { ingameKey: string }) => findAugment.ingameKey === augment

@@ -1,3 +1,4 @@
+import Cookie from 'js-cookie';
 import { QueryFunctionContext } from '@tanstack/react-query';
 import axios from 'axios';
 
@@ -35,7 +36,7 @@ export const getSet11Portals = () => instance.get('portals/set11').then((respons
 export const postSummonerData = ({ queryKey }: QueryFunctionContext) => {
   const [_, gameName, tagLine] = queryKey;
   const data = { gameName, tagLine }; // Create an object with the required data
-  return instance.post('http://127.0.0.1:8000/api/v1/profiles/fetch-puuid', data).then((response) => response.data);
+  return instance.post('profiles/fetch-puuid', data).then((response) => response.data);
 };
 
 export const getSet11SummonerData = ({ queryKey }: QueryFunctionContext) => {
@@ -45,9 +46,7 @@ export const getSet11SummonerData = ({ queryKey }: QueryFunctionContext) => {
 export async function fetchMatchData(summonerName: string | undefined, matchId: string | undefined) {
   if (summonerName === undefined) throw new Error('summonerName should be string!');
   if (matchId === undefined) throw new Error('matchId should be string!');
-  const url = `http://127.0.0.1:8000/api/v1/profiles/matches-by-puuid/${encodeURIComponent(
-    summonerName
-  )}/${encodeURIComponent(matchId)}`;
+  const url = `profiles/matches-by-puuid/${encodeURIComponent(summonerName)}/${encodeURIComponent(matchId)}`;
 
   try {
     const response = await fetch(url);
@@ -76,3 +75,29 @@ export const getSet11MatchDetailsByMatchID = ({ queryKey }: QueryFunctionContext
 };
 
 export const getSet11MetaDecks = () => instance.get('comps/set11/meta/decks').then((response) => response.data);
+
+export const postSet11MatchData = ({ queryKey }: QueryFunctionContext) => {
+  const [_, puuid] = queryKey;
+  return instance
+    .post(
+      `profiles/matches-by-puuid/${puuid}`,
+      {}, // data가 없으면 빈 객체를 전달
+      {
+        headers: {
+          'X-CSRFToken': Cookie.get('csrftoken') || '',
+        },
+      }
+    )
+    .then((response) => response.data);
+};
+
+export const deleteSet11MatchData = ({ queryKey }: QueryFunctionContext) => {
+  const [_, puuid] = queryKey;
+  return instance
+    .delete(`profiles/matches-by-puuid/${puuid}`, {
+      headers: {
+        'X-CSRFToken': Cookie.get('csrftoken') || '',
+      },
+    })
+    .then((response) => response.data);
+};

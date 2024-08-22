@@ -1,12 +1,25 @@
-import { Box, Container, HStack, Image, Text, VStack, SkeletonText, Button, Tooltip } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import {
+  Box,
+  Container,
+  HStack,
+  Image,
+  Text,
+  VStack,
+  SkeletonText,
+  Button,
+  Tooltip,
+  useToast,
+  ToastId,
+} from '@chakra-ui/react';
+import { useEffect, useRef, useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useLocation, useParams } from 'react-router-dom';
 import { FaSearch, FaStar } from 'react-icons/fa';
 import ILeagueEntryDTO from '../../components/types';
 import IProfileMiniBox from '../../components/types';
 import IMatch from '../../components/types';
 import {
+  deleteSet12MatchData,
   getSet12Augments,
   getSet12Champions,
   getSet12Items,
@@ -14,6 +27,7 @@ import {
   getSet12MatchesByPuuid,
   getSet12SummonerData,
   getSet12Synergies,
+  postSet12MatchData,
 } from '../../set12api';
 import ISynergy from '../../components/types';
 import IAugments from '../../components/types';
@@ -77,6 +91,7 @@ export default function Set12Profile() {
   });
   const summonerId = summonerData?.summonerId;
   const puuid = summonerData?.puuid;
+  // console.log('puuid: ', puuid);
   const {
     data: leagueEntryData,
     isLoading: isLeagueEntryDataLoading,
@@ -151,42 +166,93 @@ export default function Set12Profile() {
     return '';
   };
 
+  const toast = useToast();
+
+  // DELETE 요청 쿼리
+  const {
+    refetch: refetchDeleteSet12MatchData,
+    isSuccess: isDeleteSuccess,
+    isError: isDeleteError,
+  } = useQuery({
+    queryKey: ['puuid', puuid],
+    queryFn: deleteSet12MatchData,
+    enabled: false, // 클릭 시에만 실행
+  });
+
+  // POST 요청 쿼리
+  const {
+    refetch: refetchPostSet12MatchData,
+    isSuccess: isPostSuccess,
+    isError: isPostError,
+  } = useQuery({
+    queryKey: ['puuid', puuid],
+    queryFn: postSet12MatchData,
+    enabled: false,
+  });
+
   const handleUpdateClick = async () => {
-    await refetchSummonerData();
-    await refetchLeagueEntries();
-    await refetchMatchesByPuuid();
+    // Toast를 처음에 로딩 상태로 설정
+    const deleteLoadingToastId = toast({
+      title: '매치 데이터 업데이트 중...',
+      status: 'loading',
+      position: 'top',
+      duration: 100000,
+    });
 
     try {
-      // DELETE 요청으로 전적 데이터 삭제
-      const deleteResponse = await axios.delete(`http://127.0.0.1:8000/api/v1/profiles/matches-by-puuid/${puuid}`);
-      if (deleteResponse.status === 200) {
-        alert('전적 데이터가 성공적으로 업데이트 되었습니다.');
+      // DELETE 쿼리 실행
+      const deleteResult = await refetchDeleteSet12MatchData();
+
+      if (deleteResult.isSuccess) {
+        // DELETE 성공 시 POST 쿼리 실행
+        const postResult = await refetchPostSet12MatchData();
+
+        if (postResult.isSuccess) {
+          // POST 쿼리 성공 시 페이지 새로 고침 및 성공 메시지 표시를 위한 flag 설정
+          localStorage.setItem('updateSuccessToast', 'true');
+          window.location.reload();
+        } else {
+          // POST 쿼리 실패 시 오류 메시지 표시
+          toast.update(deleteLoadingToastId, {
+            title: '매치 데이터 업데이트 중 오류 발생',
+            status: 'error',
+          });
+        }
       } else {
-        alert('전적 데이터 업데이트 중 오류가 발생했습니다.');
+        // DELETE 쿼리 실패 시 오류 메시지 표시
+        toast.update(deleteLoadingToastId, {
+          title: '매치 데이터 업데이트 중 오류 발생',
+          status: 'error',
+        });
       }
     } catch (error) {
-      // 에러를 처리하는 부분
-      // console.error('전적 데이터 업데이트 중 오류 발생:', error);
-
-      // deleteResponse 객체가 없는 경우를 처리
-      if (axios.isAxiosError(error)) {
-        // console.error('전적 데이터 업로드 중 발생한 오류:', error.response?.data);
-      }
-
-      alert('전적 데이터 업데이트 중 오류가 발생했습니다.');
-    }
-
-    // 새로운 데이터를 가져오는 로직
-    try {
-      await axios.post(`http://127.0.0.1:8000/api/v1/profiles/matches-by-puuid/${puuid}`);
-    } catch (error) {
-      // console.error('새로운 데이터 가져오는 중 오류 발생:', error);
-
-      if (axios.isAxiosError(error)) {
-        // console.error('새로운 데이터 가져오는 중 발생한 오류 :', error.response?.data);
-      }
+      // 예외 발생 시 오류 메시지 표시
+      toast.update(deleteLoadingToastId, {
+        title: '매치 데이터 업데이트 중 오류 발생',
+        status: 'error',
+      });
     }
   };
+
+  // 페이지 로드 후 toast를 표시하는 함수
+  const showToastAfterReload = () => {
+    if (localStorage.getItem('updateSuccessToast') === 'true') {
+      setTimeout(() => {
+        toast({
+          title: '매치 데이터 업데이트 완료!',
+          status: 'success',
+          position: 'top',
+          duration: 2000,
+        });
+        localStorage.removeItem('updateSuccessToast'); // 토스트를 표시한 후 flag 제거
+      }, 500);
+    }
+  };
+
+  // 페이지 로드 시 toast를 확인
+  useEffect(() => {
+    showToastAfterReload();
+  }, []);
 
   const formatTimestampKST = (timestamp: number): string => {
     const date = new Date(timestamp);

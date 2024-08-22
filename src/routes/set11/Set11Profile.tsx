@@ -1,4 +1,4 @@
-import { Box, Container, HStack, Image, Text, VStack, SkeletonText, Button, Tooltip } from '@chakra-ui/react';
+import { Box, Container, HStack, Image, Text, VStack, SkeletonText, Button, Tooltip, useToast } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useLocation, useParams } from 'react-router-dom';
@@ -7,6 +7,7 @@ import ILeagueEntryDTO from '../../components/types';
 import IProfileMiniBox from '../../components/types';
 import IMatch from '../../components/types';
 import {
+  deleteSet11MatchData,
   getSet11Augments,
   getSet11Champions,
   getSet11Items,
@@ -14,6 +15,7 @@ import {
   getSet11MatchesByPuuid,
   getSet11SummonerData,
   getSet11Synergies,
+  postSet11MatchData,
 } from '../../set11api';
 import ISynergy from '../../components/types';
 import IAugments from '../../components/types';
@@ -151,31 +153,93 @@ export default function Set11Profile() {
     return '';
   };
 
+  const toast = useToast();
+
+  // DELETE 요청 쿼리
+  const {
+    refetch: refetchDeleteSet11MatchData,
+    isSuccess: isDeleteSuccess,
+    isError: isDeleteError,
+  } = useQuery({
+    queryKey: ['puuid', puuid],
+    queryFn: deleteSet11MatchData,
+    enabled: false, // 클릭 시에만 실행
+  });
+
+  // POST 요청 쿼리
+  const {
+    refetch: refetchPostSet11MatchData,
+    isSuccess: isPostSuccess,
+    isError: isPostError,
+  } = useQuery({
+    queryKey: ['puuid', puuid],
+    queryFn: postSet11MatchData,
+    enabled: false,
+  });
+
   const handleUpdateClick = async () => {
-    await refetchSummonerData();
-    await refetchLeagueEntries();
-    await refetchMatchesByPuuid();
+    // Toast를 처음에 로딩 상태로 설정
+    const deleteLoadingToastId = toast({
+      title: '매치 데이터 업데이트 중...',
+      status: 'loading',
+      position: 'top',
+      duration: 100000,
+    });
 
     try {
-      // DELETE 요청으로 전적 데이터 삭제
-      const deleteResponse = await axios.delete(`http://127.0.0.1:8000/api/v1/profiles/matches-by-puuid/${puuid}`);
-      if (deleteResponse.status === 200) {
-        alert('전적 데이터가 성공적으로 업데이트 되었습니다.');
+      // DELETE 쿼리 실행
+      const deleteResult = await refetchDeleteSet11MatchData();
+
+      if (deleteResult.isSuccess) {
+        // DELETE 성공 시 POST 쿼리 실행
+        const postResult = await refetchPostSet11MatchData();
+
+        if (postResult.isSuccess) {
+          // POST 쿼리 성공 시 페이지 새로 고침 및 성공 메시지 표시를 위한 flag 설정
+          localStorage.setItem('updateSuccessToast', 'true');
+          window.location.reload();
+        } else {
+          // POST 쿼리 실패 시 오류 메시지 표시
+          toast.update(deleteLoadingToastId, {
+            title: '매치 데이터 업데이트 중 오류 발생',
+            status: 'error',
+          });
+        }
       } else {
-        alert('전적 데이터 업데이트 중 오류가 발생했습니다.');
+        // DELETE 쿼리 실패 시 오류 메시지 표시
+        toast.update(deleteLoadingToastId, {
+          title: '매치 데이터 업데이트 중 오류 발생',
+          status: 'error',
+        });
       }
     } catch (error) {
-      // console.error('전적 데이터 업데이트 중 오류 발생:', error);
-      alert('전적 데이터 업데이트 중 오류가 발생했습니다.');
-    }
-
-    // 새로운 데이터를 가져오는 로직
-    try {
-      await axios.post(`http://127.0.0.1:8000/api/v1/profiles/matches-by-matchid/${puuid}`);
-    } catch (error) {
-      // console.error('새로운 데이터 가져오는 중 오류 발생:', error);
+      // 예외 발생 시 오류 메시지 표시
+      toast.update(deleteLoadingToastId, {
+        title: '매치 데이터 업데이트 중 오류 발생',
+        status: 'error',
+      });
     }
   };
+
+  // 페이지 로드 후 toast를 표시하는 함수
+  const showToastAfterReload = () => {
+    if (localStorage.getItem('updateSuccessToast') === 'true') {
+      setTimeout(() => {
+        toast({
+          title: '매치 데이터 업데이트 완료!',
+          status: 'success',
+          position: 'top',
+          duration: 2000,
+        });
+        localStorage.removeItem('updateSuccessToast'); // 토스트를 표시한 후 flag 제거
+      }, 500);
+    }
+  };
+
+  // 페이지 로드 시 toast를 확인
+  useEffect(() => {
+    showToastAfterReload();
+  }, []);
 
   const formatTimestampKST = (timestamp: number): string => {
     const date = new Date(timestamp);

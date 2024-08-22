@@ -1,3 +1,4 @@
+import Cookie from 'js-cookie';
 import { QueryFunctionContext } from '@tanstack/react-query';
 import axios from 'axios';
 
@@ -43,3 +44,29 @@ export const getSet12SummonerData = ({ queryKey }: QueryFunctionContext) => {
 };
 
 export const getSet12MetaDecks = () => instance.get('comps/set12/meta/decks').then((response) => response.data);
+
+export const postSet12MatchData = ({ queryKey }: QueryFunctionContext) => {
+  const [_, puuid] = queryKey;
+  return instance
+    .post(
+      `profiles/matches-by-puuid/${puuid}`,
+      {}, // data가 없으면 빈 객체를 전달
+      {
+        headers: {
+          'X-CSRFToken': Cookie.get('csrftoken') || '',
+        },
+      }
+    )
+    .then((response) => response.data);
+};
+
+export const deleteSet12MatchData = ({ queryKey }: QueryFunctionContext) => {
+  const [_, puuid] = queryKey;
+  return instance
+    .delete(`profiles/matches-by-puuid/${puuid}`, {
+      headers: {
+        'X-CSRFToken': Cookie.get('csrftoken') || '',
+      },
+    })
+    .then((response) => response.data);
+};

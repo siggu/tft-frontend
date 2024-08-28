@@ -31,6 +31,18 @@ export const getSet12LeagueEntries = ({ queryKey }: QueryFunctionContext) => {
   const [_, summonerId] = queryKey;
   return instance.get(`profiles/entry/${summonerId}`).then((response) => response.data);
 };
+
+export const deleteSet12LeagueEntries = ({ queryKey }: QueryFunctionContext) => {
+  const [_, summonerId] = queryKey;
+  return instance
+    .delete(`profiles/entry/${summonerId}`, {
+      headers: {
+        'X-CSRFToken': Cookie.get('csrftoken') || '',
+      },
+    })
+    .then((response) => response.data);
+};
+
 export const getSet12MatchesByPuuid = ({ queryKey }: QueryFunctionContext) => {
   const [_, puuid] = queryKey;
   return instance.get(`profiles/matches-by-puuid/${puuid}`).then((response) => response.data);

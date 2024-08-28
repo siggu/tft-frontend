@@ -7,6 +7,7 @@ import ILeagueEntryDTO from '../../components/types';
 import IProfileMiniBox from '../../components/types';
 import IMatch from '../../components/types';
 import {
+  deleteSet12LeagueEntries,
   deleteSet12MatchData,
   getSet12Augments,
   getSet12Champions,
@@ -155,15 +156,26 @@ export default function Set12Profile() {
 
   const toast = useToast();
 
-  // DELETE 요청 쿼리
+  // 매치 데이터 DELETE 요청 쿼리
   const {
     refetch: refetchDeleteSet12MatchData,
-    isSuccess: isDeleteSuccess,
-    isError: isDeleteError,
+    isSuccess: isDeleteSet12MatchDataSuccess,
+    isError: isDeleteSet12MatchDataError,
   } = useQuery({
     queryKey: ['puuid', puuid],
     queryFn: deleteSet12MatchData,
     enabled: false, // 클릭 시에만 실행
+  });
+
+  // 리그 정보 DELETE 요청 쿼리
+  const {
+    refetch: refetchDeleteSet12LeagueEntries,
+    isSuccess: isDeleteSet12LeagueSuccess,
+    isError: isDeleteErrorSet12LeagueError,
+  } = useQuery({
+    queryKey: ['summonerId', summonerId],
+    queryFn: deleteSet12LeagueEntries,
+    enabled: false,
   });
 
   // POST 요청 쿼리
@@ -189,6 +201,7 @@ export default function Set12Profile() {
     try {
       // DELETE 쿼리 실행
       const deleteResult = await refetchDeleteSet12MatchData();
+      const leagueEntries = await refetchDeleteSet12LeagueEntries();
 
       if (deleteResult.isSuccess) {
         // DELETE 성공 시 POST 쿼리 실행

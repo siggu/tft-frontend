@@ -347,7 +347,7 @@ export default function Set12Profile() {
             최근 게임 전적
           </Text>
           <Text color={'gray'} mb={5}>
-            (일반, 랭크, 초고속, 더블업, 펭구의 파티)
+            (일반, 랭크, 초고속, 더블업)
           </Text>
           <HStack>
             <HStack mr={5} w={'290px'} flexWrap={'wrap'}>
@@ -446,6 +446,7 @@ export default function Set12Profile() {
                 );
 
                 if (!participant) return null;
+                if (match.match_detail.info.queueId === 1220) return null;
                 return (
                   <Box
                     bgColor={'#27282e'}

@@ -25,11 +25,13 @@ import Set12ProfileSearchAdapter from './routes/set12/Set12ProfileSearchAdapter'
 import Set12MetaHome from './routes/set12/Set12MetaHome';
 import RiotTxt from './routes/set12/RiotTxt';
 import RiotTxtRedirect from './routes/set12/RiotTxt';
+import NotFound from './routes/NotFound';
 
 const router = createHashRouter([
   {
     path: '/set11',
     element: <Set11Root />,
+    errorElement: <NotFound />,
     children: [
       {
         path: 'oldHome',
@@ -80,6 +82,7 @@ const router = createHashRouter([
   {
     path: '/set12',
     element: <Set12Root />,
+    errorElement: <NotFound />,
     children: [
       {
         path: 'oldHome',
@@ -144,6 +147,7 @@ const router = createHashRouter([
   {
     path: '/',
     element: <Navigate to="/set12" replace />,
+    errorElement: <NotFound />,
   },
 ]);
 

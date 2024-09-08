@@ -15,19 +15,26 @@ import IMatch from '../../components/types';
 import ISynergy from '../../components/types';
 import IAugments from '../../components/types';
 
-type TraitPlacement = Record<string, number>;
-type UnitPlacement = Record<string, number>;
-type AugmentUsage = Record<string, number>;
-type ItemUsage = Record<string, number>;
+type TraitPlacement = Record<string, [number, number]>;
+type UnitPlacement = Record<string, [number, number]>;
+type AugmentUsage = Record<string, [number, number]>;
+type ItemUsage = Record<string, [number, number]>;
 
 const countTraits = (participants: any[], synergyMap: Record<string, string>): TraitPlacement => {
   const traitCount: TraitPlacement = {};
+
   participants.forEach((participant) => {
     participant.traits.forEach((trait: any) => {
       const traitName = synergyMap[trait.name] || trait.name;
-      traitCount[traitName] = (traitCount[traitName] || 0) + 1;
+
+      // 현재 특성의 횟수와 등수 합을 가져옴, 없으면 [0, 0] 기본값 사용
+      const [count, placementSum] = traitCount[traitName] || [0, 0];
+
+      // 횟수를 1 증가시키고, 등수 합에 참가자의 등수를 더함
+      traitCount[traitName] = [count + 1, placementSum + participant.placement];
     });
   });
+
   return traitCount;
 };
 
@@ -42,11 +49,17 @@ const countUnitsAndItems = (
   participants.forEach((participant) => {
     participant.units.forEach((unit: any) => {
       const unitName = championMap[unit.character_id] || unit.character_id;
-      unitCount[unitName] = (unitCount[unitName] || 0) + 1;
+
+      // 현재 유닛의 횟수와 등수 합을 가져옴, 없으면 [0, 0] 기본값 사용
+      const [unitCountValue, unitPlacementSum] = unitCount[unitName] || [0, 0];
+      unitCount[unitName] = [unitCountValue + 1, unitPlacementSum + participant.placement];
 
       unit.itemNames.forEach((item: string) => {
         const itemName = itemMap[item] || item;
-        itemCount[itemName] = (itemCount[itemName] || 0) + 1;
+
+        // 현재 아이템의 횟수와 사용 빈도 합을 가져옴, 없으면 [0, 0] 기본값 사용
+        const [itemCountValue, itemUsageSum] = itemCount[itemName] || [0, 0];
+        itemCount[itemName] = [itemCountValue + 1, itemUsageSum + participant.placement];
       });
     });
   });
@@ -56,12 +69,19 @@ const countUnitsAndItems = (
 
 const countAugments = (participants: any[], augmentMap: Record<string, string>): AugmentUsage => {
   const augmentCount: AugmentUsage = {};
+
   participants.forEach((participant) => {
     participant.augments.forEach((augment: string) => {
       const augmentName = augmentMap[augment] || augment;
-      augmentCount[augmentName] = (augmentCount[augmentName] || 0) + 1;
+
+      // 현재 오그멘트의 횟수와 등수 합을 가져옴, 없으면 [0, 0] 기본값 사용
+      const [augmentCountValue, augmentPlacementSum] = augmentCount[augmentName] || [0, 0];
+
+      // 횟수를 1 증가시키고, 등수 합에 참가자의 등수를 더함
+      augmentCount[augmentName] = [augmentCountValue + 1, augmentPlacementSum + participant.placement];
     });
   });
+
   return augmentCount;
 };
 
@@ -155,7 +175,6 @@ export default function Set12ProfileDetail() {
     }, {} as Record<string, string>) || {};
 
   const allParticipants = badMatchesByPuuidData?.flatMap((match) => match.match_detail.info.participants) || [];
-
   const traitCounts = countTraits(allParticipants, synergyMap);
   const augmentCounts = countAugments(allParticipants, augmentMap);
   const { unitCount, itemCount } = countUnitsAndItems(allParticipants, championMap, itemMap);
@@ -222,11 +241,16 @@ export default function Set12ProfileDetail() {
         {/* Display the trait counts */}
         <Box>
           <Text color={'white'}>Trait Usage:</Text>
+
           {Object.entries(traitCounts)
-            .sort(([, countA], [, countB]) => countB - countA)
-            .map(([trait, count]) => (
+            .filter(([, [count]]) => count > 3)
+            .sort(
+              ([, [countA, placementSumA]], [, [countB, placementSumB]]) =>
+                placementSumB / countB - placementSumA / countA // 평균 등수로 정렬
+            )
+            .map(([trait, [count, placementSum]]) => (
               <Text key={trait} color={'white'}>
-                {trait}: {count} 번
+                {trait}: {count} 번 / 평균등수 : {(placementSum / count).toFixed(1)} 등
               </Text>
             ))}
         </Box>
@@ -235,10 +259,14 @@ export default function Set12ProfileDetail() {
         <Box>
           <Text color={'white'}>Augment Usage:</Text>
           {Object.entries(augmentCounts)
-            .sort(([, countA], [, countB]) => countB - countA)
-            .map(([augment, count]) => (
+            .filter(([, [count]]) => count > 1)
+            .sort(
+              ([, [countA, placementSumA]], [, [countB, placementSumB]]) =>
+                placementSumB / countB - placementSumA / countA // 평균 등수로 정렬
+            )
+            .map(([augment, [count, placementSum]]) => (
               <Text key={augment} color={'white'}>
-                {augment}: {count} 번
+                {augment}: {count} 번 / 평균등수 : {(placementSum / count).toFixed(1)} 등
               </Text>
             ))}
         </Box>
@@ -247,10 +275,14 @@ export default function Set12ProfileDetail() {
         <Box>
           <Text color={'white'}>Unit Usage:</Text>
           {Object.entries(unitCount)
-            .sort(([, countA], [, countB]) => countB - countA)
-            .map(([unit, count]) => (
+            .filter(([, [count]]) => count > 3)
+            .sort(
+              ([, [countA, placementSumA]], [, [countB, placementSumB]]) =>
+                placementSumB / countB - placementSumA / countA // 평균 등수로 정렬
+            )
+            .map(([unit, [count, placementSum]]) => (
               <Text key={unit} color={'white'}>
-                {unit}: {count} 번
+                {unit}: {count} 번 / 평균등수 : {(placementSum / count).toFixed(1)} 등
               </Text>
             ))}
         </Box>
@@ -259,10 +291,14 @@ export default function Set12ProfileDetail() {
         <Box>
           <Text color={'white'}>Item Usage:</Text>
           {Object.entries(itemCount)
-            .sort(([, countA], [, countB]) => countB - countA)
-            .map(([item, count]) => (
+            .filter(([, [count]]) => count > 3)
+            .sort(
+              ([, [countA, placementSumA]], [, [countB, placementSumB]]) =>
+                placementSumB / countB - placementSumA / countA // 평균 등수로 정렬
+            )
+            .map(([item, [count, placementSum]]) => (
               <Text key={item} color={'white'}>
-                {item}: {count} 번
+                {item}: {count} 번 / 평균등수 : {(placementSum / count).toFixed(1)} 등
               </Text>
             ))}
         </Box>

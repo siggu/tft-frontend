@@ -26,6 +26,7 @@ import Set12MetaHome from './routes/set12/Set12MetaHome';
 import RiotTxt from './routes/set12/RiotTxt';
 import RiotTxtRedirect from './routes/set12/RiotTxt';
 import NotFound from './routes/NotFound';
+import Set12ProfileDetail from './routes/set12/Set12ProfileDetail';
 
 const router = createHashRouter([
   {
@@ -141,7 +142,14 @@ const router = createHashRouter([
         path: 'search/:gameName/:tagLine',
         element: <Set12ProfileSearchAdapter />,
       },
-      { path: 'profile/:gameName/:tagLine', element: <Set12Profile /> },
+      {
+        path: 'profile/:gameName/:tagLine',
+        element: <Set12Profile />,
+      },
+      {
+        path: 'profile/:gameName/:tagLine/detail',
+        element: <Set12ProfileDetail />,
+      },
     ],
   },
   {

@@ -48,6 +48,11 @@ export const getSet12MatchesByPuuid = ({ queryKey }: QueryFunctionContext) => {
   return instance.get(`profiles/matches-by-puuid/${puuid}`).then((response) => response.data);
 };
 
+export const getSet12badMatchesByPuuid = ({ queryKey }: QueryFunctionContext) => {
+  const [_, puuid] = queryKey;
+  return instance.get(`profiles/bad-matches-by-puuid/${puuid}`).then((response) => response.data);
+};
+
 export const getSet12SummonerData = ({ queryKey }: QueryFunctionContext) => {
   const [_, gameName, tagLine] = queryKey;
   return instance.get(`profiles/fetch-puuid/${gameName}/${tagLine}`).then((response) => response.data);

@@ -1,7 +1,7 @@
 import { Box, Container, HStack, Image, Text, VStack, SkeletonText, Button, Tooltip, useToast } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { FaSearch, FaStar } from 'react-icons/fa';
 import ILeagueEntryDTO from '../../components/types';
 import IProfileMiniBox from '../../components/types';
@@ -193,6 +193,7 @@ export default function Set12Profile() {
     // Toast를 처음에 로딩 상태로 설정
     const deleteLoadingToastId = toast({
       title: '매치 데이터 업데이트 중...',
+      description: '시간이 많이 소요될 수 있습니다..',
       status: 'loading',
       position: 'top',
       duration: 100000,
@@ -354,6 +355,7 @@ export default function Set12Profile() {
               {matchesByPuuidData
                 ?.filter((match) => match.match_detail.metadata.participants)
                 .sort((a, b) => b.match_detail.info.game_datetime - a.match_detail.info.game_datetime)
+                .slice(0, 20)
                 .map((match: IMatch) => {
                   const participant = match.match_detail.info.participants.find(
                     (participant) => participant.puuid === puuid
@@ -430,15 +432,25 @@ export default function Set12Profile() {
             </HStack>
           </HStack>
         </VStack>
-        <Box mb={5}>
-          <Button colorScheme="green" onClick={handleUpdateClick}>
-            전적 업데이트
-          </Button>
-        </Box>
+        <HStack justifyContent={'space-between'}>
+          <Box mb={5}>
+            <Button colorScheme="green" onClick={handleUpdateClick}>
+              전적 업데이트
+            </Button>
+          </Box>
+          <Box mb={5}>
+            <Button colorScheme="blue">
+              <Link to={`/set12/profile/${summonerData?.gameName}/${summonerData?.tagLine}/detail`}>
+                승률 올리는 버튼
+              </Link>
+            </Button>
+          </Box>
+        </HStack>
         <Box textColor={'white'}>
           {matchesByPuuidData
             ?.filter((match) => match.match_detail.metadata.participants)
             .sort((a, b) => b.match_detail.info.game_datetime - a.match_detail.info.game_datetime) // 최신 매치부터 정렬
+            .slice(0, 20)
             .map((match: IMatch) => {
               if (match.match_detail.info.tft_set_core_name === 'TFTSet12') {
                 const participant = match.match_detail.info.participants.find(

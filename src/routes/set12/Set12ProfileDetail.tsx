@@ -1,19 +1,37 @@
-import { Box, Container, HStack, Image, SkeletonText, Text, VStack } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Container,
+  HStack,
+  Image,
+  SkeletonText,
+  Table,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tr,
+  useToast,
+  VStack,
+} from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import {
   getSet12LeagueEntries,
   getSet12badMatchesByPuuid,
-  getSet12MatchesByPuuid,
   getSet12SummonerData,
   getSet12Items,
   getSet12Champions,
   getSet12Augments,
   getSet12Synergies,
+  putSet12BadMatchData,
 } from '../../set12api';
 import { useParams } from 'react-router-dom';
 import IMatch from '../../components/types';
 import ISynergy from '../../components/types';
 import IAugments from '../../components/types';
+import { useEffect, useState } from 'react';
+import ILeagueEntryDTO from './../../components/types.d';
 
 type TraitPlacement = Record<string, [number, number]>;
 type UnitPlacement = Record<string, [number, number]>;
@@ -88,43 +106,76 @@ const countAugments = (participants: any[], augmentMap: Record<string, string>):
 export default function Set12ProfileDetail() {
   const { gameName, tagLine } = useParams();
 
-  const { data: summonerData, isLoading: isSummonerDataLoading } = useQuery({
-    queryKey: ['summonerData', gameName, tagLine],
+  const {
+    data: summonerData,
+    isLoading: isSummonerDataLoading,
+    refetch: refetchSummonerData,
+  } = useQuery({
+    queryKey: ['', gameName, tagLine],
     queryFn: getSet12SummonerData,
-    enabled: !!gameName && !!tagLine,
+    enabled: false,
   });
 
   const summonerId = summonerData?.summonerId || '';
   const puuid = summonerData?.puuid || '';
 
-  const { data: leagueEntryData, isLoading: isLeagueEntryDataLoading } = useQuery({
-    queryKey: ['leagueEntryData', summonerId],
+  const {
+    data: leagueEntryData,
+    isLoading: isLeagueEntryDataLoading,
+    refetch: refetchLeagueEntries,
+  } = useQuery<ILeagueEntryDTO>({
+    queryKey: ['', summonerId],
     queryFn: getSet12LeagueEntries,
-    enabled: !!summonerId,
+    enabled: false,
   });
-
-  const { data: badMatchesByPuuidData, isLoading: isBadMatchesByPuuidData } = useQuery<IMatch[]>({
+  const {
+    data: badMatchesByPuuidData,
+    isLoading: isBadMatchesByPuuidData,
+    refetch: refetchBadMatchesByPuuid,
+  } = useQuery<IMatch[]>({
     queryKey: ['badMatchesByPuuidData', puuid],
     queryFn: getSet12badMatchesByPuuid,
-    enabled: !!puuid,
+    enabled: false,
   });
 
-  const { data: synergiesData, isLoading: isSynergiesDataLoading } = useQuery<ISynergy[]>({
+  const {
+    data: synergiesData,
+    isLoading: isSynergiesDataLoading,
+    refetch: refetchSynergiesData,
+  } = useQuery<ISynergy[]>({
     queryKey: ['synergy'],
     queryFn: getSet12Synergies,
+    enabled: false,
   });
-  const { data: augmentsData, isLoading: isAugmentsDataLoading } = useQuery<IAugments[]>({
+  const {
+    data: augmentsData,
+    isLoading: isAugmentsDataLoading,
+    refetch: refetchAugmentsData,
+  } = useQuery<IAugments[]>({
     queryKey: ['augment'],
     queryFn: getSet12Augments,
+    enabled: false,
   });
-  const { data: chamiponsData, isLoading: isChampionsDataLoading } = useQuery({
+  const {
+    data: chamiponsData,
+    isLoading: isChampionsDataLoading,
+    refetch: refetchChampionsData,
+  } = useQuery({
     queryKey: ['champions'],
     queryFn: getSet12Champions,
+    enabled: false,
   });
-  const { data: itemsData, isLoading: isItemsDataLoading } = useQuery({
+  const {
+    data: itemsData,
+    isLoading: isItemsDataLoading,
+    refetch: refetchItemsData,
+  } = useQuery({
     queryKey: ['items'],
     queryFn: getSet12Items,
+    enabled: false,
   });
+
+  const [matchData, setMatchData] = useState<IMatch[]>([]);
 
   const getTierImageSrc = (tier: string) => {
     const baseUrl = 'https://cdn.metatft.com/file/metatft/ranks/wings_';
@@ -143,12 +194,6 @@ export default function Set12ProfileDetail() {
     const lowerCaseTier = tier?.toLowerCase();
     return validTiers.includes(lowerCaseTier) ? `${baseUrl}${lowerCaseTier}.png` : '';
   };
-
-  // const championMap =
-  //   chamiponsData?.reduce((map: Record<string, string>, champion: any) => {
-  //     map[champion.ingameKey] = champion.name;
-  //     return map;
-  //   }, {} as Record<string, string>) || {};
 
   const championMap =
     chamiponsData?.reduce((map: Record<string, string>, champion: any) => {
@@ -179,8 +224,128 @@ export default function Set12ProfileDetail() {
   const augmentCounts = countAugments(allParticipants, augmentMap);
   const { unitCount, itemCount } = countUnitsAndItems(allParticipants, championMap, itemMap);
 
+  const renderTable = (
+    data: Record<string, [number, number]>,
+    title: string,
+    type: string,
+    mapData: any[],
+    countThreshold: number // 추가된 인자
+  ) => (
+    <Box color={'white'}>
+      <Text mb={'20px'} color={'white'}>
+        {title}
+      </Text>
+      <Table variant="simple" colorScheme="whiteAlpha">
+        <Thead>
+          <Tr>
+            <Th>{type}</Th>
+            <Th>게임 수</Th>
+            <Th>평균 등수</Th>
+          </Tr>
+        </Thead>
+        <Tbody>
+          {Object.entries(data)
+            .filter(([, [count]]) => count > countThreshold) // countThreshold를 이용하여 필터링
+            .sort(
+              ([, [countA, placementSumA]], [, [countB, placementSumB]]) =>
+                placementSumB / countB - placementSumA / countA
+            )
+            .map(([name, [count, placementSum]]) => {
+              const mappedItem = mapData.find((item: any) => item.name === name);
+
+              return (
+                <Tr key={name}>
+                  <Td>
+                    <HStack>
+                      <Image
+                        rounded={'20px'}
+                        w={'30px'}
+                        src={mappedItem?.whiteImageUrl || mappedItem?.imageUrl || ''}
+                      />
+                      <Text>{name}</Text>
+                    </HStack>
+                  </Td>
+                  <Td>{count}</Td>
+                  <Td>{(placementSum / count).toFixed(1)}</Td>
+                </Tr>
+              );
+            })}
+        </Tbody>
+      </Table>
+    </Box>
+  );
+
+  const toast = useToast();
+
+  // PUT 요청 쿼리
+  const {
+    refetch: refetchPutSet12BadMatchData,
+    isSuccess: isPostSuccess,
+    isError: isPostError,
+  } = useQuery({
+    queryKey: ['puuid', puuid],
+    queryFn: putSet12BadMatchData,
+    enabled: false,
+  });
+
+  const handleUpdateClick = async () => {
+    // Toast를 처음에 로딩 상태로 설정
+    const updateToastId = toast({
+      title: '매치 데이터 업데이트 중...',
+      description: '처음에는 시간이 많이 소요될 수 있습니다...',
+      status: 'loading',
+      position: 'top',
+      duration: 100000,
+    });
+
+    try {
+      const putResult = await refetchPutSet12BadMatchData();
+      const BadMatchesByPuuidResult = await refetchBadMatchesByPuuid();
+      const summonerDataResult = await refetchSummonerData();
+      const leagueEntriesResult = await refetchLeagueEntries();
+      const synergiesDataResult = await refetchSynergiesData();
+      const augmentsDataResult = await refetchAugmentsData();
+      const championsDataResult = await refetchChampionsData();
+      const itemsDataResult = await refetchItemsData();
+
+      if (
+        putResult.isSuccess &&
+        BadMatchesByPuuidResult.isSuccess &&
+        summonerDataResult.isSuccess &&
+        leagueEntriesResult.isSuccess &&
+        synergiesDataResult.isSuccess &&
+        augmentsDataResult.isSuccess &&
+        championsDataResult.isSuccess &&
+        itemsDataResult.isSuccess
+      ) {
+        // POST 쿼리 성공 시 페이지 새로 고침 및 성공 메시지 표시를 위한 flag 설정
+        localStorage.setItem('updateSuccessToast', 'true');
+        toast.update(updateToastId, {
+          title: '매치 데이터 업데이트 완료!',
+          status: 'success',
+          duration: 1000,
+        });
+        setMatchData(BadMatchesByPuuidResult.data || []);
+      } else {
+        // POST 쿼리 실패 시 오류 메시지 표시
+        toast.update(updateToastId, {
+          title: '매치 데이터 업데이트 중 오류 발생',
+          status: 'error',
+          duration: 1000,
+        });
+      }
+    } catch (error) {
+      // 예외 발생 시 오류 메시지 표시
+      toast.update(updateToastId, {
+        title: '매치 데이터 업데이트 중 오류 발생',
+        status: 'error',
+        duration: 1000,
+      });
+    }
+  };
+
   return (
-    <VStack>
+    <VStack display={'flex'} alignItems={'center'}>
       {/* Existing profile and league info */}
       <HStack display={'flex'} justifyContent={'center'} alignItems={'center'} flexWrap={'wrap'} textColor={'white'}>
         <Box
@@ -193,7 +358,12 @@ export default function Set12ProfileDetail() {
           alignItems={'center'}
         >
           {/* Tier Image */}
-          <Image top={-180} position={'absolute'} w={'300px'} src={getTierImageSrc(leagueEntryData?.tier || '')} />
+          <Image
+            top={-180}
+            position={'absolute'}
+            w={'300px'}
+            src={getTierImageSrc(String(leagueEntryData?.tier || ''))}
+          />
           {/* Summoner Profile Icon */}
           <Image
             borderRadius="full"
@@ -236,73 +406,22 @@ export default function Set12ProfileDetail() {
           )}
         </VStack>
       </HStack>
-
-      <VStack>
-        {/* Display the trait counts */}
-        <Box>
-          <Text color={'white'}>Trait Usage:</Text>
-
-          {Object.entries(traitCounts)
-            .filter(([, [count]]) => count > 3)
-            .sort(
-              ([, [countA, placementSumA]], [, [countB, placementSumB]]) =>
-                placementSumB / countB - placementSumA / countA // 평균 등수로 정렬
-            )
-            .map(([trait, [count, placementSum]]) => (
-              <Text key={trait} color={'white'}>
-                {trait}: {count} 번 / 평균등수 : {(placementSum / count).toFixed(1)} 등
-              </Text>
-            ))}
-        </Box>
-
-        {/* Display the augment counts */}
-        <Box>
-          <Text color={'white'}>Augment Usage:</Text>
-          {Object.entries(augmentCounts)
-            .filter(([, [count]]) => count > 1)
-            .sort(
-              ([, [countA, placementSumA]], [, [countB, placementSumB]]) =>
-                placementSumB / countB - placementSumA / countA // 평균 등수로 정렬
-            )
-            .map(([augment, [count, placementSum]]) => (
-              <Text key={augment} color={'white'}>
-                {augment}: {count} 번 / 평균등수 : {(placementSum / count).toFixed(1)} 등
-              </Text>
-            ))}
-        </Box>
-
-        {/* Display the unit counts */}
-        <Box>
-          <Text color={'white'}>Unit Usage:</Text>
-          {Object.entries(unitCount)
-            .filter(([, [count]]) => count > 3)
-            .sort(
-              ([, [countA, placementSumA]], [, [countB, placementSumB]]) =>
-                placementSumB / countB - placementSumA / countA // 평균 등수로 정렬
-            )
-            .map(([unit, [count, placementSum]]) => (
-              <Text key={unit} color={'white'}>
-                {unit}: {count} 번 / 평균등수 : {(placementSum / count).toFixed(1)} 등
-              </Text>
-            ))}
-        </Box>
-
-        {/* Display the item counts */}
-        <Box>
-          <Text color={'white'}>Item Usage:</Text>
-          {Object.entries(itemCount)
-            .filter(([, [count]]) => count > 3)
-            .sort(
-              ([, [countA, placementSumA]], [, [countB, placementSumB]]) =>
-                placementSumB / countB - placementSumA / countA // 평균 등수로 정렬
-            )
-            .map(([item, [count, placementSum]]) => (
-              <Text key={item} color={'white'}>
-                {item}: {count} 번 / 평균등수 : {(placementSum / count).toFixed(1)} 등
-              </Text>
-            ))}
-        </Box>
-      </VStack>
+      <Box onClick={handleUpdateClick}>
+        <Button colorScheme="green">최신화 버튼</Button>
+      </Box>
+      <HStack
+        gap={'50px'}
+        padding={'50px 20px 100px 0px'}
+        display={'flex'}
+        alignItems={'flex-start'}
+        justifyContent={'center'} // 중앙 정렬
+        flexWrap={'wrap'} // 줄바꿈
+      >
+        {renderTable(traitCounts, '시너지', '시너지', synergiesData || [], 4)}
+        {renderTable(augmentCounts, '증강체', '증강체', augmentsData || [], 1)}
+        {renderTable(unitCount, '챔피언', '챔피언', chamiponsData || [], 3)}
+        {renderTable(itemCount, '아이템', '아이템', itemsData || [], 5)}
+      </HStack>
     </VStack>
   );
 }

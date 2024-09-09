@@ -1,14 +1,13 @@
 import { Box, Container, HStack, Image, Text, VStack, SkeletonText, Button, Tooltip, useToast } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { FaSearch, FaStar } from 'react-icons/fa';
 import ILeagueEntryDTO from '../../components/types';
 import IProfileMiniBox from '../../components/types';
 import IMatch from '../../components/types';
 import {
   deleteSet12LeagueEntries,
-  deleteSet12MatchData,
   getSet12Augments,
   getSet12Champions,
   getSet12Items,
@@ -16,7 +15,7 @@ import {
   getSet12MatchesByPuuid,
   getSet12SummonerData,
   getSet12Synergies,
-  postSet12MatchData,
+  putSet12MatchData,
 } from '../../set12api';
 import ISynergy from '../../components/types';
 import IAugments from '../../components/types';
@@ -87,6 +86,7 @@ export default function Set12Profile() {
   } = useQuery<ILeagueEntryDTO>({
     queryKey: ['', summonerId],
     queryFn: getSet12LeagueEntries,
+    enabled: false,
   });
   const {
     data: matchesByPuuidData,
@@ -95,22 +95,43 @@ export default function Set12Profile() {
   } = useQuery<IMatch[]>({
     queryKey: ['', puuid],
     queryFn: getSet12MatchesByPuuid,
+    enabled: false,
   });
-  const { data: synergiesData, isLoading: isSynergiesDataLoading } = useQuery<ISynergy[]>({
+  const {
+    data: synergiesData,
+    isLoading: isSynergiesDataLoading,
+    refetch: refetchSynergiesData,
+  } = useQuery<ISynergy[]>({
     queryKey: ['synergy'],
     queryFn: getSet12Synergies,
+    enabled: false,
   });
-  const { data: augmentsData, isLoading: isAugmentsDataLoading } = useQuery<IAugments[]>({
+  const {
+    data: augmentsData,
+    isLoading: isAugmentsDataLoading,
+    refetch: refetchAugmentsData,
+  } = useQuery<IAugments[]>({
     queryKey: ['augment'],
     queryFn: getSet12Augments,
+    enabled: false,
   });
-  const { data: chamiponsData, isLoading: isChampionsDataLoading } = useQuery({
+  const {
+    data: chamiponsData,
+    isLoading: isChampionsDataLoading,
+    refetch: refetchChampionsData,
+  } = useQuery({
     queryKey: ['champions'],
     queryFn: getSet12Champions,
+    enabled: false,
   });
-  const { data: itemsData, isLoading: isItemsDataLoading } = useQuery({
+  const {
+    data: itemsData,
+    isLoading: isItemsDataLoading,
+    refetch: refetchItemsData,
+  } = useQuery({
     queryKey: ['items'],
     queryFn: getSet12Items,
+    enabled: false,
   });
 
   const location = useLocation();
@@ -156,17 +177,6 @@ export default function Set12Profile() {
 
   const toast = useToast();
 
-  // 매치 데이터 DELETE 요청 쿼리
-  const {
-    refetch: refetchDeleteSet12MatchData,
-    isSuccess: isDeleteSet12MatchDataSuccess,
-    isError: isDeleteSet12MatchDataError,
-  } = useQuery({
-    queryKey: ['puuid', puuid],
-    queryFn: deleteSet12MatchData,
-    enabled: false, // 클릭 시에만 실행
-  });
-
   // 리그 정보 DELETE 요청 쿼리
   const {
     refetch: refetchDeleteSet12LeagueEntries,
@@ -178,82 +188,57 @@ export default function Set12Profile() {
     enabled: false,
   });
 
-  // POST 요청 쿼리
+  // PUT 요청 쿼리
   const {
-    refetch: refetchPostSet12MatchData,
-    isSuccess: isPostSuccess,
-    isError: isPostError,
+    refetch: refetchPutSet12MatchData,
+    isSuccess: isPutSuccess,
+    isError: isPutError,
   } = useQuery({
     queryKey: ['puuid', puuid],
-    queryFn: postSet12MatchData,
+    queryFn: putSet12MatchData,
     enabled: false,
   });
 
   const handleUpdateClick = async () => {
-    // Toast를 처음에 로딩 상태로 설정
-    const deleteLoadingToastId = toast({
+    const updateToastId = toast({
       title: '매치 데이터 업데이트 중...',
-      description: '시간이 많이 소요될 수 있습니다..',
+      description: '처음에는 시간이 많이 소요될 수 있습니다...',
       status: 'loading',
       position: 'top',
-      duration: 100000,
+      duration: 10000,
     });
 
     try {
-      // DELETE 쿼리 실행
-      const deleteResult = await refetchDeleteSet12MatchData();
-      const leagueEntries = await refetchDeleteSet12LeagueEntries();
+      const putResult = await refetchPutSet12MatchData();
+      const summonerDataResult = await refetchSummonerData();
+      const leagueEntriesResult = await refetchLeagueEntries();
+      const matchesByPuuidResult = await refetchMatchesByPuuid();
+      const synergiesDataResult = await refetchSynergiesData();
+      const augmentsDataResult = await refetchAugmentsData();
+      const championsDataResult = await refetchChampionsData();
+      const itemsDataResult = await refetchItemsData();
 
-      if (deleteResult.isSuccess) {
-        // DELETE 성공 시 POST 쿼리 실행
-        const postResult = await refetchPostSet12MatchData();
-
-        if (postResult.isSuccess) {
-          // POST 쿼리 성공 시 페이지 새로 고침 및 성공 메시지 표시를 위한 flag 설정
-          localStorage.setItem('updateSuccessToast', 'true');
-          window.location.reload();
-        } else {
-          // POST 쿼리 실패 시 오류 메시지 표시
-          toast.update(deleteLoadingToastId, {
-            title: '매치 데이터 업데이트 중 오류 발생',
-            status: 'error',
-          });
-        }
+      if (putResult.isSuccess && summonerDataResult.isSuccess && leagueEntriesResult.isSuccess) {
+        localStorage.setItem('updateSuccessToast', 'true');
+        toast.update(updateToastId, {
+          title: '매치 데이터 업데이트 완료!',
+          status: 'success',
+          duration: 1000,
+        });
+        setMatchData(matchesByPuuidResult.data || []);
       } else {
-        // DELETE 쿼리 실패 시 오류 메시지 표시
-        toast.update(deleteLoadingToastId, {
-          title: '매치 데이터 업데이트 중 오류 발생',
+        toast.update(updateToastId, {
+          title: '매치 데이터 업데이트 실패',
           status: 'error',
         });
       }
     } catch (error) {
-      // 예외 발생 시 오류 메시지 표시
-      toast.update(deleteLoadingToastId, {
-        title: '매치 데이터 업데이트 중 오류 발생',
+      toast.update(updateToastId, {
+        title: '오류 발생',
         status: 'error',
       });
     }
   };
-
-  // 페이지 로드 후 toast를 표시하는 함수
-  const showToastAfterReload = () => {
-    if (localStorage.getItem('updateSuccessToast') === 'true') {
-      setTimeout(() => {
-        toast({
-          title: '매치 데이터 업데이트 완료!',
-          status: 'success',
-          position: 'top',
-          duration: 2000,
-        });
-        localStorage.removeItem('updateSuccessToast'); // 토스트를 표시한 후 flag 제거
-      }, 500);
-    }
-  };
-
-  // 페이지 로드 시 toast를 확인
-  useEffect(() => {
-    showToastAfterReload();
-  }, []);
 
   const formatTimestampKST = (timestamp: number): string => {
     const date = new Date(timestamp);
@@ -277,6 +262,13 @@ export default function Set12Profile() {
   const averagePlacement = calculateAveragePlacement(matchesByPuuidData, puuid);
   const topFourRate = calculateTopFourRate(matchesByPuuidData, puuid);
   const firstPlaceCount = calculateFirstPlaceCount(matchesByPuuidData, puuid);
+
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    // Navigate to the new URL
+    navigate(`/set12/profile/${summonerData?.gameName}/${summonerData?.tagLine}/detail`);
+  };
 
   return (
     <VStack>
@@ -439,10 +431,8 @@ export default function Set12Profile() {
             </Button>
           </Box>
           <Box mb={5}>
-            <Button colorScheme="blue">
-              <Link to={`/set12/profile/${summonerData?.gameName}/${summonerData?.tagLine}/detail`}>
-                승률 올리는 버튼
-              </Link>
+            <Button colorScheme="blue" onClick={handleNavigate}>
+              승률 올리는 버튼
             </Button>
           </Box>
         </HStack>

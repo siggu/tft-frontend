@@ -1271,12 +1271,15 @@ export default function Set12Rewards() {
                                     <Set12Item
                                       key={item1.key}
                                       ingameKey={item1.ingameKey}
+                                      ingameIcon={item1.ingameIcon}
                                       name={item1.name}
-                                      description={item1.description}
+                                      desc={item1.desc}
                                       shortDesc={item1.shortDesc}
+                                      fromDesc={item1.fromDesc}
                                       imageUrl={item1.imageUrl}
                                       composition1={item1.composition1}
                                       composition2={item1.composition2}
+                                      affectedTraitKey={item1.affectedTraitKey}
                                       isFromItem={item1.isFromItem}
                                       isNormal={item1.isNormal}
                                       isEmblem={item1.isEmblem}
@@ -1285,9 +1288,6 @@ export default function Set12Rewards() {
                                       isRadiant={item1.isRadiant}
                                       isUnique={item1.isUnique}
                                       isNew={item1.isNew}
-                                      tag1={item1.tag1}
-                                      tag2={item1.tag2}
-                                      tag3={item1.tag3}
                                     />
                                   </Box>
                                   <Text fontSize={'12px'} color={'gray'}>
@@ -1301,12 +1301,15 @@ export default function Set12Rewards() {
                                     <Set12Item
                                       key={item2.key}
                                       ingameKey={item2.ingameKey}
+                                      ingameIcon={item2.ingameIcon}
                                       name={item2.name}
-                                      description={item2.description}
+                                      desc={item2.desc}
                                       shortDesc={item2.shortDesc}
+                                      fromDesc={item2.fromDesc}
                                       imageUrl={item2.imageUrl}
                                       composition1={item2.composition1}
                                       composition2={item2.composition2}
+                                      affectedTraitKey={item2.affectedTraitKey}
                                       isFromItem={item2.isFromItem}
                                       isNormal={item2.isNormal}
                                       isEmblem={item2.isEmblem}
@@ -1315,9 +1318,6 @@ export default function Set12Rewards() {
                                       isRadiant={item2.isRadiant}
                                       isUnique={item2.isUnique}
                                       isNew={item2.isNew}
-                                      tag1={item2.tag1}
-                                      tag2={item2.tag2}
-                                      tag3={item2.tag3}
                                     />
                                   </Box>
                                   <Text fontSize={'12px'} color={'gray'}>
@@ -1331,12 +1331,15 @@ export default function Set12Rewards() {
                                     <Set12Item
                                       key={item3.key}
                                       ingameKey={item3.ingameKey}
+                                      ingameIcon={item3.ingameIcon}
                                       name={item3.name}
-                                      description={item3.description}
+                                      desc={item3.desc}
                                       shortDesc={item3.shortDesc}
+                                      fromDesc={item3.fromDesc}
                                       imageUrl={item3.imageUrl}
                                       composition1={item3.composition1}
                                       composition2={item3.composition2}
+                                      affectedTraitKey={item3.affectedTraitKey}
                                       isFromItem={item3.isFromItem}
                                       isNormal={item3.isNormal}
                                       isEmblem={item3.isEmblem}
@@ -1345,9 +1348,6 @@ export default function Set12Rewards() {
                                       isRadiant={item3.isRadiant}
                                       isUnique={item3.isUnique}
                                       isNew={item3.isNew}
-                                      tag1={item3.tag1}
-                                      tag2={item3.tag2}
-                                      tag3={item3.tag3}
                                     />
                                   </Box>
                                   <Text fontSize={'12px'} color={'gray'}>

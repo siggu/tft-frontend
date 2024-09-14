@@ -99,42 +99,42 @@ export default function Set11Home() {
     const counts: { [key: string]: number } = {};
 
     comp.elements?.forEach((elementByComp) => {
-      if (elementByComp.recommendedItem1 && elementByComp.recommendedItem1.tags === 'normal') {
+      if (elementByComp.recommendedItem1 && elementByComp.recommendedItem1.isNormal === true) {
         basicItemArr?.forEach((basicItem) => {
           if (basicItem.key === elementByComp.recommendedItem1.composition1) {
             elementByComp.recommendedItem1.composition1 = basicItem.imageUrl;
           }
         });
       }
-      if (elementByComp.recommendedItem2 && elementByComp.recommendedItem2.tags === 'normal') {
+      if (elementByComp.recommendedItem2 && elementByComp.recommendedItem2.isNormal === true) {
         basicItemArr?.forEach((basicItem) => {
           if (basicItem.key === elementByComp.recommendedItem2.composition1) {
             elementByComp.recommendedItem2.composition1 = basicItem.imageUrl;
           }
         });
       }
-      if (elementByComp.recommendedItem3 && elementByComp.recommendedItem3.tags === 'normal') {
+      if (elementByComp.recommendedItem3 && elementByComp.recommendedItem3.isNormal === true) {
         basicItemArr?.forEach((basicItem) => {
           if (basicItem.key === elementByComp.recommendedItem3.composition1) {
             elementByComp.recommendedItem3.composition1 = basicItem.imageUrl;
           }
         });
       }
-      if (elementByComp.recommendedItem1 && elementByComp.recommendedItem1.tags === 'normal') {
+      if (elementByComp.recommendedItem1 && elementByComp.recommendedItem1.isNormal === true) {
         basicItemArr?.forEach((basicItem) => {
           if (basicItem.key === elementByComp.recommendedItem1.composition2) {
             elementByComp.recommendedItem1.composition2 = basicItem.imageUrl;
           }
         });
       }
-      if (elementByComp.recommendedItem2 && elementByComp.recommendedItem2.tags === 'normal') {
+      if (elementByComp.recommendedItem2 && elementByComp.recommendedItem2.isNormal === true) {
         basicItemArr?.forEach((basicItem) => {
           if (basicItem.key === elementByComp.recommendedItem2.composition2) {
             elementByComp.recommendedItem2.composition2 = basicItem.imageUrl;
           }
         });
       }
-      if (elementByComp.recommendedItem3 && elementByComp.recommendedItem3.tags === 'normal') {
+      if (elementByComp.recommendedItem3 && elementByComp.recommendedItem3.isNormal === true) {
         basicItemArr?.forEach((basicItem) => {
           if (basicItem.key === elementByComp.recommendedItem3.composition2) {
             elementByComp.recommendedItem3.composition2 = basicItem.imageUrl;
@@ -277,14 +277,17 @@ export default function Set11Home() {
                           <Box gap="3px">
                             <Box w="17px" h="17px">
                               <Item
-                                imageUrl={compEle.recommendedItem2.imageUrl}
                                 key={compEle.recommendedItem2.key}
                                 ingameKey={compEle.recommendedItem2.ingameKey}
+                                ingameIcon={compEle.recommendedItem2.ingameIcon}
                                 name={compEle.recommendedItem2.name}
-                                description={compEle.recommendedItem2.description}
+                                desc={compEle.recommendedItem2.desc}
                                 shortDesc={compEle.recommendedItem2.shortDesc}
+                                fromDesc={compEle.recommendedItem2.fromDesc}
+                                imageUrl={compEle.recommendedItem2.imageUrl}
                                 composition1={compEle.recommendedItem2.composition1}
                                 composition2={compEle.recommendedItem2.composition2}
+                                affectedTraitKey={compEle.recommendedItem2.affectedTraitKey}
                                 isFromItem={compEle.recommendedItem2.isFromItem}
                                 isNormal={compEle.recommendedItem2.isNormal}
                                 isEmblem={compEle.recommendedItem2.isEmblem}
@@ -293,9 +296,6 @@ export default function Set11Home() {
                                 isRadiant={compEle.recommendedItem2.isRadiant}
                                 isUnique={compEle.recommendedItem2.isUnique}
                                 isNew={compEle.recommendedItem2.isNew}
-                                tag1={compEle.recommendedItem2.tag1}
-                                tag2={compEle.recommendedItem2.tag2}
-                                tag3={compEle.recommendedItem2.tag3}
                               />
                             </Box>
                           </Box>
@@ -304,14 +304,17 @@ export default function Set11Home() {
                           <Box gap="3px">
                             <Box w="17px" h="17px">
                               <Item
-                                imageUrl={compEle.recommendedItem1.imageUrl}
                                 key={compEle.recommendedItem1.key}
                                 ingameKey={compEle.recommendedItem1.ingameKey}
+                                ingameIcon={compEle.recommendedItem1.ingameIcon}
                                 name={compEle.recommendedItem1.name}
-                                description={compEle.recommendedItem1.description}
+                                desc={compEle.recommendedItem1.desc}
                                 shortDesc={compEle.recommendedItem1.shortDesc}
+                                fromDesc={compEle.recommendedItem1.fromDesc}
+                                imageUrl={compEle.recommendedItem1.imageUrl}
                                 composition1={compEle.recommendedItem1.composition1}
                                 composition2={compEle.recommendedItem1.composition2}
+                                affectedTraitKey={compEle.recommendedItem1.affectedTraitKey}
                                 isFromItem={compEle.recommendedItem1.isFromItem}
                                 isNormal={compEle.recommendedItem1.isNormal}
                                 isEmblem={compEle.recommendedItem1.isEmblem}
@@ -320,9 +323,6 @@ export default function Set11Home() {
                                 isRadiant={compEle.recommendedItem1.isRadiant}
                                 isUnique={compEle.recommendedItem1.isUnique}
                                 isNew={compEle.recommendedItem1.isNew}
-                                tag1={compEle.recommendedItem1.tag1}
-                                tag2={compEle.recommendedItem1.tag2}
-                                tag3={compEle.recommendedItem1.tag3}
                               />
                             </Box>
                           </Box>
@@ -331,14 +331,17 @@ export default function Set11Home() {
                           <Box gap="3px">
                             <Box w="17px" h="17px">
                               <Item
-                                imageUrl={compEle.recommendedItem3.imageUrl}
                                 key={compEle.recommendedItem3.key}
                                 ingameKey={compEle.recommendedItem3.ingameKey}
+                                ingameIcon={compEle.recommendedItem3.ingameIcon}
                                 name={compEle.recommendedItem3.name}
-                                description={compEle.recommendedItem3.description}
+                                desc={compEle.recommendedItem3.desc}
                                 shortDesc={compEle.recommendedItem3.shortDesc}
+                                fromDesc={compEle.recommendedItem3.fromDesc}
+                                imageUrl={compEle.recommendedItem3.imageUrl}
                                 composition1={compEle.recommendedItem3.composition1}
                                 composition2={compEle.recommendedItem3.composition2}
+                                affectedTraitKey={compEle.recommendedItem3.affectedTraitKey}
                                 isFromItem={compEle.recommendedItem3.isFromItem}
                                 isNormal={compEle.recommendedItem3.isNormal}
                                 isEmblem={compEle.recommendedItem3.isEmblem}
@@ -347,9 +350,6 @@ export default function Set11Home() {
                                 isRadiant={compEle.recommendedItem3.isRadiant}
                                 isUnique={compEle.recommendedItem3.isUnique}
                                 isNew={compEle.recommendedItem3.isNew}
-                                tag1={compEle.recommendedItem3.tag1}
-                                tag2={compEle.recommendedItem3.tag2}
-                                tag3={compEle.recommendedItem3.tag3}
                               />
                             </Box>
                           </Box>

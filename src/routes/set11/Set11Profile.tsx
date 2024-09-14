@@ -640,14 +640,17 @@ export default function Set11Profile() {
                                         return (
                                           <Box w={'15px'}>
                                             <Item
-                                              key={item.ingameKey}
+                                              key={item.key}
                                               ingameKey={item.ingameKey}
+                                              ingameIcon={item.ingameIcon}
                                               name={item.name}
-                                              description={item.description}
+                                              desc={item.desc}
                                               shortDesc={item.shortDesc}
+                                              fromDesc={item.fromDesc}
                                               imageUrl={item.imageUrl}
                                               composition1={item.composition1}
                                               composition2={item.composition2}
+                                              affectedTraitKey={item.affectedTraitKey}
                                               isFromItem={item.isFromItem}
                                               isNormal={item.isNormal}
                                               isEmblem={item.isEmblem}
@@ -656,9 +659,6 @@ export default function Set11Profile() {
                                               isRadiant={item.isRadiant}
                                               isUnique={item.isUnique}
                                               isNew={item.isNew}
-                                              tag1={item.tag1}
-                                              tag2={item.tag2}
-                                              tag3={item.tag3}
                                             />
                                           </Box>
                                         );

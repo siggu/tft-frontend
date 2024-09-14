@@ -104,12 +104,15 @@ export default interface IEncounter {
 export default interface IItems {
   key: string;
   ingameKey: string;
+  ingameIcon: string;
   name: string;
-  description: string;
+  desc: string;
   shortDesc: string;
+  fromDesc: string;
   imageUrl: string;
   composition1: string;
   composition2: string;
+  affectedTraitKey: string;
   isFromItem: boolean;
   isNormal: boolean;
   isEmblem: boolean;
@@ -118,9 +121,7 @@ export default interface IItems {
   isRadiant: boolean;
   isUnique: boolean;
   isNew: boolean;
-  tag1: string;
-  tag2: string;
-  tag3: string;
+  isHidden: boolean;
 }
 
 export default interface IAugments {

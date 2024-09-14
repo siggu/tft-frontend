@@ -220,14 +220,17 @@ export default function Set12MetaHome() {
                                 {item_ele ? (
                                   <Box w="15px" h="15px">
                                     <Set12Item
-                                      imageUrl={item_ele.imageUrl}
                                       key={item_ele.key}
                                       ingameKey={item_ele.ingameKey}
+                                      ingameIcon={item_ele.ingameIcon}
                                       name={item_ele.name}
-                                      description={item_ele.description}
+                                      desc={item_ele.desc}
                                       shortDesc={item_ele.shortDesc}
+                                      fromDesc={item_ele.fromDesc}
+                                      imageUrl={item_ele.imageUrl}
                                       composition1={item_ele.composition1}
                                       composition2={item_ele.composition2}
+                                      affectedTraitKey={item_ele.affectedTraitKey}
                                       isFromItem={item_ele.isFromItem}
                                       isNormal={item_ele.isNormal}
                                       isEmblem={item_ele.isEmblem}
@@ -236,9 +239,6 @@ export default function Set12MetaHome() {
                                       isRadiant={item_ele.isRadiant}
                                       isUnique={item_ele.isUnique}
                                       isNew={item_ele.isNew}
-                                      tag1={item_ele.tag1}
-                                      tag2={item_ele.tag2}
-                                      tag3={item_ele.tag3}
                                     />
                                   </Box>
                                 ) : null}

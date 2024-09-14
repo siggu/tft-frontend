@@ -5,12 +5,15 @@ import { getSet11Items } from '../../set11api';
 interface IItems {
   key: string;
   ingameKey: string;
+  ingameIcon: string;
   name: string;
-  description: string;
+  desc: string;
   shortDesc: string;
+  fromDesc: string;
   imageUrl: string;
   composition1: string;
   composition2: string;
+  affectedTraitKey: string;
   isFromItem: boolean;
   isNormal: boolean;
   isEmblem: boolean;
@@ -19,20 +22,20 @@ interface IItems {
   isRadiant: boolean;
   isUnique: boolean;
   isNew: boolean;
-  tag1: string;
-  tag2: string;
-  tag3: string;
 }
 
 export default function Set11Item({
   key,
   ingameKey,
+  ingameIcon,
   name,
-  description,
+  desc,
   shortDesc,
+  fromDesc,
   imageUrl,
   composition1,
   composition2,
+  affectedTraitKey,
   isFromItem,
   isNormal,
   isEmblem,
@@ -41,9 +44,6 @@ export default function Set11Item({
   isRadiant,
   isUnique,
   isNew,
-  tag1,
-  tag2,
-  tag3,
 }: IItems) {
   const filteredShortDesc = shortDesc.replace(/<br>/g, ' ');
 
@@ -68,7 +68,7 @@ export default function Set11Item({
             <Text color={'#e09400'} fontSize={'lg'}>
               {name}
             </Text>
-            {description.split('<br>').map((splitedContext, index) => (
+            {desc.split('<br>').map((splitedContext, index) => (
               <Text key={index} color={'white'}>
                 {splitedContext}
               </Text>

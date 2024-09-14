@@ -129,14 +129,8 @@ const router = createHashRouter([
         ],
       },
       {
-        path: 'charms',
+        path: 'charms/:tier',
         element: <Set12Charms />,
-        children: [
-          {
-            path: ':tier',
-            element: <Set12Charms />,
-          },
-        ],
       },
       {
         path: 'search/:gameName/:tagLine',

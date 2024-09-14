@@ -228,3 +228,12 @@ export default interface IMatch {
     };
   };
 }
+
+export default interface ICharms {
+  name: string;
+  cost: number;
+  tier: string;
+  _key: string;
+  desc: string;
+  imageUrl: string;
+}

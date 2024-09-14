@@ -27,6 +27,10 @@ export const getSet12Portals = () => instance.get('portals/set12').then((respons
 
 // 시너지
 export const getSet12Synergies = () => instance.get('synergies/set12').then((response) => response.data);
+
+// 주술
+export const getSet12Charms = () => instance.get('charms/set12').then((response) => response.data);
+
 export const getSet12LeagueEntries = ({ queryKey }: QueryFunctionContext) => {
   const [_, summonerId] = queryKey;
   return instance.get(`profiles/entry/${summonerId}`).then((response) => response.data);

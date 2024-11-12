@@ -275,7 +275,7 @@ export default function Set12Profile() {
       <Container maxW="1000px">
         <HStack display={'flex'} justifyContent={'center'} alignItems={'center'} flexWrap={'wrap'} textColor={'white'}>
           <Box
-            mt={20}
+            mt={150}
             mb={20}
             w="300px"
             position={'relative'}
